@@ -21,6 +21,8 @@ public class User {
     @Column(name="id")
     int id;
     private String username;    //用户名
+    private String phone;   //手机号
+    private String email;   //邮箱号
     private String password;    //密码
     private String salt;    //盐
     private boolean enabled;       //是否使用

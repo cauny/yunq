@@ -9,6 +9,12 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     /* 根据用户名查找用户对象 */
     User findByUsername(String username);
 
+    /* 根据手机号查找用户对象 */
+    User findByPhone(String phone);
+
+    /* 根据邮箱查找用户对象 */
+    User findByEmail(String email);
+
     /* 根据用户名和密码查找用户对象 */
     User findByUsernameAndPassword(String username,String password);
 

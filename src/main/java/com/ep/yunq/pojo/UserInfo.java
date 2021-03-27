@@ -24,8 +24,6 @@ public class UserInfo {
 
     private String username;    //用户名
     private String realname;    //真实姓名
-    private String phone;   //手机号
-    private String email;   //邮箱号
     private String ino; //学号/工号
     private Integer sex; //性别
     private String school; //学校
@@ -34,7 +32,12 @@ public class UserInfo {
     private String cover; //头像
     private Integer uid;     //用户id
 
-    public UserInfo(String username) {
+    public UserInfo(String username, Integer uid) {
         this.username = username;
+        this.uid = uid;
+    }
+
+    public UserInfo() {
+
     }
 }
