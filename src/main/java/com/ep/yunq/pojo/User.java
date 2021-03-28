@@ -25,7 +25,7 @@ public class User {
     private String email;   //邮箱号
     private String password;    //密码
     private String salt;    //盐
-    private boolean enabled;       //是否使用
+    private Integer enabled;       //是否使用
 
 
     @Transient

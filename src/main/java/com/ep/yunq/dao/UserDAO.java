@@ -3,7 +3,11 @@ package com.ep.yunq.dao;
 import com.ep.yunq.pojo.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 public interface UserDAO extends JpaRepository<User,Integer> {
     /* 根据用户名查找用户对象 */
@@ -19,6 +23,9 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     User findByUsernameAndPassword(String username,String password);
 
     User findByPhoneAndUsername(String phone,String username);
+
+
+
 
     /* 根据用户id删除行 */
     @Modifying

@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 /**
  * @classname: LoginController
  * @Author: yan
@@ -25,21 +28,22 @@ public class LoginController {
 //    @Autowired
 
     @CrossOrigin
-    @RequestMapping(value = "/api/login")
-    @ResponseBody
-    public Result login(@RequestParam String username,@RequestParam String password){
+    @PostMapping(value = "/api/login")
+    public Result login(@RequestBody User user) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        String username=user.getUsername();
+        String password=user.getPassword();
         username = HtmlUtils.htmlEscape(username);
         password = HtmlUtils.htmlEscape(password);
 
         log.info("username:{},password:{}",username,password);
-        User user = userService.findByUsernameAndPassword(username,password);
 
-
-//        log.info(user.getCollege());
-        if (null == user) {
-            return ResultUtil.buildFailResult("不存在该用户");
-        } else {
-            return ResultUtil.buildSuccessResult(user);
+        String message=userService.authUser(username,password);
+        if("登录成功".equals(message)){
+            return ResultUtil.buildSuccessResult(message);
+        }else{
+            return ResultUtil.buildFailResult(message);
         }
+
+
     }
 }

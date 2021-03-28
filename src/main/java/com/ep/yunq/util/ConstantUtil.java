@@ -1,5 +1,7 @@
 package com.ep.yunq.util;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @classname: ConstantUtil
  * @Author: yan

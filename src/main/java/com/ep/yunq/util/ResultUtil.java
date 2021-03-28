@@ -1,6 +1,7 @@
 package com.ep.yunq.util;
 
 import com.ep.yunq.pojo.Result;
+import org.springframework.stereotype.Component;
 
 /**
  * @classname: ResultUtil
@@ -8,6 +9,7 @@ import com.ep.yunq.pojo.Result;
  * @Date: 2021/3/27 10:06
  * 功能描述：结果工具类
  **/
+@Component
 public class ResultUtil {
 
     /* 返回成功信息 */
