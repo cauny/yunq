@@ -58,7 +58,7 @@ public class UserService {
     }
 
     /* 根据用户id删除用户 */
-    public void deleteByUid(int id){ userDAO.deleteAllByUid(id);}
+    public void deleteByUid(int id){ userDAO.deleteAllById(id);}
 
     /* 对用户表表进行添加操作 */
     public void add(User user) {  userDAO.save(user); }

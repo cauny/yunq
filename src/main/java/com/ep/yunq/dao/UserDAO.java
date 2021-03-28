@@ -23,7 +23,7 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     /* 根据用户id删除行 */
     @Modifying
     @Transactional
-    void deleteAllByUid(int id);
+    void deleteAllById(int id);
 
 
 }

@@ -115,6 +115,14 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--安全框架sureness-->
+        <dependency>
+            <groupId>com.usthe.sureness</groupId>
+            <artifactId>sureness-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+
     </dependencies>
 
 
