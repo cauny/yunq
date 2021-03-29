@@ -31,7 +31,7 @@ public class test {
     Logger logger= LoggerFactory.getLogger(getClass());
 
     @CrossOrigin
-    @RequestMapping("/hello")
+    @RequestMapping("/api/index")
     public Result index(){
         String a="yan";
         AdminRole role;
@@ -42,6 +42,12 @@ public class test {
 //        adminUserToRoleService.findRidByUid(9);
 //        log.info(String.valueOf(adminUserToRoleService.findRidByUid(1)));
         return ResultUtil.buildSuccessResult("哈哈哈哈哈哈哈哈哈哈哈");
+    }
+
+    @CrossOrigin
+    @RequestMapping("/api/test")
+    public Result tes(){
+        return ResultUtil.buildSuccessResult("这是测试界面");
     }
 
 

@@ -6,11 +6,13 @@ import com.usthe.sureness.mgt.SurenessSecurityManager;
 import com.usthe.sureness.processor.exception.*;
 import com.usthe.sureness.subject.SubjectSum;
 import com.usthe.sureness.util.SurenessContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -26,6 +28,7 @@ import java.util.Map;
  * @Date: 2021/3/28 11:38
  * 功能描述：
  **/
+@Slf4j
 @Order(1)
 @WebFilter(filterName = "SurenessFilterExample", urlPatterns = "/*", asyncSupported = true)
 public class SurenessFilterExample implements Filter {

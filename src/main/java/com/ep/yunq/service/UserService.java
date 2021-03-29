@@ -7,6 +7,7 @@ import com.ep.yunq.pojo.UserInfo;
 import com.ep.yunq.util.PBKDF2Util;
 import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class UserService {
     @Autowired
@@ -151,6 +153,7 @@ public class UserService {
     }
 
     public SurenessAccount loadAccount(String username){
+        log.info("11111");
         User authUserOptional = findByUserName(username);
         if (authUserOptional!=null) {
             User authUser = authUserOptional;
@@ -162,6 +165,7 @@ public class UserService {
             AdminRole role = findRoleById(findByUserName(username).getId());
             List<String> roles = null;
             roles.add(role.getName());
+
             if (role != null) {
                 accountBuilder.setOwnRoles(roles);
             }
