@@ -24,6 +24,7 @@ public class UserInfo {
 
     private String username;    //用户名
     private String realname;    //真实姓名
+    private String nickname;    //昵称
     private String ino; //学号/工号
     private Integer sex; //性别
     private String school; //学校

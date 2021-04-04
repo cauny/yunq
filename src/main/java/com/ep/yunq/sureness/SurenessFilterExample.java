@@ -13,13 +13,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Map;
 
 /**
@@ -31,13 +34,26 @@ import java.util.Map;
 @Slf4j
 @Order(1)
 @WebFilter(filterName = "SurenessFilterExample", urlPatterns = "/*", asyncSupported = true)
-public class SurenessFilterExample implements Filter {
+public class SurenessFilterExample implements Filter, HandlerInterceptor {
 
     /** logger **/
     private static final Logger logger = LoggerFactory.getLogger(SurenessFilterExample.class);
 
+
+
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+        HttpServletRequest httpServletRequest= (HttpServletRequest) servletRequest;
+
+        /*log.info(httpServletRequest.getMethod());
+        log.info(httpServletRequest.getRequestURI());
+        log.info(httpServletRequest.getQueryString());
+        log.info(String.valueOf(httpServletRequest.getParameterMap()));*/
+
+        if(httpServletRequest.getMethod().equals("OPTIONS")){
+            return;
+        }
 
         try {
             SubjectSum subject = SurenessSecurityManager.getInstance().checkIn(servletRequest);
@@ -47,7 +63,8 @@ public class SurenessFilterExample implements Filter {
                 SurenessContextHolder.bindSubject(subject);
             }
         } catch (ProcessorNotFoundException | UnknownAccountException | UnsupportedSubjectException e4) {
-            logger.debug("this request is illegal");
+            log.info(e4.getMessage());
+            log.info("this request is illegal");
             responseWrite(ResponseEntity
                     .status(HttpStatus.BAD_REQUEST).body("bad request, can not Auth"), servletResponse);
             return;
@@ -86,6 +103,7 @@ public class SurenessFilterExample implements Filter {
         }
     }
 
+
     /**
      * write response json data
      * @param content content
@@ -112,4 +130,5 @@ public class SurenessFilterExample implements Filter {
             logger.error("responseWrite response error: ", e);
         }
     }
+
 }

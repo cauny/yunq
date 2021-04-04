@@ -4,19 +4,18 @@ import com.ep.yunq.dao.UserDAO;
 import com.ep.yunq.pojo.AdminRole;
 import com.ep.yunq.pojo.User;
 import com.ep.yunq.pojo.UserInfo;
+import com.ep.yunq.pojo.UserLogin;
 import com.ep.yunq.util.PBKDF2Util;
 import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
+import com.usthe.sureness.util.JsonWebTokenUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -52,13 +51,10 @@ public class UserService {
         return null!=user;
     }
 
-
-
     /* 根据用户名查找用户 */
     public User findByUserName(String username) {
         return userDAO.findByUsername(username);
     }
-
 
     /* 根据手机号查找用户 */
     public User findByPhone(String phone) {
@@ -150,6 +146,21 @@ public class UserService {
             return "密码错误";
         }
 
+    }
+
+    /* 使用token */
+    public Map<String, String> useToken(UserLogin user){
+        //获取角色信息
+        String roles=null;
+        roles=findRoleById(findByUserName(user.getUsername()).getId()).getName();
+
+        //刷新时间5小时
+        long refreshPeriodTime = 36000L;
+        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), user.getUsername(),
+                "tom-auth-server", refreshPeriodTime >> 1, Collections.singletonList(roles),
+                null, false);
+        Map<String, String> responseData = Collections.singletonMap("token", jwt);
+        return responseData;
     }
 
     public SurenessAccount loadAccount(String username){

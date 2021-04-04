@@ -2,6 +2,7 @@ package com.ep.yunq.sureness.subject;
 
 import com.usthe.sureness.subject.Subject;
 import com.usthe.sureness.subject.SubjectCreate;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
  * @Date: 2021/3/28 11:37
  * 功能描述：
  **/
+@Slf4j
 public class CustomTokenSubjectCreator implements SubjectCreate {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomTokenSubjectCreator.class);
@@ -34,6 +36,7 @@ public class CustomTokenSubjectCreator implements SubjectCreate {
 
     @Override
     public Subject createSubject(Object context) {
+        log.info("11111111111");
         String authorization = ((HttpServletRequest)context).getHeader(HEADER_TOKEN);
         String remoteHost = ((HttpServletRequest) context).getRemoteHost();
         String requestUri = ((HttpServletRequest) context).getRequestURI();

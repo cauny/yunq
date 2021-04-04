@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,7 +32,7 @@ public class test {
     Logger logger= LoggerFactory.getLogger(getClass());
 
     @CrossOrigin
-    @RequestMapping("/api/index")
+    @GetMapping("/api/index")
     public Result index(){
         String a="yan";
         AdminRole role;

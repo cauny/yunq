@@ -22,6 +22,7 @@ public class User {
     int id;
     private String username;    //用户名
     private String phone;   //手机号
+    private String realname; //真实姓名
     private String email;   //邮箱号
     private String password;    //密码
     private String salt;    //盐
