@@ -44,16 +44,10 @@ public class SurenessFilterExample implements Filter, HandlerInterceptor {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
-        HttpServletRequest httpServletRequest= (HttpServletRequest) servletRequest;
-
-        /*log.info(httpServletRequest.getMethod());
-        log.info(httpServletRequest.getRequestURI());
-        log.info(httpServletRequest.getQueryString());
-        log.info(String.valueOf(httpServletRequest.getParameterMap()));*/
-
+/*        HttpServletRequest httpServletRequest= (HttpServletRequest) servletRequest;
         if(httpServletRequest.getMethod().equals("OPTIONS")){
             return;
-        }
+        }*/
 
         try {
             SubjectSum subject = SurenessSecurityManager.getInstance().checkIn(servletRequest);

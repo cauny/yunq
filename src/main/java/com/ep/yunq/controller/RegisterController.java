@@ -7,10 +7,7 @@ import com.ep.yunq.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @classname: RegisterController
@@ -28,12 +25,16 @@ public class RegisterController {
 
     @CrossOrigin
     @PostMapping(value = "/api/register")
-    public Result register(@RequestBody User user){
+    public Result register(@RequestBody User user, @RequestParam String role,@RequestParam String verificationCode){
 
         log.info("---------------- 注册新用户 ----------------------");
         log.info("---------------- 验证验证码 ----------------------");
-
-        String message=userService.register(user);
+        String message=userService.verifyCode(user,verificationCode);
+        if(!message.equals("验证成功")){
+            return ResultUtil.buildFailResult(message);
+        }
+        log.info("---------------- 验证成功 ----------------------");
+        message=userService.register(user,role);
         log.info("---------------- {} ----------------------",message);
         if("注册成功".equals(message)){
             return ResultUtil.buildSuccessResult(message);

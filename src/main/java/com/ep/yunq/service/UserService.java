@@ -1,17 +1,21 @@
 package com.ep.yunq.service;
 
 import com.ep.yunq.dao.UserDAO;
-import com.ep.yunq.pojo.AdminRole;
-import com.ep.yunq.pojo.User;
-import com.ep.yunq.pojo.UserInfo;
-import com.ep.yunq.pojo.UserLogin;
+import com.ep.yunq.pojo.*;
+import com.ep.yunq.util.ConstantUtil;
 import com.ep.yunq.util.PBKDF2Util;
+import com.ep.yunq.util.RedisUtil;
+import com.ep.yunq.util.ResultUtil;
 import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
 import com.usthe.sureness.util.JsonWebTokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.SecureRandomNumberGenerator;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -30,6 +34,8 @@ public class UserService {
     AdminUserToRoleService adminUserToRoleService;
     @Autowired
     PBKDF2Util pbkdf2Util;
+    @Autowired
+    RedisUtil redisUtil;
 
 
 
@@ -81,7 +87,7 @@ public class UserService {
     public AdminRole findRoleById(int id){ return adminRoleService.findById(adminUserToRoleService.findRidByUid(id));}
 
     /* 用户注册 */
-    public String register(User user){
+    public String register(User user,String role){
         String message="";
         try {
             String username=user.getUsername();
@@ -91,8 +97,9 @@ public class UserService {
 
             user.setEnabled(1);
 
+
             if(username.equals("") || password.equals("")){
-                message="";
+                message="用户名或密码为空，注册失败";
                 return message;
             }
             if(isExistByUsername(username)){
@@ -123,12 +130,57 @@ public class UserService {
             UserInfo userInfo=new UserInfo(username,uid);
             userInfoService.add(userInfo);
 
+            //设置用户角色
+            int rid=adminRoleService.findByName(role).getId();
+            AdminUserToRole adminUserToRole=new AdminUserToRole();
+            log.info(String.valueOf(rid));
+            adminUserToRole.setRid(rid);
+            adminUserToRole.setUid(uid);
+            adminUserToRoleService.addAndUpdate(adminUserToRole);
+
             message="注册成功";
 
         }catch (Exception e){
             e.printStackTrace();
             message="参数异常，注册失败";
         }
+        return message;
+    }
+
+    /*用户密码重置*/
+    public String resetPassword(User user){
+        String message = "";
+        try{
+            String username = user.getUsername();
+            String password = user.getPassword();
+            if (StringUtils.isEmpty(username)) {
+                message = "用户名为空，重置失败";
+                return message;
+            }
+            if (StringUtils.isEmpty(password)) {
+                message = "密码为空，重置失败";
+                return message;
+            }
+            User userInDB = userDAO.findByUsername(username);
+            if (null == userInDB) {
+                message = "未找到该用户，请正确输入用户名";
+                return message;
+            }
+            //生成盐，默认长度16位
+            String salt = pbkdf2Util.generateSalt();
+            //对密码进行哈希加密
+            String encodedPwd=pbkdf2Util.getEncryptedPassword(password,salt);
+
+            //保存到用户表和用户信息表里
+            user.setSalt(salt);
+            user.setPassword(encodedPwd);
+            add(user);
+            message = "重置成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = "参数异常，重置失败";
+        }
+
         return message;
     }
 
@@ -146,6 +198,30 @@ public class UserService {
             return "密码错误";
         }
 
+    }
+
+    /*发送验证码*/
+    public String sendCode(){
+        int a=(int)((Math.random()*9+1)*1000);
+        String code= String.valueOf(a);
+        return code;
+    }
+
+    /*验证码验证*/
+    public String verifyCode(User user,String code){
+        Object redisVerificationCode = redisUtil.get(user.getPhone() + ConstantUtil.SMS_Verification_Code.code);
+        log.info(user.getPhone());
+        log.info(code);
+        if (ObjectUtils.isEmpty(redisVerificationCode)) {
+            String message = "验证码超时,请重新获取";
+            return message;
+        } else if (!redisVerificationCode.equals(code)) {
+            String message = "验证码错误";
+            return message;
+        }else {
+            String message = "验证成功";
+            return message;
+        }
     }
 
     /* 使用token */

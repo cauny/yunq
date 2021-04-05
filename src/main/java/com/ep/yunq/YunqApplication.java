@@ -7,7 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
-@ServletComponentScan
+//@ServletComponentScan
 public class YunqApplication {
 
     public static void main(String[] args) {

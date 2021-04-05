@@ -8,36 +8,33 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * @classname: CourseSignIn
+ * @classname: StudentSignIn
  * @Author: yan
- * @Date: 2021/4/4 17:28
- * 功能描述：
+ * @Date: 2021/4/4 21:45
+ * 功能描述： 学生签到
  **/
 @Entity
-@Table(name="course_signin")
+@Table(name="student_signin")
 @JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
 @Data
-public class CourseSignIn {
+public class StudentSignIn {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
-    private String mode;
-    private String value;
+    private String mode;    //
+    private String value;   //
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "start_time")
-    private Date startTime;
+    private Date time;  //
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "end_time")
-    private Date endTime;
-
-    private String longitude;
-    private String latitude;
+    private String longitude;   //
+    private String latitude;    //
+    private int student;    //
 
     @ManyToOne()
-    @JoinColumn(name = "cid")
-    private Course course;
+    @JoinColumn(name = "course_signin_id")
+    private CourseSignIn courseSignIn;  //
+
 }
