@@ -19,7 +19,7 @@ public class AdminUserToRoleService {
     AdminUserToRoleDAO adminUserToRoleDAO;
 
     /* 根据用户id查找角色id */
-    public Integer findRidByUid(int uid){   return adminUserToRoleDAO.findRidByUid(uid);}
+    public List<Integer> findRidByUid(int uid){   return adminUserToRoleDAO.findRidByUid(uid);}
 
     /* 根据角色id查找所有用户id */
     public List<Integer> findAllUidByRid(int rid){  return adminUserToRoleDAO.findAllUidByRid(rid);}
@@ -35,9 +35,17 @@ public class AdminUserToRoleService {
         //检查该对象是否存在，存在时比较是否一样，不一样的时删除然后添加，对象不存在直接添加
         if (findRidByUid(adminUserToRole.getUid()) == null) {
             adminUserToRoleDAO.save(adminUserToRole);
-        } else if(findRidByUid(adminUserToRole.getUid())!=adminUserToRole.getRid()){
-            deleteByUid(adminUserToRole.getUid());
-            adminUserToRoleDAO.save(adminUserToRole);
+            return;
         }
+        List<Integer> rids=findRidByUid(adminUserToRole.getUid());
+        for(int r:rids){
+            if(r!=adminUserToRole.getRid()){
+                deleteByUid(adminUserToRole.getUid());
+                adminUserToRoleDAO.save(adminUserToRole);
+                return;
+            }
+
+        }
+
     }
 }

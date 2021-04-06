@@ -83,8 +83,15 @@ public class UserService {
     /* 对用户表表进行添加操作 */
     public void add(User user) {  userDAO.save(user); }
 
-    /* 根据用户id查找对象 */
-    public AdminRole findRoleById(int id){ return adminRoleService.findById(adminUserToRoleService.findRidByUid(id));}
+    /* 根据用户id查找角色名称 */
+    public List<String> findRolesById(int id){
+        List<Integer> rids=adminUserToRoleService.findRidByUid(id);
+        List<String> roles = null;
+        for(int r:rids){
+            roles.add(adminRoleService.findById(r).getName());
+        }
+
+        return roles;}
 
     /* 用户注册 */
     public String register(User user,String role){
@@ -184,11 +191,11 @@ public class UserService {
         return message;
     }
 
-    /* 用户登录验证 */
+    /* 用户密码登录验证 */
     public String authUser(String username,String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
 
         User authuser=findByUserName(username);
-        if(authuser==null){     return "用户不存在";}
+        if(authuser==null){    return "用户不存在";}
         if(password==null){    return "密码为空";}
 
         password=pbkdf2Util.getEncryptedPassword(password,authuser.getSalt());
@@ -196,6 +203,22 @@ public class UserService {
             return "登录成功";
         }else {
             return "密码错误";
+        }
+
+    }
+
+    /* 用户验证码登录验证 */
+    public String authUserByVerificationCode(String phone,String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
+
+        User authuser=findByPhone(phone);
+        if(authuser==null){    return "用户不存在";}
+        if(verificationCode==null){    return "验证码为空";}
+
+        String message=verifyCode(authuser,verificationCode);
+        if(!message.equals("验证成功")){
+            return message;
+        }else{
+            return "登录成功";
         }
 
     }
@@ -225,22 +248,20 @@ public class UserService {
     }
 
     /* 使用token */
-    public Map<String, String> useToken(UserLogin user){
+    public Map<String, String> useToken(User user){
         //获取角色信息
-        String roles=null;
-        roles=findRoleById(findByUserName(user.getUsername()).getId()).getName();
+        List<String> roles=findRolesById(findByUserName(user.getUsername()).getId());
 
         //刷新时间5小时
         long refreshPeriodTime = 36000L;
         String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), user.getUsername(),
-                "tom-auth-server", refreshPeriodTime >> 1, Collections.singletonList(roles),
+                "tom-auth-server", refreshPeriodTime >> 1, roles,
                 null, false);
         Map<String, String> responseData = Collections.singletonMap("token", jwt);
         return responseData;
     }
 
     public SurenessAccount loadAccount(String username){
-        log.info("11111");
         User authUserOptional = findByUserName(username);
         if (authUserOptional!=null) {
             User authUser = authUserOptional;
@@ -249,11 +270,9 @@ public class UserService {
                     .setSalt(authUser.getSalt())
                     .setDisabledAccount(1 != authUser.getEnabled())
                     .setExcessiveAttempts(2 == authUser.getEnabled());
-            AdminRole role = findRoleById(findByUserName(username).getId());
-            List<String> roles = null;
-            roles.add(role.getName());
+            List<String> roles = findRolesById(findByUserName(username).getId());
 
-            if (role != null) {
+            if (roles != null) {
                 accountBuilder.setOwnRoles(roles);
             }
             return accountBuilder.build();
