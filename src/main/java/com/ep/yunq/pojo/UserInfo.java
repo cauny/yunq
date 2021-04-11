@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @classname: UserInfo
@@ -31,14 +32,21 @@ public class UserInfo {
     private String college; //学院
     private String major; //专业
     private String cover; //头像
-    private Integer uid;     //用户id
 
-    public UserInfo(String username, Integer uid) {
-        this.username = username;
-        this.uid = uid;
-    }
+    @ManyToOne()
+    @JoinColumn(name = "user_id")
+    User user;
+
+    @Transient
+    private List<AdminRole> roles;
+
 
     public UserInfo() {
 
+    }
+
+    public UserInfo(String username, User user) {
+        this.username = username;
+        this.user = user;
     }
 }

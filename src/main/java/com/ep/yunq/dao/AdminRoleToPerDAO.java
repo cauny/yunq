@@ -12,12 +12,12 @@ public interface AdminRoleToPerDAO extends JpaRepository<AdminUserToRole,Integer
 
 
     @Query("select rs from PermissionResource rs, AdminRoleToPer bind " +
-            "where rs.id = bind.pid and bind.rid = ?1")
+            "where rs.id = bind.permissionId and bind.roleId = ?1")
     List<PermissionResource> findAllResByRid(int rid);
 
 
     @Query("delete from AdminRoleToPer bind " +
-            "where bind.rid = ?1 and bind.pid = ?2")
+            "where bind.roleId = ?1 and bind.permissionId = ?2")
     void deleteRoleResourceBind(int rid,int pid);
 
 }

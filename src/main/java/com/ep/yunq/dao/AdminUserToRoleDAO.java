@@ -17,22 +17,22 @@ public interface AdminUserToRoleDAO extends JpaRepository<AdminUserToRole,Intege
     AdminUserToRole findById(int id);
 
     /* 根据用户id查找角色id */
-    @Query(nativeQuery = true,value = "select rid from user_to_role where uid= ?1")
-    List<Integer> findRidByUid(int uid);
+    @Query(nativeQuery = true,value = "select role_id from user_to_role where user_id= ?1")
+    List<Integer> findRoleIdByUserId(int uid);
 
     /* 根据角色id查找所有用户id */
-    @Query(nativeQuery = true,value = "select uid from admin_user_role where rid = ?1")
-    List<Integer> findAllUidByRid(int rid);
+    @Query(nativeQuery = true,value = "select user_id from admin_user_role where role_id = ?1")
+    List<Integer> findAllUserIdByRoleId(int rid);
 
     /* 根据用户id删除行 */
     @Modifying
     @Transactional
-    void deleteAllByUid(int uid);
+    void deleteAllByUserId(int uid);
 
     /* 根据用户id和角色id删除行 */
     @Modifying
     @Transactional
-    void deleteByUidAndRid(int uid, int rid);
+    void deleteByUserIdAndRoleId(int uid, int rid);
 
 
 

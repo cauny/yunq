@@ -22,12 +22,15 @@ public class AdminUserToRole {
     @Column(name = "id")
     private int id;
 
-    private int uid;    //用户id
-    private int rid;    //角色id
+    @Column(name = "user_id")
+    private int userId;    //用户id
 
-    public AdminUserToRole(int uid, int rid) {
-        this.uid = uid;
-        this.rid = rid;
+    @Column(name = "role_id")
+    private int roleId;    //角色id
+
+    public AdminUserToRole(int userId, int roleId) {
+        this.userId = userId;
+        this.roleId = roleId;
     }
 
     public AdminUserToRole() {

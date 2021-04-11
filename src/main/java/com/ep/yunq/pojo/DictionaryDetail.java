@@ -1,9 +1,11 @@
 package com.ep.yunq.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @classname: dictionaryDetail
@@ -20,6 +22,22 @@ public class DictionaryDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     int id;
+
+    private int sort;
+
+    private String name;
+
+    private int value;
+
+    private boolean status;
+
+    @ManyToOne()
+    @JoinColumn(name = "type_id")
+    DictionaryType dictionaryType;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "update_time")
+    private Date updateTime;
 
 
 

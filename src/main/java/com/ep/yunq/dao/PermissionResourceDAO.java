@@ -33,8 +33,8 @@ public interface PermissionResourceDAO extends JpaRepository<PermissionResource,
      */
     @Query(value = "SELECT  CONCAT(LOWER(res.uri),\"===\",LOWER(res.method),\"===[\",IFNULL(GROUP_CONCAT(DISTINCT r.name),\"\"),\"]\") " +
             "FROM permission res " +
-            "LEFT JOIN role_to_permission bind on res.id = bind.pid " +
-            "LEFT JOIN role r on r.id = bind.rid " +
+            "LEFT JOIN role_to_permission bind on res.id = bind.permission_id " +
+            "LEFT JOIN role r on r.id = bind.role_id " +
             "where res.status = 1 " +
             "group by res.id", nativeQuery = true)
     Optional<List<String>> getEnableResourcePathRoleData();

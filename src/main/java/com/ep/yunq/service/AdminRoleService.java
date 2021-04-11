@@ -6,6 +6,9 @@ import com.ep.yunq.pojo.AdminUserToRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @classname: AdminRoleService
  * @Author: yan
@@ -26,6 +29,18 @@ public class AdminRoleService {
 
     /* 根据角色名查找 */
     public AdminRole findByName(String name){  return adminRoleDAO.findByName(name);}
+
+    /*根据用户查找角色*/
+    public List<AdminRole> listRolesByUser(int uid) {
+        List<AdminRole> roles = new ArrayList<>();
+        List<Integer> urs = adminUserToRoleService.findRidByUid(uid);
+        for (Integer ur: urs) {
+            AdminRole role = findById(ur);
+            if (1 == role.getEnabled())
+                roles.add(role);
+        }
+        return roles;
+    }
 
     public void deleteByUid(int id){ adminRoleDAO.deleteAllById(id);}
 

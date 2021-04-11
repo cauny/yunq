@@ -19,28 +19,28 @@ public class AdminUserToRoleService {
     AdminUserToRoleDAO adminUserToRoleDAO;
 
     /* 根据用户id查找角色id */
-    public List<Integer> findRidByUid(int uid){   return adminUserToRoleDAO.findRidByUid(uid);}
+    public List<Integer> findRidByUid(int uid){   return adminUserToRoleDAO.findRoleIdByUserId(uid);}
 
     /* 根据角色id查找所有用户id */
-    public List<Integer> findAllUidByRid(int rid){  return adminUserToRoleDAO.findAllUidByRid(rid);}
+    public List<Integer> findAllUidByRid(int rid){  return adminUserToRoleDAO.findAllUserIdByRoleId(rid);}
 
     /* 根据用户id和角色id进行删除 */
-    public void deleteByUidAndRid(int uid, int rid){ adminUserToRoleDAO.deleteByUidAndRid(uid,rid);}
+    public void deleteByUidAndRid(int uid, int rid){ adminUserToRoleDAO.deleteByUserIdAndRoleId(uid,rid);}
 
     /* 根据用户id进行删除 */
-    public void deleteByUid(int uid){   adminUserToRoleDAO.deleteAllByUid(uid);}
+    public void deleteByUid(int uid){   adminUserToRoleDAO.deleteAllByUserId(uid);}
 
     /* 对用户角色关系表进行更新和添加操作 */
     public void addAndUpdate(AdminUserToRole adminUserToRole) {
         //检查该对象是否存在，存在时比较是否一样，不一样的时删除然后添加，对象不存在直接添加
-        if (findRidByUid(adminUserToRole.getUid()) == null) {
+        if (findRidByUid(adminUserToRole.getUserId()) == null) {
             adminUserToRoleDAO.save(adminUserToRole);
             return;
         }
-        List<Integer> rids=findRidByUid(adminUserToRole.getUid());
+        List<Integer> rids=findRidByUid(adminUserToRole.getUserId());
         for(int r:rids){
-            if(r!=adminUserToRole.getRid()){
-                deleteByUid(adminUserToRole.getUid());
+            if(r!=adminUserToRole.getRoleId()){
+                deleteByUid(adminUserToRole.getUserId());
                 adminUserToRoleDAO.save(adminUserToRole);
                 return;
             }

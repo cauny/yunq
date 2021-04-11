@@ -4,6 +4,8 @@ import com.ep.yunq.pojo.Result;
 import com.ep.yunq.pojo.User;
 import com.ep.yunq.service.UserService;
 import com.ep.yunq.util.ResultUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2021/3/26 23:20
  * 功能描述：实现注册功能
  **/
+@Api
 @Slf4j
 @RestController
 @CrossOrigin
@@ -24,6 +27,7 @@ public class RegisterController {
     UserService userService;
 
     @CrossOrigin
+    @ApiOperation("web端注册")
     @PostMapping(value = "/api/register")
     public Result register(@RequestParam String username,
                            @RequestParam String phone,
@@ -56,11 +60,11 @@ public class RegisterController {
         }
     }
 
+    @ApiOperation("移动端注册")
     @PostMapping(value = "/api/mobileRegister")
     public Result mobileRegister(@RequestParam String username,
                            @RequestParam String phone,
                            @RequestParam String password,
-                           @RequestParam String role,
                            @RequestParam String verificationCode){
 
         log.info("---------------- 注册新用户 ----------------------");
@@ -75,7 +79,7 @@ public class RegisterController {
             return ResultUtil.buildFailResult(message);
         }
         log.info("---------------- 验证成功 ----------------------");
-        message=userService.register(user,"学生");
+        message=userService.register(user,"student");
         log.info("---------------- {} ----------------------",message);
         if("注册成功".equals(message)){
             return ResultUtil.buildSuccessResult(message);

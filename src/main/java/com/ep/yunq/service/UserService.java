@@ -104,7 +104,6 @@ public class UserService {
 
             user.setEnabled(1);
 
-
             if(username.equals("") || password.equals("")){
                 message="用户名或密码为空，注册失败";
                 return message;
@@ -117,10 +116,10 @@ public class UserService {
                 message="手机号已被注册";
                 return message;
             }
-            if(isExistByEmail(email)){
-                message="邮箱已被注册";
-                return message;
-            }
+//            if(isExistByEmail(email)){
+//                message="邮箱已被注册";
+//                return message;
+//            }
 
             //生成盐，默认长度16位
             String salt = pbkdf2Util.generateSalt();
@@ -134,15 +133,15 @@ public class UserService {
 
             //刚存进去的用户表再取出uid存入
             Integer uid=findByUserName(username).getId();
-            UserInfo userInfo=new UserInfo(username,uid);
+            UserInfo userInfo=new UserInfo(username,user);
             userInfoService.add(userInfo);
 
             //设置用户角色
             int rid=adminRoleService.findByName(role).getId();
             AdminUserToRole adminUserToRole=new AdminUserToRole();
             log.info(String.valueOf(rid));
-            adminUserToRole.setRid(rid);
-            adminUserToRole.setUid(uid);
+            adminUserToRole.setRoleId(rid);
+            adminUserToRole.setUserId(uid);
             adminUserToRoleService.addAndUpdate(adminUserToRole);
 
             message="注册成功";

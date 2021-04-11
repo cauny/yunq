@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @classname: User
@@ -28,8 +29,18 @@ public class User {
     private String salt;    //盐
     private Integer enabled;       //是否使用
 
-
     @Transient
-    private AdminRole role;
+    private List<AdminRole> roles;
 
+    public User(int id, String username, String realname, Integer enabled, List<AdminRole> roles) {
+        this.id = id;
+        this.username = username;
+        this.realname = realname;
+        this.enabled = enabled;
+        this.roles = roles;
+    }
+
+    public User() {
+
+    }
 }

@@ -3,6 +3,7 @@ package com.ep.yunq.dao;
 import com.ep.yunq.pojo.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -15,10 +16,11 @@ public interface UserInfoDAO extends JpaRepository<UserInfo,Integer> {
     UserInfo findByUsername(String username);
 
     /* 根据用户id查找用户信息 */
-    UserInfo findByUid(int id);
+    @Query("from UserInfo i where i.user.id = ?1 ")
+    UserInfo findByUserId(int uid);
 
     /* 根据用户id删除用户信息 */
     @Modifying
     @Transactional
-    void deleteAllByUid(int uid);
+    void deleteAllByUserId(int uid);
 }

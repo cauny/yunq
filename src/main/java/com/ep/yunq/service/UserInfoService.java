@@ -18,10 +18,10 @@ public class UserInfoService {
     UserInfoDAO userInfoDAO;
 
     /* 根据用户id查找用户信息 */
-    public UserInfo findByUid(int uid){  return userInfoDAO.findByUid(uid);}
+    public UserInfo findByUid(int uid){  return userInfoDAO.findByUserId(uid);}
 
     /* 根据用户id删除用户信息 */
-    public void deleteByUid(int uid){   userInfoDAO.deleteAllByUid(uid);}
+    public void deleteByUid(int uid){   userInfoDAO.deleteAllByUserId(uid);}
 
     /* 对用户信息表进行添加操作 */
     public void add(UserInfo userInfo){ userInfoDAO.save(userInfo); }

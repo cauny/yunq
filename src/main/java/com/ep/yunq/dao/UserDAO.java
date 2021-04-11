@@ -22,11 +22,6 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     /* 根据用户名和密码查找用户对象 */
     User findByUsernameAndPassword(String username,String password);
 
-    User findByPhoneAndUsername(String phone,String username);
-
-
-
-
     /* 根据用户id删除行 */
     @Modifying
     @Transactional

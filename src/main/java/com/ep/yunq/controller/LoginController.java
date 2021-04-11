@@ -65,7 +65,7 @@ public class LoginController {
 
     /*手机密码登录*/
     @ApiOperation("手机密码登录")
-    @PostMapping(value = "/api/mobieLoginByPwd")
+    @PostMapping(value = "/api/mobileLoginByPwd")
     public Result phoneLoginByPwd(@RequestParam String phone,@RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
         phone = HtmlUtils.htmlEscape(phone);
         password = HtmlUtils.htmlEscape(password);
@@ -93,12 +93,12 @@ public class LoginController {
 
     /*手机验证码登录*/
     @ApiOperation("手机验证码登录")
-    @PostMapping(value = "/api/mobieLoginByVerificationCode")
+    @PostMapping(value = "/api/mobileLoginByVerificationCode")
     public Result phoneLoginByVerficationCode(@RequestParam String phone,@RequestParam String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
         phone = HtmlUtils.htmlEscape(phone);
         verificationCode = HtmlUtils.htmlEscape(verificationCode);
 
-        if(userService.findByPhone(phone)==null){
+        if(!userService.isExistByPhone(phone)){
             String message="用户不存在";
             return ResultUtil.buildFailResult(message);
         }
@@ -164,6 +164,10 @@ public class LoginController {
             String message = "密码为空，重置失败";
             return ResultUtil.buildFailResult(message);
         }
+        if (!userService.isExistByPhone(phone)){
+            String message="用户不存在";
+            return ResultUtil.buildFailResult(message);
+        }
         log.info("---------------- 验证验证码 ----------------------");
         User user=new User();
         user.setPhone(phone);
@@ -175,8 +179,10 @@ public class LoginController {
 
         user.setUsername(userService.findByPhone(phone).getUsername());
         user.setPassword(password);
-        userService.resetPassword(user);
-        message = "重置成功";
+        message=userService.resetPassword(user);
+        if(!message.equals("重置成功")){
+            return ResultUtil.buildFailResult(message);
+        }
         log.info("---------------- 重置成功 ----------------------");
         return ResultUtil.buildSuccessResult(message);
     }
