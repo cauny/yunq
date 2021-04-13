@@ -24,6 +24,7 @@ public class AdminRole {
     private int id;
 
     private String name;
+    private String nameZh;
     private Integer enabled;
 
     public AdminRole() {

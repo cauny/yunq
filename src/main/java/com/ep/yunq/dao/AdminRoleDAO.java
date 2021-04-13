@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AdminRoleDAO extends JpaRepository<AdminRole,Integer> {
     AdminRole findById(int id);
     AdminRole findByName(String name);
+    AdminRole findByNameZh(String nameZh);
 
     /* 根据用户id删除行 */
     @Modifying

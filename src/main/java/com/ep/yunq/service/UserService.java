@@ -36,6 +36,8 @@ public class UserService {
     PBKDF2Util pbkdf2Util;
     @Autowired
     RedisUtil redisUtil;
+    @Autowired
+    SysParamService sysParamService;
 
 
 
@@ -62,6 +64,11 @@ public class UserService {
         return userDAO.findByUsername(username);
     }
 
+    /* 根据用户名查找用户 */
+    public User findById(int id) {
+        return userDAO.findById(id);
+    }
+
     /* 根据手机号查找用户 */
     public User findByPhone(String phone) {
         return userDAO.findByPhone(phone);
@@ -70,6 +77,11 @@ public class UserService {
     /* 根据用户名查找用户 */
     public User findByEmail(String email) {
         return userDAO.findByEmail(email);
+    }
+
+    /* 根据用户id查找用户角色 */
+    public List<AdminRole> findRoleByUserId(int uid) {
+        return adminRoleService.listRolesByUser(uid);
     }
 
     /* 根据用户名和密码查找用户 */
@@ -86,7 +98,7 @@ public class UserService {
     /* 根据用户id查找角色名称 */
     public List<String> findRolesById(int id){
         List<Integer> rids=adminUserToRoleService.findRidByUid(id);
-        List<String> roles = null;
+        List<String> roles = new ArrayList<>();
         for(int r:rids){
             roles.add(adminRoleService.findById(r).getName());
         }
@@ -134,6 +146,7 @@ public class UserService {
             //刚存进去的用户表再取出uid存入
             Integer uid=findByUserName(username).getId();
             UserInfo userInfo=new UserInfo(username,user);
+            userInfo.setDefaultRole(role);
             userInfoService.add(userInfo);
 
             //设置用户角色
@@ -143,6 +156,9 @@ public class UserService {
             adminUserToRole.setRoleId(rid);
             adminUserToRole.setUserId(uid);
             adminUserToRoleService.addAndUpdate(adminUserToRole);
+
+            SysParam sysParam = new SysParam(new Date(), user);
+            sysParamService.addOrUpdate(sysParam);
 
             message="注册成功";
 
@@ -247,7 +263,19 @@ public class UserService {
     }
 
     /* 使用token */
-    public Map<String, String> useToken(User user){
+    public String useToken(User user){
+        //获取角色信息
+        List<String> roles=findRolesById(findByUserName(user.getUsername()).getId());
+
+        //刷新时间5小时
+        long refreshPeriodTime = 36000L;
+        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), user.getUsername(),
+                "tom-auth-server", refreshPeriodTime >> 1, roles,
+                null, false);
+        String responseData = jwt;
+        return responseData;
+    }
+    /*public Map<String, String> useToken(User user){
         //获取角色信息
         List<String> roles=findRolesById(findByUserName(user.getUsername()).getId());
 
@@ -258,7 +286,7 @@ public class UserService {
                 null, false);
         Map<String, String> responseData = Collections.singletonMap("token", jwt);
         return responseData;
-    }
+    }*/
 
     public SurenessAccount loadAccount(String username){
         User authUserOptional = findByUserName(username);

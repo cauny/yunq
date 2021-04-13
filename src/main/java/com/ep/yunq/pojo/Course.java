@@ -1,10 +1,12 @@
 package com.ep.yunq.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @classname: course
@@ -28,10 +30,16 @@ public class Course {
     private String college;    //
     private String major;    //
     private String teacher;    //
-    private String learn_require;    //
-    private String teach_progress;    //
-    private String exam_arrange;    //
+    private String learnRequire;    //
+    private String teachProgress;    //
+    private String examArrange;    //
     private String cover;    //
     private String qrcode;    //
-    private Timestamp update_time;    //
+    private int creator;
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "update_time")
+    private Date updateTime;
 }

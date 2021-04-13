@@ -3,6 +3,8 @@ package com.ep.yunq.util;
 import com.ep.yunq.pojo.Result;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * @classname: ResultUtil
  * @Author: yan

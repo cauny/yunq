@@ -2,6 +2,10 @@ package com.ep.yunq.controller;
 
 import com.ep.yunq.pojo.Result;
 import com.ep.yunq.pojo.User;
+import com.ep.yunq.pojo.UserBasicInfo;
+import com.ep.yunq.pojo.UserInfo;
+import com.ep.yunq.service.AdminRoleService;
+import com.ep.yunq.service.UserInfoService;
 import com.ep.yunq.service.UserService;
 import com.ep.yunq.util.ConstantUtil;
 import com.ep.yunq.util.RedisUtil;
@@ -32,40 +36,17 @@ public class LoginController {
     @Autowired
     UserService userService;
     @Autowired
+    UserInfoService userInfoService;
+    @Autowired
+    AdminRoleService adminRoleService;
+    @Autowired
     RedisUtil redisUtil;
 
 
     //管理员可以访问主页和测试页，普通用户访问主页
-    @CrossOrigin
-    @ApiOperation("登录操作")
-    @PostMapping(value = "/api/login")
-    public Result login(@RequestParam String username,@RequestParam String password,@RequestParam boolean rememberMe) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        username = HtmlUtils.htmlEscape(username);
-        password = HtmlUtils.htmlEscape(password);
-
-        String message=userService.authUser(username,password);
-        if(!"登录成功".equals(message)){
-            log.info("用户：{},登录失败",username);
-            return ResultUtil.buildFailResult(message);
-        }
-        log.info("用户：{},登录成功",username);
-        /* 如果设置了记住我选项，使用token */
-//        if (userLogin.getRememberMe()){
-//            Map<String, String> responseData= userService.useToken(userLogin);
-//            return ResultUtil.buildSuccessResult(responseData);
-//        }
-        User user=new User();
-        user.setUsername(username);
-        user.setPassword(password);
-        Map<String, String> responseData= userService.useToken(user);
-        return ResultUtil.buildSuccessResult(responseData);
-
-//        return ResultUtil.buildSuccessResult(message);
-    }
-
     /*手机密码登录*/
-    @ApiOperation("手机密码登录")
-    @PostMapping(value = "/api/mobileLoginByPwd")
+    @ApiOperation("密码登录")
+    @PostMapping(value = "/api/loginByPwd")
     public Result phoneLoginByPwd(@RequestParam String phone,@RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
         phone = HtmlUtils.htmlEscape(phone);
         password = HtmlUtils.htmlEscape(password);
@@ -84,16 +65,26 @@ public class LoginController {
 //        }
         User user=new User();
         user.setUsername(username);
-        user.setPassword(password);
-        Map<String, String> responseData= userService.useToken(user);
-        return ResultUtil.buildSuccessResult(responseData);
+        int uid=userService.findByUserName(username).getId();
 
-//        return ResultUtil.buildSuccessResult(message);
+        UserInfo userInfo=userInfoService.findByUid(uid);
+        UserBasicInfo userBasicInfo=new UserBasicInfo();
+        userBasicInfo.setPhone(userService.findByUserName(username).getPhone());
+        userBasicInfo.setAvatar(userInfo.getAvatar());
+        userBasicInfo.setUsername(userInfo.getUsername());
+        userBasicInfo.setRoles(adminRoleService.listRolesNameByUser(uid));
+        userBasicInfo.setDefaultRole(userInfo.getDefaultRole());
+
+        String token= userService.useToken(user);
+        Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
+        responseData.put("userinfo",userBasicInfo);
+
+        return ResultUtil.buildSuccessResult(responseData);
     }
 
     /*手机验证码登录*/
-    @ApiOperation("手机验证码登录")
-    @PostMapping(value = "/api/mobileLoginByVerificationCode")
+    @ApiOperation("验证码登录")
+    @PostMapping(value = "/api/loginByVerificationCode")
     public Result phoneLoginByVerficationCode(@RequestParam String phone,@RequestParam String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
         phone = HtmlUtils.htmlEscape(phone);
         verificationCode = HtmlUtils.htmlEscape(verificationCode);
@@ -109,17 +100,22 @@ public class LoginController {
             return ResultUtil.buildFailResult(message);
         }
         log.info("用户：{},登录成功",phone);
-        /* 如果设置了记住我选项，使用token */
-//        if (userLogin.getRememberMe()){
-//            Map<String, String> responseData= userService.useToken(userLogin);
-//            return ResultUtil.buildSuccessResult(responseData);
-//        }
 
-        User user= userService.findByPhone(phone);
-        Map<String, String> responseData= userService.useToken(user);
+        User user= new User();
+        user=userService.findByPhone(phone);
+        UserInfo userInfo=userInfoService.findByUid(user.getId());
+        UserBasicInfo userBasicInfo=new UserBasicInfo();
+        userBasicInfo.setPhone(user.getPhone());
+        userBasicInfo.setAvatar(userInfo.getAvatar());
+        userBasicInfo.setUsername(userInfo.getUsername());
+        userBasicInfo.setRoles(adminRoleService.listRolesNameByUser(user.getId()));
+        userBasicInfo.setDefaultRole(userInfo.getDefaultRole());
+
+        String token= userService.useToken(user);
+        Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
+        responseData.put("userinfo",userBasicInfo);
+
         return ResultUtil.buildSuccessResult(responseData);
-
-//        return ResultUtil.buildSuccessResult(message);
     }
 
 

@@ -42,6 +42,18 @@ public class AdminRoleService {
         return roles;
     }
 
+    /*根据用户查找角色名*/
+    public List<String> listRolesNameByUser(int uid) {
+        List<String> roles = new ArrayList<>();
+        List<Integer> urs = adminUserToRoleService.findRidByUid(uid);
+        for (Integer ur: urs) {
+            AdminRole role = findById(ur);
+            if (1 == role.getEnabled())
+                roles.add(role.getName());
+        }
+        return roles;
+    }
+
     public void deleteByUid(int id){ adminRoleDAO.deleteAllById(id);}
 
     /* 对角色表进行更新和添加操作 */

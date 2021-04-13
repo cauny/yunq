@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
   **/
 public interface DictionaryTypeDAO extends JpaRepository<DictionaryType,Integer> {
 
+    DictionaryType findById(int id);
+
+    DictionaryType findByCode(int code);
 }

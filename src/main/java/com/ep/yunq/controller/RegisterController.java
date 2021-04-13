@@ -31,9 +31,7 @@ public class RegisterController {
     @PostMapping(value = "/api/register")
     public Result register(@RequestParam String username,
                            @RequestParam String phone,
-                           @RequestParam String email,
                            @RequestParam String password,
-                           @RequestParam String realname,
                            @RequestParam String role,
                            @RequestParam String verificationCode){
 
@@ -41,9 +39,7 @@ public class RegisterController {
         User user=new User();
         user.setUsername(username);
         user.setPhone(phone);
-        user.setEmail(email);
         user.setPassword(password);
-        user.setRealname(realname);
         log.info("---------------- 验证验证码 ----------------------");
 
         String message=userService.verifyCode(user,verificationCode);

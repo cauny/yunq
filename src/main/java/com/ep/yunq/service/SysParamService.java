@@ -87,6 +87,9 @@ public class SysParamService {
 
     public SysParam getByUserId(int uid){
         SysParam sysParam = sysParamDAO.findByUserId(uid);
+        if(sysParam==null){
+            return null;
+        }
         List<AdminRole> roles = adminRoleService.listRolesByUser(uid);
         User user = new User(uid,sysParam.getUserUsername(),
                 sysParam.getUserName(),sysParam.getUserEnabled(),roles);

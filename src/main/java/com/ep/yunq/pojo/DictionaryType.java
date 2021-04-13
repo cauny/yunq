@@ -1,11 +1,14 @@
 package com.ep.yunq.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @classname: DictionaryType
@@ -26,6 +29,20 @@ public class DictionaryType {
     private int code;   //
     private String name;    //
     private boolean status;     //
+
+    /**
+     * 更新时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "update_time")
+    private Date updateTime;
+
+    /**
+     * 字典信息
+     */
+    @OneToMany(mappedBy = "dictionaryType",cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<DictionaryDetail> dictionaryInfos = new ArrayList<>();
 
 
 

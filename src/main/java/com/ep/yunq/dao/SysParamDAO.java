@@ -16,6 +16,6 @@ public interface SysParamDAO extends JpaRepository<SysParam,Integer> {
     List<SysParam> search(String keyword1);
 
     @Query(nativeQuery = true, value = "select * from sys_param  " +
-            " where uid = ?1 ")
+            " where user_id = ?1 ")
     SysParam findByUserId(int uid);
 }

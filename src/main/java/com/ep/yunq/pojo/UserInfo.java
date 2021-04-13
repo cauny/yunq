@@ -25,13 +25,14 @@ public class UserInfo {
 
     private String username;    //用户名
     private String realname;    //真实姓名
+    private String defaultRole;    //真实姓名
     private String nickname;    //昵称
     private String ino; //学号/工号
     private Integer sex; //性别
     private String school; //学校
     private String college; //学院
     private String major; //专业
-    private String cover; //头像
+    private String avatar; //头像
 
     @ManyToOne()
     @JoinColumn(name = "user_id")
