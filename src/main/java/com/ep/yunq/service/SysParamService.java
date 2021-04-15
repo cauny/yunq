@@ -67,8 +67,7 @@ public class SysParamService {
         List<SysParam> sysParams = sysParamDAO.search('%' + keywords + '%');
         for (SysParam sysParam : sysParams) {
             List<AdminRole> roles = adminRoleService.listRolesByUser(sysParam.getUserId());
-            User user = new User(sysParam.getId(),sysParam.getUserUsername(),
-                    sysParam.getUserName(),sysParam.getUserEnabled(),roles);
+            User user = new User(sysParam.getId(),sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
             sysParam.setUser(user);
         }
         return sysParams;
@@ -78,8 +77,7 @@ public class SysParamService {
         List<SysParam> sysParams= sysParamDAO.findAll();
         for (SysParam sysParam : sysParams) {
             List<AdminRole> roles = adminRoleService.listRolesByUser(sysParam.getUserId());
-            User user = new User(sysParam.getId(),sysParam.getUserUsername(),
-                    sysParam.getUserName(),sysParam.getUserEnabled(),roles);
+            User user = new User(sysParam.getId(),sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
             sysParam.setUser(user);
         }
         return sysParams;
@@ -91,8 +89,7 @@ public class SysParamService {
             return null;
         }
         List<AdminRole> roles = adminRoleService.listRolesByUser(uid);
-        User user = new User(uid,sysParam.getUserUsername(),
-                sysParam.getUserName(),sysParam.getUserEnabled(),roles);
+        User user = new User(uid,sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
         sysParam.setUser(user);
         return sysParam;
     }

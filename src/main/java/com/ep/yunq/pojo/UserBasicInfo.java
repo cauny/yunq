@@ -19,4 +19,14 @@ public class UserBasicInfo {
     private List<String> roles;
     private String defaultRole;
 
+    public UserBasicInfo() {
+    }
+
+    public UserBasicInfo(String username, String phone, String avatar, List<String> roles, String defaultRole) {
+        this.username = username;
+        this.phone = phone;
+        this.avatar = avatar;
+        this.roles = roles;
+        this.defaultRole = defaultRole;
+    }
 }

@@ -2,6 +2,7 @@ package com.ep.yunq.controller;
 
 import com.ep.yunq.pojo.DictionaryDetail;
 import com.ep.yunq.pojo.DictionaryType;
+import com.ep.yunq.pojo.Param;
 import com.ep.yunq.pojo.Result;
 import com.ep.yunq.service.DictionaryDetailService;
 import com.ep.yunq.service.DictionaryTypeService;
@@ -32,7 +33,7 @@ public class DicControllor {
 
     /** -------------------------- 字典类型 -------------------------------------- **/
     @ApiOperation("增加字典类型")
-    @PostMapping("/api/sys/dic/type/add")
+    @PostMapping("/api/dictionary-types")
     public Result addDicType(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 增加字典类型 ----------------------");
         String message = dictionaryTypeService.add(dictionaryType);
@@ -43,7 +44,7 @@ public class DicControllor {
     }
 
     @ApiOperation("删除字典类型")
-    @GetMapping("/api/sys/dic/type/delete")
+    @DeleteMapping("/api/dictionary-types")
     public Result deleteDicType(@RequestParam int dicTypeId) {
         log.info("---------------- 删除字典类型 ----------------------");
         String message = dictionaryTypeService.delete(dicTypeId);
@@ -54,7 +55,7 @@ public class DicControllor {
     }
 
     @ApiOperation("修改字典类型")
-    @PutMapping("/api/sys/dic/type/edit")
+    @PutMapping("/api/dictionary-types")
     public Result editDicType(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 修改字典类型 ----------------------");
         String message = dictionaryTypeService.edit(dictionaryType);
@@ -64,8 +65,8 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("修改字典类型状态")
-    @PutMapping("/api/sys/dic/type/status")
+    /*@ApiOperation("修改字典类型状态")
+    @PutMapping("/api/dictionary-types/status")
     public Result updateDicTypeStatus(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 修改字典类型状态 ----------------------");
         String message = dictionaryTypeService.updateStatus(dictionaryType);
@@ -73,10 +74,10 @@ public class DicControllor {
             return ResultUtil.buildSuccessResult(message);
         else
             return ResultUtil.buildFailResult(message);
-    }
+    }*/
 
     @ApiOperation("获取所有字典类型")
-    @GetMapping("/api/sys/dic/type/all")
+    @GetMapping("/api/dictionary-types")
     public Result getAllDicType() {
         log.info("---------------- 获取所有字典类型 ----------------------");
         List<DictionaryType> dts = dictionaryTypeService.list();
@@ -86,10 +87,10 @@ public class DicControllor {
 
 
     /** -------------------------- 字典明细 -------------------------------------- **/
-    @ApiOperation("增加字典类型")
-    @PostMapping("/api/sys/dic/info/add")
-    public Result addDicInfo(@RequestBody DictionaryDetail dictionaryDetail) {
-        log.info("---------------- 增加字典类型 ----------------------");
+    @ApiOperation("增加字典明细")
+    @PostMapping("/api/dictionary-details")
+    public Result addDicDetail(@RequestBody DictionaryDetail dictionaryDetail) {
+        log.info("---------------- 增加字典明细 ----------------------");
         String message = dictionaryDetailService.add(dictionaryDetail);
         if ("添加成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -97,21 +98,21 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("删除字典类型")
-    @GetMapping("/api/sys/dic/info/delete")
-    public Result deleteDicInfo(@RequestParam int dicInfoId) {
-        log.info("---------------- 删除字典类型 ----------------------");
-        String message = dictionaryDetailService.delete(dicInfoId);
+    @ApiOperation("删除字典明细")
+    @DeleteMapping("/api/dictionary-details")
+    public Result deleteDicInfo(@RequestParam int dicDetailId) {
+        log.info("---------------- 删除字典字典明细 ----------------------");
+        String message = dictionaryDetailService.delete(dicDetailId);
         if ("删除成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
             return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("修改字典类型")
-    @PutMapping("/api/sys/dic/info/edit")
-    public Result editDicInfo(@RequestBody DictionaryDetail dictionaryDetail) {
-        log.info("---------------- 修改字典类型 ----------------------");
+    @ApiOperation("修改字典字典明细")
+    @PutMapping("/api/dictionary-details")
+    public Result editDicDetail(@RequestBody DictionaryDetail dictionaryDetail) {
+        log.info("---------------- 修改字典明细 ----------------------");
         String message = dictionaryDetailService.edit(dictionaryDetail);
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -119,46 +120,38 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("修改字典类型状态")
-    @PutMapping("/api/sys/dic/info/status")
-    public Result updateDicInfoStatus(@RequestBody DictionaryDetail dictionaryDetail) {
-        log.info("---------------- 修改字典类型状态 ----------------------");
+    /*@ApiOperation("修改字典明细状态")
+    @PutMapping("/api/dictionary-details/status")
+    public Result updateDicDetailStatus(@RequestBody DictionaryDetail dictionaryDetail) {
+        log.info("---------------- 修改字典明细状态 ----------------------");
         String message = dictionaryDetailService.updateStatus(dictionaryDetail);
         if ("更新成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
             return ResultUtil.buildFailResult(message);
-    }
+    }*/
 
-//    @GetMapping("/api/sys/dic/info/all")
-//    public Result getAllDicInfo() {
-//        log.info("---------------- 获取所有字典类型 ----------------------");
-//        List<DictionaryInfo> dis = dictionaryInfoService.list();
-//
-//        return ResultFactory.buildSuccessResult(dis);
-//    }
-
-    @ApiOperation("获取所有字典类型")
-    @GetMapping("/api/sys/dic/info/all")
-    public Result getAllDicInfoByDicTypeId(@RequestParam int dicTypeId) {
-        log.info("---------------- 获取所有字典类型 ----------------------");
+    @ApiOperation("获取所有字典明细")
+    @GetMapping("/api/dictionary-details")
+    public Result getAllDicDetailByDicTypeId(@RequestParam int dicTypeId) {
+        log.info("---------------- 获取所有字典明细 ----------------------");
         List<DictionaryDetail> dis = dictionaryDetailService.findAllByTypeId(dicTypeId);
 
         return ResultUtil.buildSuccessResult(dis);
     }
 
-    @ApiOperation("获取字典键值对")
-    @GetMapping("/api/userInfo/get/{TypeCode}")
+    /*@ApiOperation("获取字典键值对")
+    @GetMapping("/api/dictionary-details/{TypeCode}")
     public Result getAllByTypeCode(@PathVariable("TypeCode") int typeCode) {
         log.info("---------------- 获取字典键值对 ----------------------");
         List<Map<String, String>> kv = dictionaryDetailService.findAllByTypeCode(typeCode);
 
         return ResultUtil.buildSuccessResult(kv);
-    }
+    }*/
 
     @ApiOperation("增加字典类型和字典明细")
-    @PostMapping("/api/sys/dic/type/adds")
-    public Result addTypeAndInfo(@RequestBody Param param) {
+    @PostMapping("/api/dictionary-types-details")
+    public Result addTypeAndDetail(@RequestBody Param param) {
         log.info("---------------- 增加字典类型和字典明细 ----------------------");
         String message = dictionaryDetailService.addTypeAndDetails(param.dictionaryType, param.dictionaryDetails);
         if ("添加成功".equals(message))
@@ -169,7 +162,4 @@ public class DicControllor {
 
 }
 
-class Param{
-    public DictionaryType dictionaryType;
-    public List<DictionaryDetail> dictionaryDetails;
-}
+

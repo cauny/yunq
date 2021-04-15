@@ -20,6 +20,7 @@ public class ResultUtil {
     /* 返回失败信息 */
     public static Result buildFailResult(String message){  return buildResult(ConstantUtil.FAIL,message,null);}
 
+
     /* 返回值 */
     public static Result buildResult(ConstantUtil constant,String message,Object data){
         return new Result(constant.code,message,data);

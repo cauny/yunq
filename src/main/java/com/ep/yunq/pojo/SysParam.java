@@ -67,10 +67,6 @@ public class SysParam {
         return user.getUsername();
     }
 
-    public String getUserName() {
-        return user.getRealname();
-    }
-
     public Integer getUserEnabled() {
         return user.getEnabled();
     }

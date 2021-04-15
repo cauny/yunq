@@ -10,6 +10,7 @@ import com.ep.yunq.service.UserService;
 import com.ep.yunq.util.ConstantUtil;
 import com.ep.yunq.util.RedisUtil;
 import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.util.SmsUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
+import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
@@ -29,7 +31,7 @@ import java.util.*;
  * @Date: 2021/3/26 23:21
  * 功能描述：实现登录功能
  **/
-@Api(tags = "登录管理")
+@Api(tags = "登录")
 @Slf4j
 @RestController
 public class LoginController {
@@ -39,8 +41,10 @@ public class LoginController {
     UserInfoService userInfoService;
     @Autowired
     AdminRoleService adminRoleService;
-    @Autowired
+    @Resource
     RedisUtil redisUtil;
+    @Resource
+    SmsUtil smsUtil;
 
 
     //管理员可以访问主页和测试页，普通用户访问主页
@@ -51,7 +55,6 @@ public class LoginController {
         phone = HtmlUtils.htmlEscape(phone);
         password = HtmlUtils.htmlEscape(password);
         String username=userService.findByPhone(phone).getUsername();
-
         String message=userService.authUser(username,password);
         if(!"登录成功".equals(message)){
             log.info("用户：{},登录失败",username);
@@ -63,22 +66,8 @@ public class LoginController {
 //            Map<String, String> responseData= userService.useToken(userLogin);
 //            return ResultUtil.buildSuccessResult(responseData);
 //        }
-        User user=new User();
-        user.setUsername(username);
-        int uid=userService.findByUserName(username).getId();
 
-        UserInfo userInfo=userInfoService.findByUid(uid);
-        UserBasicInfo userBasicInfo=new UserBasicInfo();
-        userBasicInfo.setPhone(userService.findByUserName(username).getPhone());
-        userBasicInfo.setAvatar(userInfo.getAvatar());
-        userBasicInfo.setUsername(userInfo.getUsername());
-        userBasicInfo.setRoles(adminRoleService.listRolesNameByUser(uid));
-        userBasicInfo.setDefaultRole(userInfo.getDefaultRole());
-
-        String token= userService.useToken(user);
-        Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userinfo",userBasicInfo);
-
+        Map<String, Object> responseData= userService.loginMessage(phone);
         return ResultUtil.buildSuccessResult(responseData);
     }
 
@@ -94,8 +83,9 @@ public class LoginController {
             return ResultUtil.buildFailResult(message);
         }
 
+//        String message=smsUtil.checkSms(phone,verificationCode);
         String message=userService.authUserByVerificationCode(phone,verificationCode);
-        if(!"登录成功".equals(message)){
+        if(!"验证成功".equals(message)){
             log.info("用户：{},登录失败",phone);
             return ResultUtil.buildFailResult(message);
         }
@@ -103,13 +93,7 @@ public class LoginController {
 
         User user= new User();
         user=userService.findByPhone(phone);
-        UserInfo userInfo=userInfoService.findByUid(user.getId());
-        UserBasicInfo userBasicInfo=new UserBasicInfo();
-        userBasicInfo.setPhone(user.getPhone());
-        userBasicInfo.setAvatar(userInfo.getAvatar());
-        userBasicInfo.setUsername(userInfo.getUsername());
-        userBasicInfo.setRoles(adminRoleService.listRolesNameByUser(user.getId()));
-        userBasicInfo.setDefaultRole(userInfo.getDefaultRole());
+        UserBasicInfo userBasicInfo= userInfoService.createByUser(user);
 
         String token= userService.useToken(user);
         Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
@@ -131,7 +115,8 @@ public class LoginController {
         if (!ObjectUtils.isEmpty(redisVerificationCode)) {
             verificationCode = redisVerificationCode.toString();
         } else {
-            verificationCode = userService.sendCode();
+            verificationCode= userService.sendCode();
+//            verificationCode = smsUtil.sendSms(phone);
         }
         //2.存入redis缓存
         boolean isSuccess = redisUtil.set(phone + ConstantUtil.SMS_Verification_Code.code, verificationCode, 180);
@@ -167,7 +152,7 @@ public class LoginController {
         log.info("---------------- 验证验证码 ----------------------");
         User user=new User();
         user.setPhone(phone);
-        String message=userService.verifyCode(user,verificationCode);
+        String message=userService.verifyCode(phone,verificationCode);
         if(!message.equals("验证成功")){
             return ResultUtil.buildFailResult(message);
         }

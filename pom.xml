@@ -144,6 +144,25 @@
             <version>3.3.3</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.tencentcloudapi</groupId>
+            <artifactId>tencentcloud-sdk-java</artifactId>
+            <!-- 注：这里只是示例版本号，请获取并替换为 最新的版本号 -->
+            <version>3.1.240</version>
+        </dependency>
+        <!-- 腾讯云sdk-->
+        <dependency>
+            <groupId>com.github.qcloudsms</groupId>
+            <artifactId>qcloudsms</artifactId>
+            <version>1.0.6</version>
+        </dependency>
+
+        <!--将json转换成map-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
 
 
     </dependencies>

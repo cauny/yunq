@@ -79,6 +79,9 @@ public class UserService {
         return userDAO.findByEmail(email);
     }
 
+    /*  */
+    public User findByGithubId(int id){return userDAO.findByGithubId(id);}
+
     /* 根据用户id查找用户角色 */
     public List<AdminRole> findRoleByUserId(int uid) {
         return adminRoleService.listRolesByUser(uid);
@@ -94,6 +97,12 @@ public class UserService {
 
     /* 对用户表表进行添加操作 */
     public void add(User user) {  userDAO.save(user); }
+
+    /* 对用户表表进行更新操作 */
+    public void update(User user) {
+        deleteByUid(findByPhone(user.getPhone()).getId());
+        add(user);
+    }
 
     /* 根据用户id查找角色名称 */
     public List<String> findRolesById(int id){
@@ -112,7 +121,6 @@ public class UserService {
             String username=user.getUsername();
             String password=user.getPassword();
             String phone = user.getPhone();
-            String email = user.getEmail();
 
             user.setEnabled(1);
 
@@ -155,7 +163,7 @@ public class UserService {
             log.info(String.valueOf(rid));
             adminUserToRole.setRoleId(rid);
             adminUserToRole.setUserId(uid);
-            adminUserToRoleService.addAndUpdate(adminUserToRole);
+            adminUserToRoleService.add(adminUserToRole);
 
             SysParam sysParam = new SysParam(new Date(), user);
             sysParamService.addOrUpdate(sysParam);
@@ -173,19 +181,14 @@ public class UserService {
     public String resetPassword(User user){
         String message = "";
         try{
-            String username = user.getUsername();
             String password = user.getPassword();
-            if (StringUtils.isEmpty(username)) {
-                message = "用户名为空，重置失败";
-                return message;
-            }
             if (StringUtils.isEmpty(password)) {
                 message = "密码为空，重置失败";
                 return message;
             }
-            User userInDB = userDAO.findByUsername(username);
+            User userInDB = userDAO.findByPhone(user.getPhone());
             if (null == userInDB) {
-                message = "未找到该用户，请正确输入用户名";
+                message = "未找到该用户";
                 return message;
             }
             //生成盐，默认长度16位
@@ -229,11 +232,11 @@ public class UserService {
         if(authuser==null){    return "用户不存在";}
         if(verificationCode==null){    return "验证码为空";}
 
-        String message=verifyCode(authuser,verificationCode);
+        String message=verifyCode(phone,verificationCode);
         if(!message.equals("验证成功")){
             return message;
         }else{
-            return "登录成功";
+            return "验证成功";
         }
 
     }
@@ -246,9 +249,8 @@ public class UserService {
     }
 
     /*验证码验证*/
-    public String verifyCode(User user,String code){
-        Object redisVerificationCode = redisUtil.get(user.getPhone() + ConstantUtil.SMS_Verification_Code.code);
-        log.info(user.getPhone());
+    public String verifyCode(String phone,String code){
+        Object redisVerificationCode = redisUtil.get(phone + ConstantUtil.SMS_Verification_Code.code);
         log.info(code);
         if (ObjectUtils.isEmpty(redisVerificationCode)) {
             String message = "验证码超时,请重新获取";
@@ -287,6 +289,18 @@ public class UserService {
         Map<String, String> responseData = Collections.singletonMap("token", jwt);
         return responseData;
     }*/
+
+    /* 登录后信息返回 */
+    public Map<String, Object> loginMessage(String phone){
+        User user=new User();
+        user=findByPhone(phone);
+        UserBasicInfo userBasicInfo= userInfoService.createByUser(user);
+
+        String token= useToken(user);
+        Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
+        responseData.put("userinfo",userBasicInfo);
+        return responseData;
+    }
 
     public SurenessAccount loadAccount(String username){
         User authUserOptional = findByUserName(username);

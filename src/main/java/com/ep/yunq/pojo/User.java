@@ -23,19 +23,18 @@ public class User {
     int id;
     private String username;    //用户名
     private String phone;   //手机号
-    private String realname; //真实姓名
     private String email;   //邮箱号
     private String password;    //密码
     private String salt;    //盐
     private Integer enabled;       //是否使用
+    private int githubId;
 
     @Transient
     private List<AdminRole> roles;
 
-    public User(int id, String username, String realname, Integer enabled, List<AdminRole> roles) {
+    public User(int id, String username, Integer enabled, List<AdminRole> roles) {
         this.id = id;
         this.username = username;
-        this.realname = realname;
         this.enabled = enabled;
         this.roles = roles;
     }

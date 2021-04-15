@@ -3,7 +3,9 @@ package com.ep.yunq.controller;
 import com.ep.yunq.pojo.Result;
 import com.ep.yunq.pojo.SysParam;
 import com.ep.yunq.service.UserService;
+import com.ep.yunq.util.RedisUtil;
 import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.util.SmsUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +30,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    SmsUtil smsUtil;
+    @Autowired
+    RedisUtil redisUtil;
 
     /*@ApiOperation("获取当前登陆用户的信息")
     @GetMapping(value = "/api/user/get")
@@ -38,4 +44,9 @@ public class UserController {
         sysParams.add(sysParam);
         return ResultUtil.buildSuccessResult(sysParams);
     }*/
+    @GetMapping("/loginCode")
+    public void logonCode(@RequestParam String phone) {
+        smsUtil.sendSms(phone);
+        return;
+    }
 }

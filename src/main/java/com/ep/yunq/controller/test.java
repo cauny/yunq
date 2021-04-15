@@ -37,7 +37,7 @@ public class test {
         String a="yan";
         AdminRole role;
 
-        adminUserToRoleService.addAndUpdate(new AdminUserToRole(1,1));
+        adminUserToRoleService.add(new AdminUserToRole(1,1));
 //        logger.info("123245:{}",a);
         log.info("465754");
 //        adminUserToRoleService.findRidByUid(9);

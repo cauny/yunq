@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
  * @Date: 2021/3/26 23:20
  * 功能描述：实现注册功能
  **/
-@Api
+@Api(tags = "注册")
 @Slf4j
 @RestController
 @CrossOrigin
@@ -42,7 +42,7 @@ public class RegisterController {
         user.setPassword(password);
         log.info("---------------- 验证验证码 ----------------------");
 
-        String message=userService.verifyCode(user,verificationCode);
+        String message=userService.verifyCode(phone,verificationCode);
         if(!message.equals("验证成功")){
             return ResultUtil.buildFailResult(message);
         }
@@ -70,7 +70,7 @@ public class RegisterController {
         user.setPassword(password);
         log.info("---------------- 验证验证码 ----------------------");
 
-        String message=userService.verifyCode(user,verificationCode);
+        String message=userService.verifyCode(phone,verificationCode);
         if(!message.equals("验证成功")){
             return ResultUtil.buildFailResult(message);
         }

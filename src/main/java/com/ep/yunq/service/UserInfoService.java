@@ -1,6 +1,8 @@
 package com.ep.yunq.service;
 
 import com.ep.yunq.dao.UserInfoDAO;
+import com.ep.yunq.pojo.User;
+import com.ep.yunq.pojo.UserBasicInfo;
 import com.ep.yunq.pojo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class UserInfoService {
 
     @Autowired
     UserInfoDAO userInfoDAO;
+    @Autowired
+    AdminRoleService adminRoleService;
 
     /* 根据用户id查找用户信息 */
     public UserInfo findByUid(int uid){  return userInfoDAO.findByUserId(uid);}
@@ -25,5 +29,14 @@ public class UserInfoService {
 
     /* 对用户信息表进行添加操作 */
     public void add(UserInfo userInfo){ userInfoDAO.save(userInfo); }
+
+    public UserBasicInfo createByUser(User user){
+        UserInfo userInfo=findByUid(user.getId());
+        UserBasicInfo userBasicInfo=new UserBasicInfo(userInfo.getUsername(),
+                user.getPhone(),userInfo.getAvatar(),adminRoleService.listRolesNameByUser(user.getId()),
+                userInfo.getDefaultRole()
+        );
+        return userBasicInfo;
+    }
 
 }

@@ -29,6 +29,8 @@ public class DictionaryDetail {
 
     private int value;
 
+    private int defaultValue;
+
     private boolean status;
 
     @ManyToOne()
