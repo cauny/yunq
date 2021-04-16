@@ -4,10 +4,12 @@ import com.ep.yunq.pojo.AdminUserToRole;
 import com.ep.yunq.pojo.SysParam;
 import com.ep.yunq.pojo.User;
 import com.ep.yunq.pojo.UserInfo;
+import com.ep.yunq.util.PBKDF2Util;
 import com.ep.yunq.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
@@ -30,6 +32,8 @@ public class GithubLoginService {
     AdminUserToRoleService adminUserToRoleService;
     @Autowired
     SysParamService sysParamService;
+    @Autowired
+    PBKDF2Util pbkdf2Util;
 
     public String isExistUserByGithubId(int githubId){
         String message="";
@@ -89,6 +93,39 @@ public class GithubLoginService {
             e.printStackTrace();
             message="参数异常，注册失败";
         }
+        return message;
+    }
+
+    /*用户密码电话补充*/
+    public String fillPasswordAndPhone(User user){
+        String message = "";
+        try{
+            String password = user.getPassword();
+            String phone=user.getPhone();
+            if (StringUtils.isEmpty(password)) {
+                message = "密码为空";
+                return message;
+            }
+            if (StringUtils.isEmpty(phone)) {
+                message = "电话号码为空";
+                return message;
+            }
+
+            //生成盐，默认长度16位
+            String salt = pbkdf2Util.generateSalt();
+            //对密码进行哈希加密
+            String encodedPwd=pbkdf2Util.getEncryptedPassword(password,salt);
+
+            //保存到用户表和用户信息表里
+            user.setSalt(salt);
+            user.setPassword(encodedPwd);
+            userService.add(user);
+            message = "重置成功";
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = "参数异常，重置失败";
+        }
+
         return message;
     }
 }

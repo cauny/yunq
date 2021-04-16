@@ -44,8 +44,8 @@ public class GithubLoginController {
 
     //回调地址
     @ApiOperation("访问回调")
-    @GetMapping("/callback")
-    public Result callback(String code, String state, Model model, HttpServletRequest req) throws Exception{
+    @GetMapping("/api/callback")
+    public Result callback(@RequestParam String code, @RequestParam String state) throws Exception{
 
         String message="";
         if(!StringUtils.isEmpty(code)&&!StringUtils.isEmpty(state)){
@@ -54,9 +54,9 @@ public class GithubLoginController {
             String token_url = GithubConstant.TOKEN_URL.replace("CODE", code);
             //得到的responseStr是一个字符串需要将它解析放到map中
             String responseStr = HttpClientUtil.doGet(token_url);
+            log.info("responseStr"+responseStr);
             // 调用方法从map中获得返回的--》 令牌
             String token = HttpClientUtil.getMap(responseStr).get("access_token");
-            log.info(token);
 
             //根据token发送请求获取登录人的信息  ，通过令牌去获得用户信息
             String userinfo_url = GithubConstant.USER_INFO_URL;
@@ -80,10 +80,14 @@ public class GithubLoginController {
                     return ResultUtil.buildFailResult(message);
                 }
                 message="补充手机号和密码";
-                return ResultUtil.buildResult(ConstantUtil.FAIL,message,id);
+                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,id);
             }
-            // 成功则登陆
+            // 成功则登陆,判断上次是否绑定手机号
             User user=userService.findByGithubId(id);
+            if(user.getPhone()==null){
+                message="补充手机号和密码";
+                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,id);
+            }
             Map<String, Object> responseData=userService.loginMessage(user.getPhone());
             return ResultUtil.buildSuccessResult(responseData);
         }
@@ -110,7 +114,7 @@ public class GithubLoginController {
         user=userService.findByGithubId(githubId);
         user.setPhone(phone);
         user.setPassword(password);
-        message=userService.resetPassword(user);
+        message=githubLoginService.fillPasswordAndPhone(user);
         if(!message.equals("重置成功")){
             return ResultUtil.buildFailResult(message);
         }

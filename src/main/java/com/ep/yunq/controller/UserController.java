@@ -45,8 +45,20 @@ public class UserController {
         return ResultUtil.buildSuccessResult(sysParams);
     }*/
     @GetMapping("/loginCode")
-    public void logonCode(@RequestParam String phone) {
+    public void loginCode(@RequestParam String phone) {
         smsUtil.sendSms(phone);
         return;
+    }
+
+    @ApiOperation("判断手机号是否存在，存在为true")
+    @GetMapping("/phone-exist")
+    public Boolean isPhoneExist(@RequestParam String phone){
+        boolean message;
+        message=userService.isExistByPhone(phone);
+        if (message==true){
+            return true;
+        }
+        return false;
+
     }
 }

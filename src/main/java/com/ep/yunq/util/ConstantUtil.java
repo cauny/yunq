@@ -14,6 +14,7 @@ public enum ConstantUtil {
     FAIL(400),
     UNAUTHORIZED(401),
     NOT_FOUND(404),
+    USER_INFO_UNCOMPLETE(406),
     INTERNAL_SERVER_ERROR(500),
 
 

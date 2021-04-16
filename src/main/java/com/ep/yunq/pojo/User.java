@@ -27,7 +27,7 @@ public class User {
     private String password;    //密码
     private String salt;    //盐
     private Integer enabled;       //是否使用
-    private int githubId;
+    private Integer githubId;
 
     @Transient
     private List<AdminRole> roles;
