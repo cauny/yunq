@@ -1,5 +1,6 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.dto.SysParamDTO;
 import com.ep.yunq.pojo.Result;
 import com.ep.yunq.pojo.SysParam;
 import com.ep.yunq.service.SysParamService;
@@ -8,7 +9,11 @@ import com.ep.yunq.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,24 +35,33 @@ public class ParamsController {
     @Autowired
     UserService userService;
 
+
+
     /** -------------------------- 系统参数 -------------------------------------- **/
 
-    @ApiOperation("获取所有系统参数")
+    @ApiOperation("获取系统参数")
     @GetMapping(value = "/api/params")
-    public Result getAllSysParam(@RequestParam(required = false) String phone) {
+    public Result getAllSysParam(@RequestParam(required = false) String phone,
+                                 @RequestParam int pageNum,
+                                 @RequestParam int pageSize) {
         log.info("---------------- 获取所有系统参数 ----------------------");
+        ModelMapper modelMapper = new ModelMapper();
         if(phone==null){
-            List<SysParam> sysParams= sysParamService.list();
-            return ResultUtil.buildSuccessResult(sysParams);
+            Page<SysParam> params=sysParamService.list(pageNum,pageSize);
+            Page<SysParamDTO> sysParamDTO=modelMapper.map(params,new TypeToken<Page<SysParamDTO>>() {}.getType());
+            log.info("sysParamDTO"+sysParamDTO);
+            return ResultUtil.buildSuccessResult(sysParamDTO);
         }else{
             SysParam sysParam = sysParamService.getByUserId(userService.findByPhone(phone).getId());
-            List<SysParam> sysParams = new ArrayList<>();
-            sysParams.add(sysParam);
-            return ResultUtil.buildSuccessResult(sysParams);
+            SysParamDTO sysParamDTO=modelMapper.map(sysParam,SysParamDTO.class);
+            log.info("sysParamDTO"+sysParamDTO);
+            return ResultUtil.buildSuccessResult(sysParamDTO);
 
         }
 
     }
+
+
 
     @ApiOperation("修改系统参数")
     @PutMapping(value = "/api/params")

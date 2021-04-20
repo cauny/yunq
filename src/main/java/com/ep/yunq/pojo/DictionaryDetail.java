@@ -31,7 +31,7 @@ public class DictionaryDetail {
 
     private int defaultValue;
 
-    private boolean status;
+    private int status;
 
     @ManyToOne()
     @JoinColumn(name = "type_id")
@@ -41,6 +41,25 @@ public class DictionaryDetail {
     @Column(name = "update_time")
     private Date updateTime;
 
+    public DictionaryDetail() {
+    }
 
+    public DictionaryDetail(int id, int sort, String name, int value, int defaultValue, int status, DictionaryType dictionaryType) {
+        this.id = id;
+        this.sort = sort;
+        this.name = name;
+        this.value = value;
+        this.defaultValue = defaultValue;
+        this.status = status;
+        this.dictionaryType = dictionaryType;
+    }
 
+    public DictionaryDetail(int sort, String name, int value, int defaultValue, int status, DictionaryType dictionaryType) {
+        this.sort = sort;
+        this.name = name;
+        this.value = value;
+        this.defaultValue = defaultValue;
+        this.status = status;
+        this.dictionaryType = dictionaryType;
+    }
 }

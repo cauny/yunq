@@ -21,7 +21,7 @@ public class SysParam {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    int id;
+    private int id;
 
     private String key1;    //signin_experience
     private String value1;  //系统参数值

@@ -26,9 +26,9 @@ public class DictionaryType {
     @Column(name = "id")
     private int id;
 
-    private int code;   //
+    private String code;   //
     private String name;    //
-    private boolean status;     //
+    private Integer status;     //
 
     /**
      * 更新时间
@@ -45,5 +45,19 @@ public class DictionaryType {
     List<DictionaryDetail> dictionaryInfos = new ArrayList<>();
 
 
+    public DictionaryType() {
+    }
 
+    public DictionaryType(int id, String code, String name, Integer status) {
+        this.id = id;
+        this.code = code;
+        this.name = name;
+        this.status = status;
+    }
+
+    public DictionaryType(String code, String name, Integer status) {
+        this.code = code;
+        this.name = name;
+        this.status = status;
+    }
 }

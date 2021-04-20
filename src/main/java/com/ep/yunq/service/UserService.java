@@ -13,6 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
@@ -40,6 +44,13 @@ public class UserService {
     SysParamService sysParamService;
 
 
+    public Page<User> userPage(int pageNumber, int pageSize){
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<User> res=userDAO.findAll(pageable);
+        return res;
+
+    }
 
     /* 根据用户名判断用户是否存在 */
     public boolean isExistByUsername(String username) {
@@ -298,7 +309,7 @@ public class UserService {
 
         String token= useToken(user);
         Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userinfo",userBasicInfo);
+        responseData.put("userInfo",userBasicInfo);
         return responseData;
     }
 

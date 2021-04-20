@@ -97,7 +97,7 @@ public class LoginController {
 
         String token= userService.useToken(user);
         Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userinfo",userBasicInfo);
+        responseData.put("userInfo",userBasicInfo);
 
         return ResultUtil.buildSuccessResult(responseData);
     }

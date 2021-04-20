@@ -1,6 +1,10 @@
 package com.ep.yunq.dao;
 
 import com.ep.yunq.pojo.DictionaryDetail;
+import com.ep.yunq.pojo.DictionaryType;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,6 +19,8 @@ public interface DictionaryDetailDAO extends JpaRepository<DictionaryDetail,Inte
 
     DictionaryDetail findById(int id);
 
+    DictionaryDetail findByDefaultValue(int defaultValue);
+
     @Query(nativeQuery = true, value = "select * from dictionary_detail where type_id = ?1 order by sort ")
     List<DictionaryDetail> findAllByDictionaryTypeOrderBySort(int dicTypeId);
 
@@ -25,4 +31,6 @@ public interface DictionaryDetailDAO extends JpaRepository<DictionaryDetail,Inte
 
     @Query(nativeQuery = true, value = "select * from dictionary_detail where value = ?1 and type_id = ?2")
     DictionaryDetail findByValueAndDictionaryType(int value, int typeId);
+
+    Page<DictionaryDetail> findByDictionaryType(DictionaryType dictionaryType, Pageable pageable);
 }

@@ -3,7 +3,13 @@ package com.ep.yunq.service;
 import com.ep.yunq.dao.DictionaryDetailDAO;
 import com.ep.yunq.pojo.DictionaryDetail;
 import com.ep.yunq.pojo.DictionaryType;
+import com.ep.yunq.util.ResultUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -16,6 +22,7 @@ import java.util.Map;
  * @Date: 2021/4/12 23:44
  * 功能描述：
  **/
+@Slf4j
 @Service
 public class DictionaryDetailService {
     @Autowired
@@ -23,9 +30,9 @@ public class DictionaryDetailService {
     @Autowired
     DictionaryTypeService dictionaryTypeService;
 
-    public void addOrUpdate(DictionaryDetail dictionaryInfo) {
-        dictionaryInfo.setUpdateTime(new Date());
-        dictionaryDetailDAO.save(dictionaryInfo);
+    public void addOrUpdate(DictionaryDetail dictionaryDetail) {
+        dictionaryDetail.setUpdateTime(new Date());
+        dictionaryDetailDAO.save(dictionaryDetail);
     }
 
     public DictionaryDetail findById(int id) {
@@ -41,7 +48,7 @@ public class DictionaryDetailService {
         return null!=infoInDB;
     }
 
-    public  String add(DictionaryDetail dictionaryDetail) {
+    public String add(DictionaryDetail dictionaryDetail) {
         String message = "";
         try {
             if (null == dictionaryDetail.getDictionaryType()) {
@@ -53,6 +60,9 @@ public class DictionaryDetailService {
                 return message;
             }
             dictionaryDetail.setUpdateTime(new Date());
+            if(dictionaryDetail.getDefaultValue()==1&&isExistDefault()){
+                deleteDefaultValue();
+            }
 
             addOrUpdate(dictionaryDetail);
 
@@ -89,7 +99,18 @@ public class DictionaryDetailService {
         return message;
     }
 
-    public  String edit(DictionaryDetail dictionaryDetail) {
+    /* 批量删除 */
+    public String batchDelete(List<Integer> dicDetailIds){
+        String message = "";
+        for(int dicDetailId:dicDetailIds){
+            message = delete(dicDetailId);
+            if (!message.equals("删除成功"))
+                break;
+        }
+        return message;
+    }
+
+    public String edit(DictionaryDetail dictionaryDetail) {
         String message = "";
         try {
             DictionaryDetail dicDetailInDB = findById(dictionaryDetail.getId());
@@ -102,7 +123,12 @@ public class DictionaryDetailService {
             dicDetailInDB.setName(dictionaryDetail.getName());
             dicDetailInDB.setSort(dictionaryDetail.getSort());
             dicDetailInDB.setValue(dictionaryDetail.getValue());
+            dicDetailInDB.setDefaultValue(dictionaryDetail.getDefaultValue());
+            dicDetailInDB.setStatus(dictionaryDetail.getStatus());
             // dicDetailInDB.setDictionaryType();
+            if(dictionaryDetail.getDefaultValue()==1&&isExistDefault()){
+                deleteDefaultValue();
+            }
 
             addOrUpdate(dicDetailInDB);
             message = "修改成功";
@@ -114,7 +140,7 @@ public class DictionaryDetailService {
         return message;
     }
 
-    public  String updateStatus(DictionaryDetail dictionaryDetail) {
+    public String updateStatus(DictionaryDetail dictionaryDetail) {
         String message = "";
         try {
             DictionaryDetail dicDetailInDB = findById(dictionaryDetail.getId());
@@ -124,7 +150,7 @@ public class DictionaryDetailService {
                 return message;
             }
 
-            dicDetailInDB.setStatus(dictionaryDetail.isStatus());
+            dicDetailInDB.setStatus(dictionaryDetail.getStatus());
 
             addOrUpdate(dicDetailInDB);
             message = "更新成功";
@@ -161,5 +187,28 @@ public class DictionaryDetailService {
         }
 
         return message;
+    }
+
+    public Page<DictionaryDetail> dicsList(int typeId,int pageNumber,int pageSize){
+        Sort sort=Sort.by(Sort.Direction.ASC,"sort");
+        Pageable pageable=PageRequest.of(pageNumber,pageSize,sort);
+        DictionaryType dictionaryType=dictionaryTypeService.findById(typeId);
+        Page<DictionaryDetail> res=dictionaryDetailDAO.findByDictionaryType(dictionaryType,pageable);
+        return res;
+
+    }
+
+    /* 默认值是否存在 */
+    public boolean isExistDefault(){
+        if(dictionaryDetailDAO.findByDefaultValue(1)!=null){
+            return true;
+        }
+        return false;
+    }
+
+    public void deleteDefaultValue(){
+        DictionaryDetail dictionaryDetail=dictionaryDetailDAO.findByDefaultValue(1);
+        dictionaryDetail.setDefaultValue(0);
+        addOrUpdate(dictionaryDetail);
     }
 }

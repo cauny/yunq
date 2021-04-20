@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,8 +35,10 @@ public class DicControllor {
     /** -------------------------- 字典类型 -------------------------------------- **/
     @ApiOperation("增加字典类型")
     @PostMapping("/api/dictionary-types")
-    public Result addDicType(@RequestBody DictionaryType dictionaryType) {
+    public Result addDicType(@RequestParam String code, @RequestParam String name) {
         log.info("---------------- 增加字典类型 ----------------------");
+        DictionaryType dictionaryType=new DictionaryType(code,name,1);
+
         String message = dictionaryTypeService.add(dictionaryType);
         if ("添加成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -54,11 +57,30 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
+    @ApiOperation("批量删除字典类型")
+    @DeleteMapping("/api/dictionary-types/batch")
+    public Result batchDeleteDicTypes(@RequestParam List<Integer> dicTypeIds) {
+        String message="";
+        log.info("---------------- 批量删除字典类型 ----------------------");
+        message=dictionaryTypeService.batchDelete(dicTypeIds);
+        if (!message.equals("删除成功")){
+            return ResultUtil.buildFailResult(message);
+        }else{
+            return ResultUtil.buildSuccessResult(message);
+        }
+    }
+
     @ApiOperation("修改字典类型")
     @PutMapping("/api/dictionary-types")
     public Result editDicType(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 修改字典类型 ----------------------");
-        String message = dictionaryTypeService.edit(dictionaryType);
+        String message="";
+        if(dictionaryTypeService.findByCode(dictionaryType.getCode())!=null){
+            message="字典类型重复";
+            return ResultUtil.buildFailResult(message);
+        }
+        /*DictionaryType dictionaryType=new DictionaryType(id,code,name,status);*/
+        message = dictionaryTypeService.edit(dictionaryType);
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -78,9 +100,11 @@ public class DicControllor {
 
     @ApiOperation("获取所有字典类型")
     @GetMapping("/api/dictionary-types")
-    public Result getAllDicType() {
+    public Result getAllDicType(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取所有字典类型 ----------------------");
-        List<DictionaryType> dts = dictionaryTypeService.list();
+        /*List<DictionaryType> dts = dictionaryTypeService.list();*/
+
+        Page<DictionaryType> dts=dictionaryTypeService.list(pageNum,pageSize);
 
         return ResultUtil.buildSuccessResult(dts);
     }
@@ -91,6 +115,8 @@ public class DicControllor {
     @PostMapping("/api/dictionary-details")
     public Result addDicDetail(@RequestBody DictionaryDetail dictionaryDetail) {
         log.info("---------------- 增加字典明细 ----------------------");
+        /*DictionaryType dictionaryType=dictionaryTypeService.findById(typeId);
+        DictionaryDetail dictionaryDetail=new DictionaryDetail(sort,name,value,defaultValue,status,dictionaryType);*/
         String message = dictionaryDetailService.add(dictionaryDetail);
         if ("添加成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -101,7 +127,7 @@ public class DicControllor {
     @ApiOperation("删除字典明细")
     @DeleteMapping("/api/dictionary-details")
     public Result deleteDicInfo(@RequestParam int dicDetailId) {
-        log.info("---------------- 删除字典字典明细 ----------------------");
+        log.info("---------------- 删除字典明细 ----------------------");
         String message = dictionaryDetailService.delete(dicDetailId);
         if ("删除成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -109,11 +135,27 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
+    @ApiOperation("批量删除字典明细")
+    @DeleteMapping("/api/dictionary-details/batch")
+    public Result batchDeleteDicDetails(@RequestParam List<Integer> dicDetailIds) {
+        String message="";
+        log.info("---------------- 批量删除字典明细 ----------------------");
+        message=dictionaryDetailService.batchDelete(dicDetailIds);
+        if (!message.equals("删除成功")){
+            return ResultUtil.buildFailResult(message);
+        }else{
+            return ResultUtil.buildSuccessResult(message);
+        }
+    }
+
     @ApiOperation("修改字典字典明细")
     @PutMapping("/api/dictionary-details")
     public Result editDicDetail(@RequestBody DictionaryDetail dictionaryDetail) {
         log.info("---------------- 修改字典明细 ----------------------");
+        /*DictionaryType dictionaryType=dictionaryTypeService.findById(typeId);
+        DictionaryDetail dictionaryDetail=new DictionaryDetail(id,sort,name,value,defaultValue,status,dictionaryType);*/
         String message = dictionaryDetailService.edit(dictionaryDetail);
+
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -133,10 +175,12 @@ public class DicControllor {
 
     @ApiOperation("获取所有字典明细")
     @GetMapping("/api/dictionary-details")
-    public Result getAllDicDetailByDicTypeId(@RequestParam int dicTypeId) {
+    public Result getAllDicDetailByDicTypeId(@RequestParam int dicTypeId,
+                                             @RequestParam int pageNum,
+                                             @RequestParam int pageSize) {
         log.info("---------------- 获取所有字典明细 ----------------------");
-        List<DictionaryDetail> dis = dictionaryDetailService.findAllByTypeId(dicTypeId);
-
+        /*List<DictionaryDetail> dis = dictionaryDetailService.findAllByTypeId(dicTypeId);*/
+        Page<DictionaryDetail> dis=dictionaryDetailService.dicsList(dicTypeId,pageNum,pageSize);
         return ResultUtil.buildSuccessResult(dis);
     }
 

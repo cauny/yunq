@@ -1,6 +1,9 @@
 package com.ep.yunq.dao;
 
+import com.ep.yunq.pojo.DictionaryDetail;
 import com.ep.yunq.pojo.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,5 +35,6 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     @Transactional
     void deleteAllById(int id);
 
+    Page<User> findAll(Pageable pageable);
 
 }

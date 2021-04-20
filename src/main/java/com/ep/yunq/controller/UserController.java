@@ -35,15 +35,6 @@ public class UserController {
     @Autowired
     RedisUtil redisUtil;
 
-    /*@ApiOperation("获取当前登陆用户的信息")
-    @GetMapping(value = "/api/user/get")
-    public Result getInfoByLoginUser(@RequestParam String phone) {
-        log.info("---------------- 获取登陆用户的系统参数 ----------------------");
-        SysParam sysParam = sysParamService.getByUserId(userService.findByPhone(phone).getId());
-        List<SysParam> sysParams = new ArrayList<>();
-        sysParams.add(sysParam);
-        return ResultUtil.buildSuccessResult(sysParams);
-    }*/
     @GetMapping("/loginCode")
     public void loginCode(@RequestParam String phone) {
         smsUtil.sendSms(phone);
@@ -51,14 +42,14 @@ public class UserController {
     }
 
     @ApiOperation("判断手机号是否存在，存在为true")
-    @GetMapping("/phone-exist")
-    public Boolean isPhoneExist(@RequestParam String phone){
+    @GetMapping("/api/phone-exist")
+    public Result isPhoneExist(@RequestParam String phone){
         boolean message;
         message=userService.isExistByPhone(phone);
         if (message==true){
-            return true;
+            return ResultUtil.buildSuccessResult(true);
         }
-        return false;
+        return ResultUtil.buildSuccessResult(false);
 
     }
 }

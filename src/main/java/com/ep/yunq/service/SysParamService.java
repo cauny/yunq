@@ -2,9 +2,14 @@ package com.ep.yunq.service;
 
 import com.ep.yunq.dao.SysParamDAO;
 import com.ep.yunq.pojo.AdminRole;
+import com.ep.yunq.pojo.DictionaryType;
 import com.ep.yunq.pojo.SysParam;
 import com.ep.yunq.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -73,14 +78,11 @@ public class SysParamService {
         return sysParams;
     }
 
-    public List<SysParam> list() {
-        List<SysParam> sysParams= sysParamDAO.findAll();
-        for (SysParam sysParam : sysParams) {
-            List<AdminRole> roles = adminRoleService.listRolesByUser(sysParam.getUserId());
-            User user = new User(sysParam.getId(),sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
-            sysParam.setUser(user);
-        }
-        return sysParams;
+    public Page<SysParam> list(int pageNumber,int pageSize) {
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<SysParam> res=sysParamDAO.findAll(pageable);
+        return res;
     }
 
     public SysParam getByUserId(int uid){
