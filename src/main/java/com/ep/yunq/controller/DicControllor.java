@@ -75,8 +75,9 @@ public class DicControllor {
     public Result editDicType(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 修改字典类型 ----------------------");
         String message="";
-        if(dictionaryTypeService.findByCode(dictionaryType.getCode())!=null){
-            message="字典类型重复";
+        DictionaryType dt=dictionaryTypeService.findByCode(dictionaryType.getCode());
+        if(dt!=null&&dictionaryType.getId()!=dt.getId()){
+            message="字典类型英文标识重复";
             return ResultUtil.buildFailResult(message);
         }
         /*DictionaryType dictionaryType=new DictionaryType(id,code,name,status);*/

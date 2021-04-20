@@ -9,7 +9,6 @@ import com.ep.yunq.service.UserService;
 import com.ep.yunq.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKeyFactory;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -65,11 +63,8 @@ public class test {
     public Result pageTest(){
         User user=userService.findByPhone("13110514099");
         ModelMapper modelMapper = new ModelMapper();
-        List<User> users=new ArrayList<>();
-        users.add(user);
-        List<UserDTO> userDTOS=modelMapper.map(users,new TypeToken<List<UserDTO>>() {}.getType());
-//        UserDTO userDTO=modelMapper.map(user,UserDTO.class);
-        return ResultUtil.buildSuccessResult(userDTOS);
+        UserDTO userDTO=modelMapper.map(user,UserDTO.class);
+        return ResultUtil.buildSuccessResult(userDTO);
     }
 
 

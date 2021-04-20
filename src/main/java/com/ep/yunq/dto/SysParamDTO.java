@@ -20,4 +20,7 @@ public class SysParamDTO {
     private String key3;  //class_time
     private String value3;  //系统参数值
     private Date updateTime;
+
+    public SysParamDTO() {
+    }
 }

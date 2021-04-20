@@ -1,15 +1,15 @@
 package com.ep.yunq.service;
 
 import com.ep.yunq.dao.SysParamDAO;
+import com.ep.yunq.dto.SysParamDTO;
 import com.ep.yunq.pojo.AdminRole;
 import com.ep.yunq.pojo.DictionaryType;
 import com.ep.yunq.pojo.SysParam;
 import com.ep.yunq.pojo.User;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -94,5 +94,14 @@ public class SysParamService {
         User user = new User(uid,sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
         sysParam.setUser(user);
         return sysParam;
+    }
+
+    public Page<SysParamDTO> pageChange(Page<SysParam> pageOld){
+        Pageable pageable = pageOld.getPageable();
+        ModelMapper modelMapper = new ModelMapper();
+
+        List<SysParamDTO> dtos = modelMapper.map(pageOld.getContent(), new TypeToken<List<SysParamDTO>>() {}.getType());
+        Page<SysParamDTO> pageNew = new PageImpl<>(dtos, pageable, pageOld.getTotalElements());
+        return pageNew;
     }
 }
