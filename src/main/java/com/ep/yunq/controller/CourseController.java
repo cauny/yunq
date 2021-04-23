@@ -1,11 +1,11 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.pojo.Course;
-import com.ep.yunq.pojo.Result;
-import com.ep.yunq.service.CourseService;
-import com.ep.yunq.service.CourseToStudentService;
-import com.ep.yunq.service.UserService;
-import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.domain.entity.Course;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.service.CourseService;
+import com.ep.yunq.domain.service.CourseToStudentService;
+import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -39,29 +39,28 @@ public class CourseController {
 
     /** -------------------------- 课程表 -------------------------------------- **/
 
-
     @ApiOperation("添加课程")
     @PostMapping("/api/class/course/add")
-    public Result addCourse(HttpServletRequest request) {
+    public Result addCourse(@RequestBody Course params) {
         log.info("---------------- 添加课程 ----------------------");
-        MultipartHttpServletRequest params=((MultipartHttpServletRequest) request);
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
-                .getFiles("cover");
+
+        String message="";
         Course course = new Course();
-        course.setName(params.getParameter("name"));
-        course.setGrade(params.getParameter("grade"));
-        course.setSemester(params.getParameter("semester"));
-        course.setSchool(params.getParameter("school"));
-        course.setCollege(params.getParameter("college"));
-        course.setMajor(params.getParameter("major"));
-        course.setTeacher(params.getParameter("teacher"));
-        course.setLearnRequire(params.getParameter("learnRequire"));
-        course.setTeachProgress(params.getParameter("teachProgress"));
-        course.setExamArrange(params.getParameter("examArrange"));
+        course.setName(params.getName());
+        course.setGrade(params.getGrade());
+        course.setSemester(params.getSemester());
+        course.setSchool(params.getSchool());
+        course.setCollege(params.getCollege());
+        course.setMajor(params.getMajor());
+        course.setTeacher(params.getTeacher());
+        course.setLearnRequire(params.getLearnRequire());
+        course.setTeachProgress(params.getTeachProgress());
+        course.setExamArrange(params.getExamArrange());
+        course.setCover(params.getCover());
         /*course.setSchoolId(Integer.parseInt(params.getParameter("schoolId")));
         course.setCollegeId(Integer.parseInt(params.getParameter("collegeId")));*/
-
-        String message = courseService.add(course, files.get(0));
+        log.info(params.getCover());
+        message = courseService.add(course);
         if ("参数异常，添加失败".equals(message))
             return ResultUtil.buildFailResult(message);
         else

@@ -22,9 +22,9 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
 09:57:50.792 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.util.Date` from String "2021-04-18T10:01:41.158Z": expected format "yyyy-MM-dd HH:mm:ss"; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.util.Date` from String "2021-04-18T10:01:41.158Z": expected format "yyyy-MM-dd HH:mm:ss"
- at [Source: (PushbackInputStream); line: 1, column: 98] (through reference chain: com.ep.yunq.pojo.DictionaryDetail["dictionaryType"]->com.ep.yunq.pojo.DictionaryType["updateTime"])]
+ at [Source: (PushbackInputStream); line: 1, column: 98] (through reference chain: com.ep.yunq.entity.DictionaryDetail["dictionaryType"]->com.ep.yunq.entity.DictionaryType["updateTime"])]
 09:58:28.649 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.util.Date` from String "2021-04-18T10:01:41.158Z": expected format "yyyy-MM-dd HH:mm:ss"; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.util.Date` from String "2021-04-18T10:01:41.158Z": expected format "yyyy-MM-dd HH:mm:ss"
- at [Source: (PushbackInputStream); line: 1, column: 98] (through reference chain: com.ep.yunq.pojo.DictionaryDetail["dictionaryType"]->com.ep.yunq.pojo.DictionaryType["updateTime"])]
+ at [Source: (PushbackInputStream); line: 1, column: 98] (through reference chain: com.ep.yunq.entity.DictionaryDetail["dictionaryType"]->com.ep.yunq.entity.DictionaryType["updateTime"])]
 10:00:17.347 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.DicControllor - ---------------- 修改字典明细 ----------------------
 10:00:33.249 [http-nio-8080-exec-9] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 10:00:34.404 [http-nio-8080-exec-10] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
@@ -967,8 +967,8 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 18:39:46.528 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 18:39:46.528 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 18:39:46.530 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-18:39:46.554 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
-18:40:09.947 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:39:46.554 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:40:09.947 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
 18:43:11.542 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 23540 (D:\gcxl\target\classes started by yan in D:\gcxl)
 18:43:11.544 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
 18:43:11.578 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -1062,8 +1062,8 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 18:43:31.450 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 18:43:31.450 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 18:43:31.453 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-18:43:31.478 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.lang.Integer[])]
-18:43:44.231 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.lang.Integer[])]
+18:43:31.478 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.lang.Integer[])]
+18:43:44.231 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.lang.Integer[])]
 18:45:22.383 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 19040 (D:\gcxl\target\classes started by yan in D:\gcxl)
 18:45:22.385 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
 18:45:22.427 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -1157,7 +1157,7 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 18:45:49.659 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 18:45:49.660 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 18:45:49.661 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
-18:45:49.686 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.LinkedHashMap)]
+18:45:49.686 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.LinkedHashMap)]
 18:46:15.103 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.LoginController - 用户：13123191363,登录成功
 18:47:16.507 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 10364 (D:\gcxl\target\classes started by yan in D:\gcxl)
 18:47:16.509 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
@@ -1252,10 +1252,10 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 18:47:55.243 [http-nio-8080-exec-2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 18:47:55.243 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 18:47:55.246 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
-18:47:55.271 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:47:55.271 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
 18:48:27.064 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.LoginController - 用户：13123191363,登录成功
-18:49:10.662 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
-18:49:44.976 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:49:10.662 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:49:44.976 [http-nio-8080-exec-9] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
 18:50:06.304 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 20860 (D:\gcxl\target\classes started by yan in D:\gcxl)
 18:50:06.306 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
 18:50:06.341 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -1349,9 +1349,9 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 18:50:29.562 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 18:50:29.562 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 18:50:29.566 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 4 ms
-18:50:29.590 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
-18:51:08.744 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
-18:51:09.883 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:50:29.590 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:51:08.744 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
+18:51:09.883 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.test.pageTest(java.util.List<java.lang.Integer>)]
 18:51:39.287 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 19636 (D:\gcxl\target\classes started by yan in D:\gcxl)
 18:51:39.289 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
 18:51:39.327 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
@@ -1472,7 +1472,7 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 19:01:58.681 [http-nio-8080-exec-9] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 19:02:04.987 [http-nio-8080-exec-10] INFO  com.ep.yunq.controller.DicControllor - ---------------- 批量删除字典明细 ----------------------
 19:02:05.237 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-19:02:28.060 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.addDicDetail(com.ep.yunq.pojo.DictionaryDetail)]
+19:02:28.060 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.addDicDetail(com.ep.yunq.entity.DictionaryDetail)]
 19:04:00.269 [http-nio-8080-exec-3] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 19:04:01.153 [http-nio-8080-exec-4] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 19:04:08.054 [http-nio-8080-exec-5] INFO  com.ep.yunq.controller.DicControllor - ---------------- 增加字典明细 ----------------------
@@ -1515,17 +1515,17 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 20:13:52.099 [http-nio-8080-exec-5] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 20:15:04.384 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 20:16:27.962 [http-nio-8080-exec-7] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
-20:16:43.364 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.pojo.DictionaryType)]
+20:16:43.364 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.entity.DictionaryType)]
 20:16:43.718 [http-nio-8080-exec-9] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-20:16:57.045 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.pojo.DictionaryType)]
+20:16:57.045 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.entity.DictionaryType)]
 20:17:24.100 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
-20:17:25.739 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.pojo.DictionaryType)]
+20:17:25.739 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.entity.DictionaryType)]
 20:17:26.085 [http-nio-8080-exec-3] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 20:17:33.410 [http-nio-8080-exec-4] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
-20:17:35.287 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.pojo.DictionaryType)]
+20:17:35.287 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.entity.DictionaryType)]
 20:17:35.633 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 20:17:40.137 [http-nio-8080-exec-7] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
-20:17:41.622 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.pojo.DictionaryType)]
+20:17:41.622 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicType(com.ep.yunq.entity.DictionaryType)]
 20:17:41.975 [http-nio-8080-exec-9] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 20:18:02.426 [http-nio-8080-exec-10] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 20:18:05.742 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 修改字典类型 ----------------------

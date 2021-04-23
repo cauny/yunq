@@ -348,8 +348,8 @@ java.lang.NullPointerException: null
 14:11:22.756 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 14:11:27.847 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'int'; nested exception is java.lang.NumberFormatException: For input string: "性别"]
 14:11:51.985 [http-nio-8080-exec-7] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-14:11:52.010 [http-nio-8080-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+14:11:52.010 [http-nio-8080-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -446,8 +446,8 @@ java.lang.IllegalArgumentException: Parameter value [1] did not match expected t
 	at java.lang.Thread.run(Thread.java:748)
 14:14:13.157 [http-nio-8080-exec-10] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 14:14:20.046 [http-nio-8080-exec-9] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-14:14:20.046 [http-nio-8080-exec-9] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [3] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [3] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [3] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+14:14:20.046 [http-nio-8080-exec-9] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [3] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [3] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [3] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -546,8 +546,8 @@ java.lang.IllegalArgumentException: Parameter value [3] did not match expected t
 14:20:20.434 [http-nio-8080-exec-3] INFO  com.ep.yunq.controller.DicControllor - ---------------- 增加字典类型 ----------------------
 14:20:20.484 [http-nio-8080-exec-4] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 14:20:21.706 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-14:20:21.721 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+14:20:21.721 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -644,8 +644,8 @@ java.lang.IllegalArgumentException: Parameter value [5] did not match expected t
 	at java.lang.Thread.run(Thread.java:748)
 14:20:27.184 [http-nio-8080-exec-5] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 14:20:28.689 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-14:20:28.704 [http-nio-8080-exec-6] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+14:20:28.704 [http-nio-8080-exec-6] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -742,8 +742,8 @@ java.lang.IllegalArgumentException: Parameter value [5] did not match expected t
 	at java.lang.Thread.run(Thread.java:748)
 14:20:31.087 [http-nio-8080-exec-8] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 14:20:32.620 [http-nio-8080-exec-7] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-14:20:32.620 [http-nio-8080-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+14:20:32.620 [http-nio-8080-exec-7] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [5] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -1648,8 +1648,8 @@ java.sql.SQLSyntaxErrorException: Unknown column 'dictionary0_.default_value' in
 16:42:21.239 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 16:42:21.242 [http-nio-8080-exec-2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
 16:42:21.266 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
-16:42:21.299 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]] with root cause
-java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.pojo.DictionaryType (n/a)]
+16:42:21.299 [http-nio-8080-exec-2] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.dao.InvalidDataAccessApiUsageException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]; nested exception is java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]] with root cause
+java.lang.IllegalArgumentException: Parameter value [1] did not match expected type [com.ep.yunq.entity.DictionaryType (n/a)]
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:54)
 	at org.hibernate.query.spi.QueryParameterBindingValidator.validate(QueryParameterBindingValidator.java:27)
 	at org.hibernate.query.internal.QueryParameterBindingImpl.validate(QueryParameterBindingImpl.java:90)
@@ -2533,7 +2533,7 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 17:58:50.829 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 17:58:50.830 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 17:58:50.832 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-17:58:50.857 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.pojo.Result com.ep.yunq.controller.DicControllor.editDicDetail(com.ep.yunq.pojo.DictionaryDetail)]
+17:58:50.857 [http-nio-8080-exec-1] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing: public com.ep.yunq.entity.Result com.ep.yunq.controller.DicControllor.editDicDetail(com.ep.yunq.entity.DictionaryDetail)]
 18:00:47.602 [http-nio-8080-exec-2] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 18:00:48.838 [http-nio-8080-exec-7] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典明细 ----------------------
 18:00:53.351 [http-nio-8080-exec-8] INFO  com.ep.yunq.controller.DicControllor - ---------------- 修改字典明细 ----------------------

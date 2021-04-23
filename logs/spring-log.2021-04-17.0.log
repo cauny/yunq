@@ -1916,7 +1916,7 @@ javax.persistence.NonUniqueResultException: query did not return a unique result
 21:39:27.327 [http-nio-8080-exec-8] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 21:39:31.184 [http-nio-8080-exec-1] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
 21:41:10.850 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.util.Date` from String "2021-04-17T13:41:07.647Z": expected format "yyyy-MM-dd HH:mm:ss"; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.util.Date` from String "2021-04-17T13:41:07.647Z": expected format "yyyy-MM-dd HH:mm:ss"
- at [Source: (PushbackInputStream); line: 1, column: 61] (through reference chain: com.ep.yunq.pojo.DictionaryType["updateTime"])]
+ at [Source: (PushbackInputStream); line: 1, column: 61] (through reference chain: com.ep.yunq.entity.DictionaryType["updateTime"])]
 21:48:42.054 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.LoginController - 用户：123,登录成功
 21:50:37.546 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.LoginController - 用户：123,登录成功
 21:50:54.602 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.LoginController - 用户：13123191363,登录成功

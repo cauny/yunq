@@ -657,7 +657,7 @@ java.lang.NullPointerException: null
 09:54:49.923 [http-nio-8080-exec-3] INFO  com.ep.yunq.controller.SysController - ---------------- 获取所有系统参数 ----------------------
 09:54:49.974 [http-nio-8080-exec-3] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is java.lang.NullPointerException] with root cause
 java.lang.NullPointerException: null
-	at com.ep.yunq.pojo.SysParam.getUserId(SysParam.java:63)
+	at com.ep.yunq.entity.SysParam.getUserId(SysParam.java:63)
 	at com.ep.yunq.service.SysParamService.list(SysParamService.java:80)
 	at com.ep.yunq.controller.SysController.getAllSysParam(SysController.java:39)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
@@ -1141,7 +1141,7 @@ java.lang.IllegalArgumentException: Invalid character found in the request targe
 11:12:03.764 [http-nio-8080-exec-5] INFO  com.ep.yunq.controller.SysController - ---------------- 获取登陆用户的系统参数 ----------------------
 11:12:11.749 [http-nio-8080-exec-6] INFO  com.ep.yunq.controller.SysController - ---------------- 获取登陆用户的系统参数 ----------------------
 13:34:55.588 [http-nio-8080-exec-7] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize value of type `java.util.Date` from String "2021-04-13T05:34:50.304Z": expected format "yyyy-MM-dd HH:mm:ss"; nested exception is com.fasterxml.jackson.databind.exc.InvalidFormatException: Cannot deserialize value of type `java.util.Date` from String "2021-04-13T05:34:50.304Z": expected format "yyyy-MM-dd HH:mm:ss"
- at [Source: (PushbackInputStream); line: 1, column: 79] (through reference chain: com.ep.yunq.pojo.DictionaryDetail["dictionaryType"]->com.ep.yunq.pojo.DictionaryType["updateTime"])]
+ at [Source: (PushbackInputStream); line: 1, column: 79] (through reference chain: com.ep.yunq.entity.DictionaryDetail["dictionaryType"]->com.ep.yunq.entity.DictionaryType["updateTime"])]
 13:35:31.372 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 1594668 (D:\gcxl\target\classes started by yan in D:\gcxl)
 13:35:31.375 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
 13:35:31.419 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable

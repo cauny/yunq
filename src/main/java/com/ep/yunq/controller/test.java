@@ -1,12 +1,15 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.dto.UserDTO;
-import com.ep.yunq.pojo.*;
-import com.ep.yunq.service.AdminRoleService;
-import com.ep.yunq.service.AdminUserToRoleService;
-import com.ep.yunq.service.DictionaryDetailService;
-import com.ep.yunq.service.UserService;
-import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.application.dto.UserDTO;
+import com.ep.yunq.domain.entity.AdminRole;
+import com.ep.yunq.domain.entity.AdminUserToRole;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.entity.User;
+import com.ep.yunq.domain.service.AdminRoleService;
+import com.ep.yunq.domain.service.AdminUserToRoleService;
+import com.ep.yunq.domain.service.DictionaryDetailService;
+import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -14,9 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import javax.crypto.SecretKeyFactory;
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -65,6 +65,12 @@ public class test {
         ModelMapper modelMapper = new ModelMapper();
         UserDTO userDTO=modelMapper.map(user,UserDTO.class);
         return ResultUtil.buildSuccessResult(userDTO);
+    }
+
+    @GetMapping("/api/test3")
+    public Result uploadTest(@RequestParam String cover){
+
+        return ResultUtil.buildSuccessResult(cover);
     }
 
 

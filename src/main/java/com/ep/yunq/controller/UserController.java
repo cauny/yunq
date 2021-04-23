@@ -1,11 +1,10 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.pojo.Result;
-import com.ep.yunq.pojo.SysParam;
-import com.ep.yunq.service.UserService;
-import com.ep.yunq.util.RedisUtil;
-import com.ep.yunq.util.ResultUtil;
-import com.ep.yunq.util.SmsUtil;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.RedisUtil;
+import com.ep.yunq.infrastructure.util.ResultUtil;
+import com.ep.yunq.infrastructure.util.SmsUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -13,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @classname: UserController

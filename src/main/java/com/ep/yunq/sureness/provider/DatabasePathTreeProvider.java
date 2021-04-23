@@ -1,6 +1,6 @@
 package com.ep.yunq.sureness.provider;
 
-import com.ep.yunq.service.PermissionResourceService;
+import com.ep.yunq.domain.service.PermissionResourceService;
 import com.usthe.sureness.matcher.PathTreeProvider;
 import com.usthe.sureness.util.SurenessCommonUtil;
 import lombok.extern.slf4j.Slf4j;

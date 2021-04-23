@@ -1,28 +1,21 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.pojo.Result;
-import com.ep.yunq.pojo.User;
-import com.ep.yunq.pojo.UserBasicInfo;
-import com.ep.yunq.pojo.UserInfo;
-import com.ep.yunq.service.GithubLoginService;
-import com.ep.yunq.service.UserInfoService;
-import com.ep.yunq.service.UserService;
-import com.ep.yunq.util.ConstantUtil;
-import com.ep.yunq.util.GithubConstant;
-import com.ep.yunq.util.HttpClientUtil;
-import com.ep.yunq.util.ResultUtil;
-import com.tencentcloudapi.asr.v20190614.models.Model;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.entity.User;
+import com.ep.yunq.domain.service.GithubLoginService;
+import com.ep.yunq.domain.service.UserInfoService;
+import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.ConstantUtil;
+import com.ep.yunq.infrastructure.util.GithubConstant;
+import com.ep.yunq.infrastructure.util.HttpClientUtil;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.client.utils.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**

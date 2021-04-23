@@ -1,6 +1,6 @@
 package com.ep.yunq.sureness.provider;
 
-import com.ep.yunq.service.UserService;
+import com.ep.yunq.domain.service.UserService;
 import com.usthe.sureness.provider.SurenessAccount;
 import com.usthe.sureness.provider.SurenessAccountProvider;
 import org.springframework.beans.factory.annotation.Autowired;

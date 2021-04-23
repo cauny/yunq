@@ -1,30 +1,19 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.dao.SysParamDAO;
-import com.ep.yunq.dto.SysParamDTO;
-import com.ep.yunq.dto.UserDTO;
-import com.ep.yunq.pojo.Result;
-import com.ep.yunq.pojo.SysParam;
-import com.ep.yunq.service.SysParamService;
-import com.ep.yunq.service.UserService;
-import com.ep.yunq.util.PageUtil;
-import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.application.dto.SysParamDTO;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.entity.SysParam;
+import com.ep.yunq.domain.service.SysParamService;
+import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.PageUtil;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @classname: SysController
@@ -69,7 +58,7 @@ public class ParamsController {
 
     @ApiOperation("修改系统参数")
     @PutMapping(value = "/api/params")
-    public Result editSysParam(@RequestBody SysParam sysParam) {
+    public Result editSysParam(@RequestBody SysParamDTO sysParam) {
         log.info("---------------- 修改系统参数 ----------------------");
         String message = sysParamService.edit(sysParam);
         if ("修改成功".equals(message)) {

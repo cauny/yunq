@@ -1,0 +1,35 @@
+package com.ep.yunq.domain.dao;
+
+import com.ep.yunq.domain.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.transaction.annotation.Transactional;
+
+public interface UserDAO extends JpaRepository<User,Integer> {
+    /* 根据用户名查找用户对象 */
+    User findByUsername(String username);
+    /* 根据id查找用户对象 */
+    User findById(int id);
+
+    /* 根据手机号查找用户对象 */
+    User findByPhone(String phone);
+
+    /* 根据邮箱查找用户对象 */
+    User findByEmail(String email);
+
+    /* 根据githubid查找对象 */
+    User findByGithubId(int githubId);
+
+    /* 根据用户名和密码查找用户对象 */
+    User findByUsernameAndPassword(String username,String password);
+
+    /* 根据用户id删除行 */
+    @Modifying
+    @Transactional
+    void deleteAllById(int id);
+
+    Page<User> findAll(Pageable pageable);
+
+}

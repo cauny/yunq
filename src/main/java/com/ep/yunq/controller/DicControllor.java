@@ -1,12 +1,12 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.pojo.DictionaryDetail;
-import com.ep.yunq.pojo.DictionaryType;
-import com.ep.yunq.pojo.Param;
-import com.ep.yunq.pojo.Result;
-import com.ep.yunq.service.DictionaryDetailService;
-import com.ep.yunq.service.DictionaryTypeService;
-import com.ep.yunq.util.ResultUtil;
+import com.ep.yunq.domain.entity.DictionaryDetail;
+import com.ep.yunq.domain.entity.DictionaryType;
+import com.ep.yunq.domain.entity.Param;
+import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.domain.service.DictionaryDetailService;
+import com.ep.yunq.domain.service.DictionaryTypeService;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @classname: DicControllor
@@ -75,13 +74,20 @@ public class DicControllor {
     public Result editDicType(@RequestBody DictionaryType dictionaryType) {
         log.info("---------------- 修改字典类型 ----------------------");
         String message="";
-        DictionaryType dt=dictionaryTypeService.findByCode(dictionaryType.getCode());
-        if(dt!=null&&dictionaryType.getId()!=dt.getId()){
-            message="字典类型英文标识重复";
-            return ResultUtil.buildFailResult(message);
+        try{
+            DictionaryType dt=dictionaryTypeService.findByCode(dictionaryType.getCode());
+            if(dt!=null&&dictionaryType.getId()!=dt.getId()){
+                message="字典类型英文标识重复";
+                return ResultUtil.buildFailResult(message);
+            }
+            /*DictionaryType dictionaryType=new DictionaryType(id,code,name,status);*/
+            message = dictionaryTypeService.edit(dictionaryType);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.info("1111");
+            return ResultUtil.buildExceptionResult(e);
         }
-        /*DictionaryType dictionaryType=new DictionaryType(id,code,name,status);*/
-        message = dictionaryTypeService.edit(dictionaryType);
+
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -153,10 +159,17 @@ public class DicControllor {
     @PutMapping("/api/dictionary-details")
     public Result editDicDetail(@RequestBody DictionaryDetail dictionaryDetail) {
         log.info("---------------- 修改字典明细 ----------------------");
+        String message="";
         /*DictionaryType dictionaryType=dictionaryTypeService.findById(typeId);
         DictionaryDetail dictionaryDetail=new DictionaryDetail(id,sort,name,value,defaultValue,status,dictionaryType);*/
-        String message = dictionaryDetailService.edit(dictionaryDetail);
+        try {
+            message = dictionaryDetailService.edit(dictionaryDetail);
+        }catch (Exception e){
+            e.printStackTrace();
+            log.info("222222");
+            return ResultUtil.buildExceptionResult(e);
 
+        }
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
