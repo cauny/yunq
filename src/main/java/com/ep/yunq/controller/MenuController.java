@@ -59,7 +59,7 @@ public class MenuController {
         log.info("---------------- 添加菜单 ----------------------");
         String message = adminMenuService.add(adminMenu);
         if ("添加成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -70,7 +70,7 @@ public class MenuController {
         log.info("---------------- 删除菜单 ----------------------");
         String message = adminMenuService.delete(mid);
         if ("删除成功".equals(message)) {
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
         }
@@ -82,7 +82,7 @@ public class MenuController {
         log.info("---------------- 批量删除菜单 ----------------------");
         String message = adminMenuService.batchDelete(menuIds);
         if ("删除成功".equals(message)) {
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
         }
@@ -94,7 +94,7 @@ public class MenuController {
         log.info("---------------- 修改菜单 ----------------------");
         String message = adminMenuService.edit(adminMenu);
         if ("修改成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }

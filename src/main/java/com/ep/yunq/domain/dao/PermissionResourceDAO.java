@@ -46,4 +46,15 @@ public interface PermissionResourceDAO extends JpaRepository<PermissionResource,
     @Query("select CONCAT(LOWER(resource.uri),'===', resource.method) " +
             "from PermissionResource resource where resource.status = 9 order by resource.id")
     Optional<List<String>> getDisableResourcePathData();
+
+
+
+    @Query(nativeQuery = true, value = "select * from permission where" +
+            " name like ?1 or description like ?1 or uri like ?1 ")
+    List<PermissionResource> search(String keyword1);
+
+    /*List<PermissionResource> findAllByParentId(int parentId);*/
+
+    /*@Query(nativeQuery = true, value = "select * from permission order by parent_id ")
+    List<PermissionResource> findAllOrderByParentId();*/
 }

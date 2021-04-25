@@ -62,7 +62,7 @@ public class ParamsController {
         log.info("---------------- 修改系统参数 ----------------------");
         String message = sysParamService.edit(sysParam);
         if ("修改成功".equals(message)) {
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
         }

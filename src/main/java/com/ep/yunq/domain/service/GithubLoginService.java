@@ -55,6 +55,10 @@ public class GithubLoginService {
             message="用户不存在，新建账户";
             return message;
         }
+        if(user.getGithubId()!=null){
+            message="用户已绑定github";
+            return message;
+        }
         user.setGithubId(githubId);
         userService.update(user);
         message="成功绑定用户";
@@ -127,4 +131,9 @@ public class GithubLoginService {
 
         return message;
     }
+
+   /* public String bindPhone(String phone){
+        user
+
+    }*/
 }

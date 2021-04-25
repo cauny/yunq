@@ -42,4 +42,11 @@ public class User {
     public User() {
 
     }
+
+    public User(int id, String username, String phone, Integer enabled) {
+        this.id = id;
+        this.username = username;
+        this.phone = phone;
+        this.enabled = enabled;
+    }
 }

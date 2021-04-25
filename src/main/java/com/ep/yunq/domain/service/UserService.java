@@ -49,6 +49,16 @@ public class UserService {
 
     }
 
+    public List<User> listIsEnabled() {
+        List<User> users =  userDAO.findAllByEnabled();
+        List<AdminRole> roles;
+        for (User user : users) {
+            roles = adminRoleService.listRolesByUser(user.getId());
+            user.setRoles(roles);
+        }
+        return users;
+    }
+
     /* 根据用户名判断用户是否存在 */
     public boolean isExistByUsername(String username) {
         User user = findByUserName(username);
@@ -108,7 +118,7 @@ public class UserService {
 
     /* 对用户表表进行更新操作 */
     public void update(User user) {
-        deleteByUid(findByPhone(user.getPhone()).getId());
+        /*deleteByUid(findByPhone(user.getPhone()).getId());*/
         add(user);
     }
 
@@ -205,9 +215,9 @@ public class UserService {
             String encodedPwd=pbkdf2Util.getEncryptedPassword(password,salt);
 
             //保存到用户表和用户信息表里
-            user.setSalt(salt);
-            user.setPassword(encodedPwd);
-            add(user);
+            userInDB.setSalt(salt);
+            userInDB.setPassword(encodedPwd);
+            add(userInDB);
             message = "重置成功";
         } catch (Exception e) {
             e.printStackTrace();

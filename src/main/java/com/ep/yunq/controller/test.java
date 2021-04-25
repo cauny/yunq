@@ -10,6 +10,9 @@ import com.ep.yunq.domain.service.AdminUserToRoleService;
 import com.ep.yunq.domain.service.DictionaryDetailService;
 import com.ep.yunq.domain.service.UserService;
 import com.ep.yunq.infrastructure.util.ResultUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
@@ -17,10 +20,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 
 @Slf4j
 @RestController
 @CrossOrigin
+@Api(tags = "测试")
 public class test {
     @Autowired
     UserService userService;
@@ -59,6 +71,7 @@ public class test {
         return ResultUtil.buildSuccessResult(res);
     }
 
+    @ApiOperation("test1")
     @GetMapping("/api/test2")
     public Result pageTest(){
         User user=userService.findByPhone("13110514099");
@@ -67,10 +80,16 @@ public class test {
         return ResultUtil.buildSuccessResult(userDTO);
     }
 
+    @ApiOperation("test3")
     @GetMapping("/api/test3")
-    public Result uploadTest(@RequestParam String cover){
+    @RequestBody
+    public Result uploadTest(HttpServletRequest request){
+        MultipartHttpServletRequest params=((MultipartHttpServletRequest) request);
+        MultipartFile files = ((MultipartHttpServletRequest) request).getFile("file");
+        log.info(params.getParameter("grade"));
+        log.info(params.getParameter("name"));
 
-        return ResultUtil.buildSuccessResult(cover);
+        return ResultUtil.buildSuccessResult(files);
     }
 
 

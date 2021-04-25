@@ -13,12 +13,16 @@ import org.springframework.stereotype.Component;
 public class ResultUtil {
 
     /* 返回成功信息 */
-    public static Result buildSuccessResult(Object data){  return buildResult(ConstantUtil.SUCCESS,"成功",data);}
+    public static Result buildSuccessResult(String message,Object data){
+        return buildResult(ConstantUtil.SUCCESS,message,data);}
+
+    /* 返回成功信息 */
+    public static Result buildSuccessResult(Object data){ return buildResult(ConstantUtil.SUCCESS,"成功",data);}
 
     /* 返回失败信息 */
     public static Result buildFailResult(String message){  return buildResult(ConstantUtil.FAIL,message,null);}
 
-    /* 返回成功信息 */
+    /* 返回出错信息 */
     public static Result buildExceptionResult(Object data){  return buildResult(ConstantUtil.FAIL,"出错",data);}
 
     /* 返回值 */

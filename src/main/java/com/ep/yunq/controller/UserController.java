@@ -31,11 +31,6 @@ public class UserController {
     @Autowired
     RedisUtil redisUtil;
 
-    @GetMapping("/loginCode")
-    public void loginCode(@RequestParam String phone) {
-        smsUtil.sendSms(phone);
-        return;
-    }
 
     @ApiOperation("判断手机号是否存在，存在为true")
     @GetMapping("/api/phone-exist")

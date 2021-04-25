@@ -1,5 +1,6 @@
 package com.ep.yunq.domain.entity;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
  * @Date: 2021/4/12 21:58
  * 功能描述：
  **/
+@ApiModel(value = "返回用户信息")
 @Data
 public class UserBasicInfo {
     private String username;

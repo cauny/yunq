@@ -82,8 +82,8 @@ public class LoginController {
             return ResultUtil.buildFailResult(message);
         }
 
-//        String message=smsUtil.checkSms(phone,verificationCode);
-        String message=userService.authUserByVerificationCode(phone,verificationCode);
+        String message=smsUtil.checkSms(phone,verificationCode);
+        /*String message=userService.authUserByVerificationCode(phone,verificationCode);*/
         if(!"验证成功".equals(message)){
             log.info("用户：{},登录失败",phone);
             return ResultUtil.buildFailResult(message);
@@ -113,15 +113,18 @@ public class LoginController {
         Object redisVerificationCode = redisUtil.get(phone + ConstantUtil.SMS_Verification_Code.code);
         if (!ObjectUtils.isEmpty(redisVerificationCode)) {
             verificationCode = redisVerificationCode.toString();
+            verificationCode=smsUtil.sendSms(phone,verificationCode);
         } else {
-            verificationCode= userService.sendCode();
-//            verificationCode = smsUtil.sendSms(phone);
+            /*verificationCode= userService.sendCode();*/
+            verificationCode=smsUtil.createRandomVcode();
+            verificationCode = smsUtil.sendSms(phone,verificationCode);
         }
         //2.存入redis缓存
         boolean isSuccess = redisUtil.set(phone + ConstantUtil.SMS_Verification_Code.code, verificationCode, 180);
         if (true == isSuccess) {
             log.info("---------------- " + phone +" 验证码成功存入redis ----------------------");
             return ResultUtil.buildSuccessResult(verificationCode);
+            /*return ResultUtil.buildSuccessResult(null);*/
 
         } else {
             String message = "失败";
@@ -164,7 +167,7 @@ public class LoginController {
             return ResultUtil.buildFailResult(message);
         }
         log.info("---------------- 重置成功 ----------------------");
-        return ResultUtil.buildSuccessResult(message);
+        return ResultUtil.buildSuccessResult(message,null);
     }
 
 

@@ -33,7 +33,7 @@ public class Course {
     private String teachProgress;    //
     private String examArrange;    //
     private String cover;    //
-    /*private String qrcode;    //*/
+    private String qrcode;    //
     private int creator;
     private int modifier;
 

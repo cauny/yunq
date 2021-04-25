@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @classname: AdminRole
@@ -26,6 +27,12 @@ public class AdminRole {
     private String name;
     private String nameZh;
     private Integer enabled;
+
+    @Transient
+    private List<PermissionResource> perms;
+
+    @Transient
+    private List<AdminMenu> menus;
 
     public AdminRole() {
     }

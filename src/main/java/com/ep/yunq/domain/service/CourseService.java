@@ -2,10 +2,14 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.domain.dao.CourseDAO;
 import com.ep.yunq.domain.entity.Course;
+import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.QrcodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
@@ -43,22 +47,51 @@ public class CourseService {
         return courseDAO.findById(id);
     }
 
-    public String add(Course course) {
+    /*public String add(Course course) {
         String message = "";
         try {
             // 封面
 
             course.setCover(course.getCover());
-            /*course.setQrcode("");*/
+            course.setQrcode("");
 //            course.setCreator(userService.getCurrentUserId());
             addOrUpdate(course);
             // 二维码
             String qrcode = CommonUtil.creatUUID() +  ".jpg";
             String imagePath = ConstantUtil.FILE_QrCode.string +  qrcode;
             String content = String.valueOf(course.getId());
-            /*QrcodeUtil.encodeimage(imagePath, "JPEG", content, 430, 430 , logo);*/
+            QrcodeUtil.encodeimage(imagePath, "JPEG", content, 430, 430 , logo);
             String imgURL = ConstantUtil.FILE_Url_QrCode.string  + qrcode;
-            /*course.setQrcode(qrcode);*/
+            course.setQrcode(qrcode);
+            addOrUpdate(course);
+            message = imgURL;
+        } catch (Exception e) {
+            message = "参数异常，添加失败";
+            e.printStackTrace();
+        }
+        return message;
+    }*/
+
+    public String add(Course course, MultipartFile file) {
+        String message = "";
+        try {
+            // 封面
+            File imageFolder = new File(ConstantUtil.FILE_Photo_Course.string);
+            File f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
+                    .substring(file.getOriginalFilename().length() - 4));
+            InputStream logo = file.getInputStream();
+            file.transferTo(f);
+            course.setCover(f.getName());
+            course.setQrcode("");
+            course.setCreationDate(new Date());
+            addOrUpdate(course);
+            // 二维码
+            String qrcode = CommonUtil.creatUUID() + ".jpg";
+            String imagePath = ConstantUtil.FILE_QrCode.string + qrcode;
+            String content = String.valueOf(course.getId());
+            QrcodeUtil.encodeimage(imagePath, "JPEG", content, 430, 430, logo);
+            String imgURL = ConstantUtil.FILE_Url_QrCode.string + qrcode;
+            course.setQrcode(qrcode);
             addOrUpdate(course);
             message = imgURL;
         } catch (Exception e) {
@@ -68,9 +101,10 @@ public class CourseService {
         return message;
     }
 
+
     public String edit(Course course) {
         String message = "";
-        try{
+        try {
             Course courseInDB = courseDAO.findById(course.getId());
             courseInDB.setName(course.getName());
             courseInDB.setGrade(course.getGrade());
@@ -97,7 +131,7 @@ public class CourseService {
 
     public String editContainCover(Course course, MultipartFile file) {
         String message = "";
-        try{
+        try {
             Course courseInDB = courseDAO.findById(course.getId());
             courseInDB.setName(course.getName());
             courseInDB.setGrade(course.getGrade());
@@ -109,6 +143,8 @@ public class CourseService {
             courseInDB.setLearnRequire(course.getLearnRequire());
             courseInDB.setTeachProgress(course.getTeachProgress());
             courseInDB.setExamArrange(course.getExamArrange());
+            courseInDB.setModifier(course.getModifier());
+            courseInDB.setModifitionDate(new Date());
             /*courseInDB.setSchoolId(course.getSchoolId());
             courseInDB.setCollegeId(course.getCollegeId());*/
 
@@ -135,7 +171,7 @@ public class CourseService {
                 .substring(file.getOriginalFilename().length() - 4));
         try {
             file.transferTo(f);
-            String imgURL = ConstantUtil.FILE_Url_Course.string+ f.getName();
+            String imgURL = ConstantUtil.FILE_Url_Course.string + f.getName();
 
             Course courseInDB = courseDAO.findById(cid);
             courseInDB.setCover(f.getName());
@@ -163,41 +199,44 @@ public class CourseService {
         return message;
     }
 
-    public String batchDelete(LinkedHashMap courseIds) {
+    public String batchDelete(List<Integer> courseIds) {
         String message = "";
-        for (Object value : courseIds.values()) {
-            for (int cid :(List<Integer>)value) {
-                message = delete(cid);
-                if (!"删除成功".equals(message)) {
-                    break;
-                }
+        for (int cid : courseIds) {
+            message = delete(cid);
+            if (!"删除成功".equals(message)) {
+                break;
             }
         }
         return message;
     }
 
-    public List<Course> findAllByCreatorId(int uid){
-        List<Course> courses = courseDAO.findAllByCreator(uid);
-        for (Course course:courses) {
-            course.setCover(ConstantUtil.FILE_Url_Course.string+course.getCover());
-            /*course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());*/
+    public Page<Course> findAllByCreatorId(int uid, int pageNumber, int pageSize) {
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<Course> courses=courseDAO.findAllByCreator(uid,pageable);
+        for (Course course : courses) {
+            course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());
         }
         return courses;
     }
 
-    public List<Course> findAll(){
+    public Page<Course> findAll( int pageNumber, int pageSize) {
         Sort sort = Sort.by(Sort.Direction.ASC, "semester", "grade");
-        List<Course> courses = courseDAO.findAll(sort);
-        /*for (Course course:courses) {
-            course.setCover(ConstantUtil.FILE_Url_Course.string+course.getCover());
-            *//*course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());*//*
-        }*/
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<Course> courses = courseDAO.findAll(pageable);
+        for (Course course : courses) {
+            course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string + course.getQrcode());
+        }
         return courses;
     }
 
-    public List<Course> search(String keywords) {
-        List<Course> courses = courseDAO.findAllByNameLikeAndTeacherLikeAndGradeLikeAndSemesterLikeOrderBySemesterAsc(
-                "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%");
+    public Page<Course> search(String keywords,int pageNumber, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<Course> courses = courseDAO.findAllByNameLikeAndTeacherLikeAndGradeLikeAndSemesterLikeOrderBySemesterAsc(
+                "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%",pageable);
         return courses;
     }
 
@@ -206,8 +245,8 @@ public class CourseService {
             Course course = courseDAO.findById(cid);
             if (null == course)
                 return null;
-            course.setCover(ConstantUtil.FILE_Url_Course.string+course.getCover());
-            /*course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());*/
+            course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());
             return course;
         } catch (Exception e) {
             e.printStackTrace();

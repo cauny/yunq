@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.IdentityHashMap;
 import java.util.Map;
 
 /**
@@ -41,6 +42,7 @@ public class GithubLoginController {
     public Result callback(@RequestParam String code, @RequestParam String state) throws Exception{
 
         String message="";
+        Map<String, Object> responseData = new IdentityHashMap<>();
         if(!StringUtils.isEmpty(code)&&!StringUtils.isEmpty(state)){
             //拿到我们的code,去请求token
             //发送一个请求到
@@ -73,22 +75,26 @@ public class GithubLoginController {
                     return ResultUtil.buildFailResult(message);
                 }
                 message="补充手机号和密码";
-                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,id);
+                responseData.clear();
+                responseData.put("githubId",id);
+                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,responseData);
             }
             // 成功则登陆,判断上次是否绑定手机号
             User user=userService.findByGithubId(id);
             if(user.getPhone()==null){
                 message="补充手机号和密码";
-                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,id);
+                responseData.clear();
+                responseData.put("githubId",id);
+                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,responseData);
             }
-            Map<String, Object> responseData=userService.loginMessage(user.getPhone());
+            responseData=userService.loginMessage(user.getPhone());
             return ResultUtil.buildSuccessResult(responseData);
         }
         message="授权登录失败";
         return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("补充电话和密码")
+    /*@ApiOperation("补充电话和密码")
     @PutMapping("/api/password-phone")
     public Result fillPasswordAndPhone(@RequestParam String phone,
                                        @RequestParam int githubId,
@@ -97,11 +103,11 @@ public class GithubLoginController {
         String message="";
         if(userService.findByPhone(phone)!=null){
             message="该号码已被使用";
-            return ResultUtil.buildFailResult(message);
+            return ResultUtil.buildResult(ConstantUtil.PHONE_IS_USED,message,null);
         }
         message=userService.verifyCode(phone,verificationCode);
         if(!message.equals("验证成功")){
-            return ResultUtil.buildFailResult(message);
+            return ResultUtil.buildResult(ConstantUtil.VERIFIED_CODE_ERROR,message,null);
         }
         User user=new User();
         user=userService.findByGithubId(githubId);
@@ -115,5 +121,51 @@ public class GithubLoginController {
         responseData.put("Message","成功绑定用户");
         return ResultUtil.buildSuccessResult(responseData);
 
+    }*/
+
+    @ApiOperation("补充电话和密码")
+    @PutMapping("/api/password-phone")
+    public Result fillPasswordAndPhone(@RequestParam String phone,
+                                       @RequestParam Integer githubId,
+                                       @RequestParam String verificationCode,
+                                       @RequestParam String password){
+        log.info("---------------- 补充电话和密码 ----------------------");
+        String message="";
+        /*if(userService.findByPhone(phone)!=null){
+            message="该号码已被使用";
+            return ResultUtil.buildResult(ConstantUtil.PHONE_IS_USED,message,null);
+        }*/
+        message=userService.verifyCode(phone,verificationCode);
+        if(!message.equals("验证成功")){
+            log.info("---------------- 验证失败 ----------------------");
+            return ResultUtil.buildResult(ConstantUtil.VERIFIED_CODE_ERROR,message,null);
+        }
+        log.info("---------------- 开始绑定手机号 ----------------------");
+        message=githubLoginService.bindGithubAndUser(phone,githubId);
+        if(message.equals("用户已绑定github")){
+            log.info("---------------- 用户已绑定github ----------------------");
+            return ResultUtil.buildResult(ConstantUtil.PHONE_IS_USED,message,null);
+        }
+
+        if(message.equals("用户不存在，新建账户")){
+            log.info("---------------- 用户不存在，新建账户 ----------------------");
+            User user=new User();
+            user=userService.findByGithubId(githubId);
+            user.setPhone(phone);
+            user.setPassword(password);
+            message=githubLoginService.fillPasswordAndPhone(user);
+            if(!message.equals("重置成功")){
+                return ResultUtil.buildFailResult(message);
+            }
+            Map<String, Object> responseData=userService.loginMessage(phone);
+            responseData.put("Message","成功绑定用户");
+            return ResultUtil.buildSuccessResult(responseData);
+
+        }
+        //否则成功绑定用户，返回用户信息；
+        log.info("---------------- 成功绑定用户 ----------------------");
+        Map<String, Object> responseData=userService.loginMessage(phone);
+        responseData.put("Message","成功绑定用户");
+        return ResultUtil.buildSuccessResult(responseData);
     }
 }

@@ -40,7 +40,7 @@ public class DicControllor {
 
         String message = dictionaryTypeService.add(dictionaryType);
         if ("添加成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -51,7 +51,7 @@ public class DicControllor {
         log.info("---------------- 删除字典类型 ----------------------");
         String message = dictionaryTypeService.delete(dicTypeId);
         if ("删除成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -65,7 +65,7 @@ public class DicControllor {
         if (!message.equals("删除成功")){
             return ResultUtil.buildFailResult(message);
         }else{
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         }
     }
 
@@ -89,7 +89,7 @@ public class DicControllor {
         }
 
         if ("修改成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -100,7 +100,7 @@ public class DicControllor {
         log.info("---------------- 修改字典类型状态 ----------------------");
         String message = dictionaryTypeService.updateStatus(dictionaryType);
         if ("更新成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }*/
@@ -126,7 +126,7 @@ public class DicControllor {
         DictionaryDetail dictionaryDetail=new DictionaryDetail(sort,name,value,defaultValue,status,dictionaryType);*/
         String message = dictionaryDetailService.add(dictionaryDetail);
         if ("添加成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -137,7 +137,7 @@ public class DicControllor {
         log.info("---------------- 删除字典明细 ----------------------");
         String message = dictionaryDetailService.delete(dicDetailId);
         if ("删除成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -151,7 +151,7 @@ public class DicControllor {
         if (!message.equals("删除成功")){
             return ResultUtil.buildFailResult(message);
         }else{
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         }
     }
 
@@ -171,7 +171,7 @@ public class DicControllor {
 
         }
         if ("修改成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -182,7 +182,7 @@ public class DicControllor {
         log.info("---------------- 修改字典明细状态 ----------------------");
         String message = dictionaryDetailService.updateStatus(dictionaryDetail);
         if ("更新成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }*/
@@ -213,7 +213,7 @@ public class DicControllor {
         log.info("---------------- 增加字典类型和字典明细 ----------------------");
         String message = dictionaryDetailService.addTypeAndDetails(param.dictionaryType, param.dictionaryDetails);
         if ("添加成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,null);
         else
             return ResultUtil.buildFailResult(message);
     }

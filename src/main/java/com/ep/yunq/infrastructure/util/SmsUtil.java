@@ -42,7 +42,7 @@ public class SmsUtil {
      * @return
      * @return String
      */
-    public static String createRandomVcode(){
+    public String createRandomVcode(){
         //验证码
         String vcode = "";
         for (int i = 0; i < 6; i++) {
@@ -54,9 +54,10 @@ public class SmsUtil {
     /*
      *发送手机验证码(30分钟)
      */
-    public String sendSms(String phoneNumber){
+
+    public String sendSms(String phoneNumber,String verifyCode){
         try {
-            String verifyCode = createRandomVcode();
+            log.info(verifyCode);
             String[] params = {verifyCode};
 
             SmsSingleSender ssender = new SmsSingleSender(appid, appkey);

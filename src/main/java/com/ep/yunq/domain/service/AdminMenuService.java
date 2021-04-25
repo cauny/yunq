@@ -70,6 +70,11 @@ public class AdminMenuService {
 
     }
 
+    public List<AdminMenu> list() {
+        List<AdminMenu> menus = adminMenuDAO.findAll();
+        return handleMenus(menus);
+    }
+
     public List<AdminMenu> handleMenus(List<AdminMenu>menus) {
         List<AdminMenu> deleteMenus = new ArrayList<>();
         for (AdminMenu menu: menus){
