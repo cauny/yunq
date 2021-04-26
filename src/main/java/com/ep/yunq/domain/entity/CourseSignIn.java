@@ -25,7 +25,7 @@ public class CourseSignIn {
     private int id;
 
     private String mode;
-    private Integer value;
+    private Integer value;  //签到分钟数
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "start_time")
@@ -37,10 +37,21 @@ public class CourseSignIn {
 
     private BigDecimal longitude;
     private BigDecimal latitude;
+    private Integer status;
 
     private Integer countDown;
 
     @ManyToOne()
     @JoinColumn(name = "course_id")
     private Course course;
+
+    public CourseSignIn() {
+    }
+
+    public CourseSignIn(int id, String mode, Date startTime, Date endTime) {
+        this.id = id;
+        this.mode = mode;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

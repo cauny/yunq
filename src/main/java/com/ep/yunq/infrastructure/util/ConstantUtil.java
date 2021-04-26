@@ -37,8 +37,12 @@ public enum ConstantUtil {
     FILE_Url_Base("http://59.77.134.88:8080/api/file/"),
     FILE_Photo_User("C:/img/User/"),
     FILE_Photo_Course("C:/img/Course/"),
-    FILE_QrCode("C:/img/QrCode/");
+    FILE_QrCode("C:/img/QrCode/"),
 
+
+    //签到
+    SIGNUP_Mode_Gesture("gesture"),
+    SIGNUP_Mode_Time("time");
 
     public int code;
     public String string;

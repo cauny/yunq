@@ -1,5 +1,6 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.appservice.LoginAppService;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.domain.entity.UserBasicInfo;
@@ -45,6 +46,9 @@ public class LoginController {
     @Resource
     SmsUtil smsUtil;
 
+    @Autowired
+    LoginAppService loginAppService;
+
 
     //管理员可以访问主页和测试页，普通用户访问主页
     /*手机密码登录*/
@@ -73,17 +77,17 @@ public class LoginController {
     /*手机验证码登录*/
     @ApiOperation("验证码登录")
     @PostMapping(value = "/api/loginByVerificationCode")
-    public Result phoneLoginByVerficationCode(@RequestParam String phone,@RequestParam String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
+    public Result phoneLoginByVerificationCode(@RequestParam String phone,@RequestParam String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
         phone = HtmlUtils.htmlEscape(phone);
         verificationCode = HtmlUtils.htmlEscape(verificationCode);
 
-        if(!userService.isExistByPhone(phone)){
+        /*if(!userService.isExistByPhone(phone)){
             String message="用户不存在";
             return ResultUtil.buildFailResult(message);
         }
 
         String message=smsUtil.checkSms(phone,verificationCode);
-        /*String message=userService.authUserByVerificationCode(phone,verificationCode);*/
+        *//*String message=userService.authUserByVerificationCode(phone,verificationCode);*//*
         if(!"验证成功".equals(message)){
             log.info("用户：{},登录失败",phone);
             return ResultUtil.buildFailResult(message);
@@ -96,8 +100,8 @@ public class LoginController {
 
         String token= userService.useToken(user);
         Map<String, Object> responseData= new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userInfo",userBasicInfo);
-
+        responseData.put("userInfo",userBasicInfo);*/
+        Result responseData=loginAppService.phoneLoginByVerificationCode(phone,verificationCode);
         return ResultUtil.buildSuccessResult(responseData);
     }
 

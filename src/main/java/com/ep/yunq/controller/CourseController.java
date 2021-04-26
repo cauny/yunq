@@ -84,7 +84,7 @@ public class CourseController {
             @ApiImplicitParam(name = "creator", value = "创建者手机号",required=true, dataType = "string"),
     })
     @ApiResponse(code = 200,message = "成功，data返回null" )
-    @PostMapping("/api/class/course/add")
+    @PostMapping("/api/class/courses")
     public Result addCourse(HttpServletRequest request) {
         log.info("---------------- 添加课程 ----------------------");
         String message="";
@@ -131,7 +131,7 @@ public class CourseController {
             @ApiImplicitParam(name = "modifier", value = "修改者手机号",required=true, dataType = "string"),
     })
     @ApiResponse(code = 200,message = "修改成功，data返回null" )
-    @PutMapping("/api/class/course/modify")
+    @PutMapping("/api/class/course-contain-cover")
     public Result editCourseContainCover(HttpServletRequest request) {
         log.info("---------------- 修改课程包含头像 ----------------------");
         MultipartHttpServletRequest params=((MultipartHttpServletRequest) request);
@@ -164,7 +164,7 @@ public class CourseController {
 
     @ApiOperation("删除课程")
     @ApiResponse(code = 200,message = "成功，data返回null" )
-    @DeleteMapping("/api/class/course/delete")
+    @DeleteMapping("/api/class/courses")
     public Result deleteCourse(@RequestParam int cid) {
         log.info("---------------- 删除课程 ----------------------");
         String message = courseService.delete(cid);
@@ -176,7 +176,7 @@ public class CourseController {
 
     @ApiOperation("批量删除课程")
     @ApiResponse(code = 200,message = "成功，data返回null" )
-    @DeleteMapping("/api/class/course/delete-batch")
+    @DeleteMapping("/api/class/courses-batch")
     public Result batchDeleteCourse(@RequestBody List<Integer> courseIds) {
         log.info("---------------- 批量删除课程 ----------------------");
         String message = courseService.batchDelete(courseIds);
@@ -189,7 +189,7 @@ public class CourseController {
 
     @ApiOperation("修改课程除头像")
     @ApiResponse(code = 200,message = "成功，data返回null" )
-    @PutMapping("/api/class/course/edit")
+    @PutMapping("/api/class/course")
     public Result eidtCourse(@RequestBody Course course) {
         log.info("---------------- 修改课程 ----------------------");
         String message = courseService.edit(course);
@@ -217,7 +217,7 @@ public class CourseController {
 
     @ApiOperation("获取我创建的课程")
     @ApiResponse(code = 200,message = "成功，data返回Course类" )
-    @GetMapping("/api/class/course/getCreate")
+    @GetMapping("/api/class/courses/getCreated")
     public Result getCurrentUserCreateCourse(@RequestParam String phone,
                                              @RequestParam int pageNum,
                                              @RequestParam int pageSize) {
@@ -228,7 +228,7 @@ public class CourseController {
 
     @ApiOperation("搜索课程")
     @ApiResponse(code = 200,message = "成功，data返回List<Course>类" )
-    @GetMapping("/api/class/course/search")
+    @GetMapping("/api/class/courses/search")
     public Result searchCourse(@RequestParam String keywords,
                                @RequestParam int pageNum,
                                @RequestParam int pageSize) {
@@ -248,7 +248,7 @@ public class CourseController {
 
     @ApiOperation("获取单一课程")
     @ApiResponse(code = 200,message = "成功，data返回course类" )
-    @GetMapping("/api/class/stu/course/get/{cid}")
+    @GetMapping("/api/class/stu/course/{cid}")
     public Result getById(@PathVariable("cid") int cid) {
         log.info("---------------- 获取单一课程 ----------------------");
         Course course= courseService.findById(cid);
@@ -263,7 +263,7 @@ public class CourseController {
 
     @ApiOperation("获取课程学生")
     @ApiResponse(code = 200,message = "成功，data返回List<Map<String,String>>类" )
-    @GetMapping("/api/class/stu/course/stu")
+    @GetMapping("/api/class/stus/courses/stus")
     public Result getStudentsByCourseId(@RequestParam int cid) {
         log.info("---------------- 获取课程学生 ----------------------");
         List<Map<String,String>> courseStus = courseToStudentService.findAllStudentByCourseId(cid);
@@ -272,7 +272,7 @@ public class CourseController {
 
     @ApiOperation("加入课程")
     @ApiResponse(code = 200,message = "成功，data返回null" )
-    @GetMapping("/api/class/stu/course/join")
+    @PostMapping("/api/class/stus/courses")
     public Result joinCourse(@RequestParam int cid,@RequestParam String phone) {
         log.info("---------------- 加入课程 ----------------------");
         String message = courseToStudentService.joinCourse(userService.findByPhone(phone).getId(), cid);
@@ -284,7 +284,7 @@ public class CourseController {
 
     @ApiOperation("获取我加入的课程")
     @ApiResponse(code = 200,message = "成功，data返回List<course>类" )
-    @GetMapping("/api/class/stu/course/getJoin")
+    @GetMapping("/api/class/stus/courses")
     public Result getCurrentUserJoinCourse(@RequestParam String phone) {
         log.info("---------------- 获取我加入的课程 ----------------------");
         List<Course> courses= courseToStudentService.findCourseByUserId(userService.findByPhone(phone).getId());
