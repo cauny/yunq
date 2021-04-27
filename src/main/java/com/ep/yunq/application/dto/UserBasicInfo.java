@@ -1,4 +1,4 @@
-package com.ep.yunq.domain.entity;
+package com.ep.yunq.application.dto;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

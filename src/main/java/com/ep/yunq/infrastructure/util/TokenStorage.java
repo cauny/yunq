@@ -1,4 +1,4 @@
-package com.ep.yunq.controller;
+package com.ep.yunq.infrastructure.util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

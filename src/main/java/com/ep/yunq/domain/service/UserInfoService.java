@@ -2,8 +2,9 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.domain.dao.UserInfoDAO;
 import com.ep.yunq.domain.entity.User;
-import com.ep.yunq.domain.entity.UserBasicInfo;
+import com.ep.yunq.application.dto.UserBasicInfo;
 import com.ep.yunq.domain.entity.UserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
  * 功能描述：
  **/
 @Service
+@Slf4j
 public class UserInfoService {
 
     @Autowired

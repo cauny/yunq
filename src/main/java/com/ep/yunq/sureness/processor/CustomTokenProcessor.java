@@ -1,6 +1,6 @@
 package com.ep.yunq.sureness.processor;
 
-import com.ep.yunq.controller.TokenStorage;
+import com.ep.yunq.infrastructure.util.TokenStorage;
 import com.ep.yunq.sureness.subject.CustomTokenSubject;
 import com.usthe.sureness.processor.BaseProcessor;
 import com.usthe.sureness.processor.exception.IncorrectCredentialsException;

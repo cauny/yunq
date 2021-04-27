@@ -13,6 +13,7 @@ import java.io.File;
  **/
 @Data
 public class CourseDTO {
+    private int id;
     private String name;    //
     private String grade;    //
     private String semester;    //
@@ -23,8 +24,6 @@ public class CourseDTO {
     private String learnRequire;    //
     private String teachProgress;    //
     private String examArrange;    //
-    private File cover;    //
-    /*private String qrcode;    //*/
-    private int creator;
-    private int modifier;
+    private String cover;    //
+    private String qrcode;    //
 }

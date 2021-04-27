@@ -25,6 +25,7 @@ public class UserInfo {
 
     private String username;    //用户名
     private String realname;    //真实姓名
+    private String phone;
     private String defaultRole;    //真实姓名
     private String nickname;    //昵称
     private String ino; //学号/工号
@@ -48,6 +49,10 @@ public class UserInfo {
 
     public UserInfo(String username, User user) {
         this.username = username;
+        this.user = user;
+    }
+
+    public UserInfo(User user) {
         this.user = user;
     }
 }

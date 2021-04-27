@@ -14,13 +14,13 @@ import java.util.Date;
  * 功能描述： 课程表
  **/
 @Entity
-@Table(name="course")
-@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
+@Table(name = "course")
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 @Data
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     int id;
     private String name;    //
     private String grade;    //

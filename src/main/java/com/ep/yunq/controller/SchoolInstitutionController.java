@@ -5,6 +5,7 @@ import com.ep.yunq.domain.entity.SchoolInstitution;
 import com.ep.yunq.domain.service.SchoolInstitutionService;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class SchoolInstitutionController {
     @Autowired
     SchoolInstitutionService schoolInstitutionService;
 
+    @ApiOperation("获取所有学校机构")
     @GetMapping(value = "/api/sys/school/all")
     public Result getAllSchoolInstitution() {
         log.info("---------------- 获取所有学校机构 ----------------------");
@@ -32,6 +34,7 @@ public class SchoolInstitutionController {
         return ResultUtil.buildSuccessResult(schoolInstitutions);
     }
 
+    @ApiOperation("增加学校机构")
     @PostMapping(value = "/api/sys/school")
     public Result addSchoolInstitution(@RequestBody SchoolInstitution sInstitution) {
         log.info("---------------- 增加学校机构 ----------------------");
@@ -44,6 +47,7 @@ public class SchoolInstitutionController {
         }
     }
 
+    @ApiOperation("删除学校机构")
     @DeleteMapping(value = "/api/sys/school")
     public Result deleteSchoolInstitution(@RequestParam int siid) {
         log.info("---------------- 删除学校机构 ----------------------");
@@ -56,6 +60,7 @@ public class SchoolInstitutionController {
         }
     }
 
+    @ApiOperation("修改学校机构")
     @PutMapping( "/api/sys/school")
     public Result editSchoolInstitution(@RequestBody SchoolInstitution sInstitution) {
         log.info("---------------- 修改学校机构 ----------------------");
@@ -68,6 +73,7 @@ public class SchoolInstitutionController {
         }
     }
 
+    @ApiOperation("搜索学校机构")
     @GetMapping( "/api/sys/school/search")
     public Result searchSchoolInstitution(@RequestParam String keywords) {
         log.info("---------------- 搜索学校机构 ----------------------");
@@ -82,6 +88,7 @@ public class SchoolInstitutionController {
         return ResultUtil.buildSuccessResult(schoolInstitutions);
     }*/
 
+    @ApiOperation("获取院校系")
     @GetMapping("/api/userInfo/school-info")
     public Result getCollegeAndMajor(@RequestParam int parentId) {
         log.info("---------------- 获取院校系 ----------------------");

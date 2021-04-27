@@ -1,14 +1,8 @@
 package com.ep.yunq.controller;
 
 import com.ep.yunq.application.dto.UserDTO;
-import com.ep.yunq.domain.entity.AdminRole;
-import com.ep.yunq.domain.entity.AdminUserToRole;
-import com.ep.yunq.domain.entity.Result;
-import com.ep.yunq.domain.entity.User;
-import com.ep.yunq.domain.service.AdminRoleService;
-import com.ep.yunq.domain.service.AdminUserToRoleService;
-import com.ep.yunq.domain.service.DictionaryDetailService;
-import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.domain.entity.*;
+import com.ep.yunq.domain.service.*;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -42,6 +36,10 @@ public class test {
     AdminUserToRoleService adminUserToRoleService;
     @Autowired
     DictionaryDetailService dictionaryDetailService;
+    @Autowired
+    UserAuthsService userAuthsService;
+    @Autowired
+    UserInfoService userInfoService;
 
     Logger logger= LoggerFactory.getLogger(getClass());
 
@@ -74,9 +72,12 @@ public class test {
     @ApiOperation("test1")
     @GetMapping("/api/test2")
     public Result pageTest(){
-        User user=userService.findByPhone("13110514099");
+        User user=userService.findByPhone("13506976031");
+        UserInfo userInfo=userInfoService.findByUid(user.getId());
         ModelMapper modelMapper = new ModelMapper();
-        UserDTO userDTO=modelMapper.map(user,UserDTO.class);
+        log.info("role:",user.getRoles());
+//        UserDTO userDTO=modelMapper.map(user,UserDTO.class);
+        UserDTO userDTO=modelMapper.map(userInfo,UserDTO.class);
         return ResultUtil.buildSuccessResult(userDTO);
     }
 
@@ -90,6 +91,15 @@ public class test {
         log.info(params.getParameter("name"));
 
         return ResultUtil.buildSuccessResult(files);
+    }
+
+    @ApiOperation("test4")
+    @GetMapping("/api/test4")
+    @RequestBody
+    public Result est(@RequestBody UserAuths userAuths){
+        UserAuths userAuths1= userAuthsService.add(userAuths);
+
+        return ResultUtil.buildSuccessResult(userAuths1);
     }
 
 

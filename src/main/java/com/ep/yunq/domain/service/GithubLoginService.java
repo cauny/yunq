@@ -1,9 +1,6 @@
 package com.ep.yunq.domain.service;
 
-import com.ep.yunq.domain.entity.AdminUserToRole;
-import com.ep.yunq.domain.entity.SysParam;
-import com.ep.yunq.domain.entity.User;
-import com.ep.yunq.domain.entity.UserInfo;
+import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.infrastructure.util.PBKDF2Util;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +30,10 @@ public class GithubLoginService {
     SysParamService sysParamService;
     @Autowired
     PBKDF2Util pbkdf2Util;
+    @Autowired
+    UserAuthsService userAuthsService;
 
-    public String isExistUserByGithubId(int githubId){
+    /*public String isExistUserByGithubId(int githubId){
         String message="";
         User user=new User();
         user=userService.findByGithubId(githubId);
@@ -45,9 +44,21 @@ public class GithubLoginService {
         message="用户存在";
         return message;
 
+    }*/
+    public String isExistUserByGithubId(int githubId){
+        String message="";
+        UserAuths userAuths=new UserAuths();
+        userAuths=userAuthsService.findByIdentityTypeAndIdentifier("github",String.valueOf(githubId));
+        if(userAuths==null){
+            message="用户不存在";
+            return message;
+        }
+        message="用户存在";
+        return message;
+
     }
 
-    public String bindGithubAndUser(String phone,int githubId){
+    /*public String bindGithubAndUser(int userId,int githubId){
         String message="";
         User user=new User();
         user=userService.findByPhone(phone);
@@ -64,39 +75,39 @@ public class GithubLoginService {
         message="成功绑定用户";
         return message;
 
-    }
+    }*/
 
-    public String githubRegister(User user,String role,String avatar){
+    public String githubRegister(User user,String role,String avatar,UserAuths userAuths){
         String message="";
         try {
-            int githubId=user.getGithubId();
-            user.setEnabled(1);
-            userService.add(user);
-
-            //刚存进去的用户表再取出uid存入
-            int uid=userService.findByGithubId(githubId).getId();
-            UserInfo userInfo=new UserInfo(userService.findById(uid).getUsername(),user);
+            UserInfo userInfo=new UserInfo(user);
             userInfo.setDefaultRole(role);
-            userInfo.setAvatar(avatar);
+            if(userInfo.getAvatar()==null){
+                userInfo.setAvatar(avatar);
+            }
             userInfoService.add(userInfo);
 
             //设置用户角色
             int rid=adminRoleService.findByName(role).getId();
             AdminUserToRole adminUserToRole=new AdminUserToRole();
             adminUserToRole.setRoleId(rid);
-            adminUserToRole.setUserId(uid);
+            adminUserToRole.setUserId(user.getId());
             adminUserToRoleService.add(adminUserToRole);
 
             SysParam sysParam = new SysParam(new Date(), user);
             sysParamService.addOrUpdate(sysParam);
 
+            userAuths.setUserId(user.getId());
+            userAuthsService.add(userAuths);
+
             message="注册成功";
+            return message;
 
         }catch (Exception e){
             e.printStackTrace();
             message="参数异常，注册失败";
+            return message;
         }
-        return message;
     }
 
     /*用户密码电话补充*/

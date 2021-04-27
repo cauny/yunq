@@ -1,13 +1,16 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.dto.CourseDTO;
 import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.service.CourseService;
 import com.ep.yunq.domain.service.CourseToStudentService;
 import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -223,7 +226,8 @@ public class CourseController {
                                              @RequestParam int pageSize) {
         log.info("---------------- 获取我创建的课程 ----------------------");
         Page<Course> courses= courseService.findAllByCreatorId(userService.findByPhone(phone).getId(),pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(courses);
+        Page<CourseDTO> courseDTO= PageUtil.pageChange(courses,CourseDTO.class);
+        return ResultUtil.buildSuccessResult(courseDTO);
     }
 
     @ApiOperation("搜索课程")
@@ -234,7 +238,8 @@ public class CourseController {
                                @RequestParam int pageSize) {
         log.info("---------------- 搜索课程 ----------------------");
         Page<Course> courses= courseService.search(keywords,pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(courses);
+        Page<CourseDTO> courseDTO= PageUtil.pageChange(courses,CourseDTO.class);
+        return ResultUtil.buildSuccessResult(courseDTO);
     }
 
     @ApiOperation("获取所有课程")
@@ -243,7 +248,8 @@ public class CourseController {
     public Result getAllCourse(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取所有课程 ----------------------");
         Page<Course> courses= courseService.findAll(pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(courses);
+        Page<CourseDTO> courseDTO= PageUtil.pageChange(courses,CourseDTO.class);
+        return ResultUtil.buildSuccessResult(courseDTO);
     }
 
     @ApiOperation("获取单一课程")
@@ -252,11 +258,15 @@ public class CourseController {
     public Result getById(@PathVariable("cid") int cid) {
         log.info("---------------- 获取单一课程 ----------------------");
         Course course= courseService.findById(cid);
-        if (null != course)
-            return ResultUtil.buildSuccessResult(course);
-        else
+        if (null != course){
+            ModelMapper modelMapper = new ModelMapper();
+            CourseDTO courseDTO=modelMapper.map(course,CourseDTO.class);
+            return ResultUtil.buildSuccessResult(courseDTO);
+        } else{
             return ResultUtil.buildFailResult("请输入正确课程Id");
-    }
+        }
+        }
+
 
     /** -------------------------- 课程学生表 -------------------------------------- **/
 
