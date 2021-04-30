@@ -37,10 +37,18 @@ public class AdminMenu {
      */
     private String nameZh;
 
+    private int sort;
+
+    private int type;
+
+    private int enabled;
+
+    private String permission;
+
     /**
      * 菜单icon名
      */
-    private String iconCls;
+    private String icon;
 
     /**
      * 菜单组件

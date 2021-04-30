@@ -19,6 +19,6 @@ public class DatabaseAccountProvider implements SurenessAccountProvider {
 
     @Override
     public SurenessAccount loadAccount(String appId) {
-        return userService.loadAccount(appId);
+        return userService.loadAccount(Integer.parseInt(appId));
     }
 }

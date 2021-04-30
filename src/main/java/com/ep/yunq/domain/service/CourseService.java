@@ -6,6 +6,7 @@ import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.QrcodeUtil;
+import com.ep.yunq.infrastructure.util.SmsUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,40 +38,32 @@ public class CourseService {
     CourseDAO courseDAO;
     @Autowired
     UserService userService;
+    @Autowired
+    SmsUtil smsUtil;
 
     public void addOrUpdate(Course course) {
         course.setModifitionDate(new Date());
         courseDAO.save(course);
     }
 
+    public Course findByCode(String code){  return courseDAO.findByCode(code);}
+
     public Course getById(int id) {
         return courseDAO.findById(id);
     }
 
-    /*public String add(Course course) {
-        String message = "";
-        try {
-            // 封面
-
-            course.setCover(course.getCover());
-            course.setQrcode("");
-//            course.setCreator(userService.getCurrentUserId());
-            addOrUpdate(course);
-            // 二维码
-            String qrcode = CommonUtil.creatUUID() +  ".jpg";
-            String imagePath = ConstantUtil.FILE_QrCode.string +  qrcode;
-            String content = String.valueOf(course.getId());
-            QrcodeUtil.encodeimage(imagePath, "JPEG", content, 430, 430 , logo);
-            String imgURL = ConstantUtil.FILE_Url_QrCode.string  + qrcode;
-            course.setQrcode(qrcode);
-            addOrUpdate(course);
-            message = imgURL;
-        } catch (Exception e) {
-            message = "参数异常，添加失败";
-            e.printStackTrace();
+    /* 随机生成课程码 */
+    public String createCourseCode(){
+        boolean isUsed=true;
+        String code="";
+        while(isUsed){
+            code= smsUtil.createRandomVcode();
+            if(findByCode(code)==null){
+                isUsed=false;
+            }
         }
-        return message;
-    }*/
+        return code;
+    }
 
     public String add(Course course, MultipartFile file) {
         String message = "";
@@ -84,6 +77,7 @@ public class CourseService {
             course.setCover(f.getName());
             course.setQrcode("");
             course.setCreationDate(new Date());
+
             addOrUpdate(course);
             // 二维码
             String qrcode = CommonUtil.creatUUID() + ".jpg";
@@ -235,8 +229,9 @@ public class CourseService {
     public Page<Course> search(String keywords,int pageNumber, int pageSize) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
         Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
-        Page<Course> courses = courseDAO.findAllByNameLikeAndTeacherLikeAndGradeLikeAndSemesterLikeOrderBySemesterAsc(
+        Page<Course> courses = courseDAO.findAllByNameLikeOrTeacherLikeOrGradeLikeOrSemesterLikeOrderBySemesterAsc(
                 "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%",pageable);
+
         return courses;
     }
 

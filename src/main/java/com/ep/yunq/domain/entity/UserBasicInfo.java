@@ -1,4 +1,4 @@
-package com.ep.yunq.application.dto;
+package com.ep.yunq.domain.entity;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
@@ -14,6 +14,7 @@ import java.util.List;
 @ApiModel(value = "返回用户信息")
 @Data
 public class UserBasicInfo {
+    private Integer id;
     private String username;
     private String phone;
     private String avatar;
@@ -23,7 +24,8 @@ public class UserBasicInfo {
     public UserBasicInfo() {
     }
 
-    public UserBasicInfo(String username, String phone, String avatar, List<String> roles, String defaultRole) {
+    public UserBasicInfo(Integer id,String username, String phone, String avatar, List<String> roles, String defaultRole) {
+        this.id=id;
         this.username = username;
         this.phone = phone;
         this.avatar = avatar;

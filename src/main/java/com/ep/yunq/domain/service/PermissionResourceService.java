@@ -46,11 +46,7 @@ public class PermissionResourceService {
         return perms;
     }
 
-    public List<PermissionResource> list() {
-        List<PermissionResource> ps = permissionResourceDAO.findAll();
-        return ps;
 
-    }
 
 
     public Set<String> getAllEnableResourcePath() {
@@ -125,7 +121,7 @@ public class PermissionResourceService {
         return message;
     }
 
-    public List<PermissionResource> all() {
+    public List<PermissionResource> list() {
         return permissionResourceDAO.findAll();
     }
 

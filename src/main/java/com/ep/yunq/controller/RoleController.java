@@ -1,12 +1,17 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.dto.PermissionDTO;
+import com.ep.yunq.application.dto.RoleDTO;
+import com.ep.yunq.application.dto.SchoolInstitutionDTO;
 import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.domain.service.*;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -38,8 +43,8 @@ public class RoleController {
     UserService userService;
 
     @ApiOperation("添加新角色")
-    @PostMapping(value = "/api/role")
-    public Result addRole(@RequestBody AdminRole requestRole) {
+    @PostMapping(value = "/api/roles/roles")
+    public Result<String> addRole(@RequestBody AdminRole requestRole) {
         log.info("---------------- 添加新角色 ----------------------");
         AdminRole adminRoleInDB = adminRoleService.findByName(requestRole.getName());
         if (null != adminRoleInDB) {
@@ -53,8 +58,8 @@ public class RoleController {
     }
 
     @ApiOperation("删除角色")
-    @DeleteMapping(value = "/api/role")
-    public Result deleteRole(@RequestParam int rid) {
+    @DeleteMapping(value = "/api/roles/roles")
+    public Result<String> deleteRole(@RequestParam int rid) {
         log.info("---------------- 删除角色 ----------------------");
         String message = adminRoleService.delete(rid);
         if ("删除成功".equals(message)) {
@@ -65,8 +70,8 @@ public class RoleController {
     }
 
     @ApiOperation("批量删除角色")
-    @DeleteMapping(value = "/api/role-batch")
-    public Result batchDeleteRole(@RequestBody List<Integer> roleIds) {
+    @DeleteMapping(value = "/api/roles/batches")
+    public Result<String> batchDeleteRole(@RequestBody List<Integer> roleIds) {
         log.info("---------------- 批量删除角色 ----------------------");
         String message = adminRoleService.batchDelete(roleIds);
         if ("删除成功".equals(message)) {
@@ -76,9 +81,9 @@ public class RoleController {
         }
     }
 
-    @ApiOperation("更新角色状态")
-    @PutMapping(value = "/api/role/status")
-    public Result updateRoleStatus(@RequestBody AdminRole requestRole) {
+    /*@ApiOperation("更新角色状态")
+    @PutMapping(value = "/api/roles/status")
+    public Result<String> updateRoleStatus(@RequestBody AdminRole requestRole) {
         log.info("---------------- 更新角色状态 ----------------------");
         String message = adminRoleService.updateRoleStatus(requestRole);
         if (!"更新成功".equals(message)) {
@@ -86,11 +91,11 @@ public class RoleController {
         } else {
             return ResultUtil.buildSuccessResult(message,null);
         }
-    }
+    }*/
 
     @ApiOperation("修改角色信息")
-    @PutMapping(value = "/api/role")
-    public Result editRole(@RequestBody AdminRole requestRole) {
+    @PutMapping(value = "/api/roles/roles")
+    public Result<String> editRole(@RequestBody AdminRole requestRole) {
         log.info("---------------- 修改角色信息 ----------------------");
         String message = adminRoleService.edit(requestRole);
         if (!"更新成功".equals(message)) {
@@ -101,24 +106,42 @@ public class RoleController {
     }
 
     @ApiOperation("搜索角色")
-    @GetMapping(value = "/api/role/search")
-    public Result search(@RequestParam String keywords) {
+    @GetMapping(value = "/api/roles/search")
+    public Result<Page<RoleDTO>> search(@RequestParam String keywords,
+                                          @RequestParam int pageNum,
+                                          @RequestParam int pageSize) {
         log.info("---------------- 搜索角色 ----------------------");
         List<AdminRole> rs = adminRoleService.search(keywords);
-        return ResultUtil.buildSuccessResult(rs);
+        Page<AdminRole> adminRolesPage= PageUtil.listToPage(rs,pageNum,pageSize);
+        Page<RoleDTO> roleDTOS=PageUtil.pageChange(adminRolesPage,RoleDTO.class);
+        return ResultUtil.buildSuccessResult(roleDTOS);
     }
 
     @ApiOperation("获取所有角色")
-    @GetMapping(value = "/api/role/all")
-    public Result listRoles() {
+    @GetMapping(value = "/api/roles/roles")
+    public Result<Page<RoleDTO>> listRoles(@RequestParam int pageNum,
+                                             @RequestParam int pageSize) {
         log.info("---------------- 获取所有角色 ----------------------");
         List<AdminRole> ad = adminRoleService.list();
-        return ResultUtil.buildSuccessResult(ad);
+        Page<AdminRole> adminRolesPage= PageUtil.listToPage(ad,pageNum,pageSize);
+        Page<RoleDTO> roleDTOS=PageUtil.pageChange(adminRolesPage,RoleDTO.class);
+        return ResultUtil.buildSuccessResult(roleDTOS);
     }
 
-    @ApiOperation("分配用户")
+    @ApiOperation("获取所有可用角色")
+    @GetMapping(value = "/api/roles/enabled")
+    public Result<Page<RoleDTO>> getAllRoleIsEnabled(@RequestParam int pageNum,
+                                                     @RequestParam int pageSize) {
+        log.info("---------------- 获取所有角色 ----------------------");
+        List<AdminRole> ad = adminRoleService.listIsEnabled();
+        Page<AdminRole> adminRolesPage= PageUtil.listToPage(ad,pageNum,pageSize);
+        Page<RoleDTO> roleDTOS=PageUtil.pageChange(adminRolesPage,RoleDTO.class);
+        return ResultUtil.buildSuccessResult(roleDTOS);
+    }
+
+    /*@ApiOperation("分配用户")
     @PutMapping(value = "/api/role/user")
-    public Result assistUser(@RequestParam int rid, @RequestBody LinkedHashMap userIds) {
+    public Result<String> assistUser(@RequestParam int rid, @RequestBody LinkedHashMap userIds) {
         log.info("---------------- 分配用户 ----------------------");
         String message = adminUserToRoleService.assistUser(rid, userIds);
         if (!"分配成功".equals(message)) {
@@ -126,30 +149,26 @@ public class RoleController {
         } else {
             return ResultUtil.buildSuccessResult(message,null);
         }
-    }
+    }*/
 
     @ApiOperation("获取所有权限")
-    @GetMapping(value = "/api/role/perm")
-    public Result listPerms() {
+    @GetMapping(value = "/api/roles/perms")
+    public Result<Page<PermissionDTO>> listPerms(@RequestParam int pageNum,
+                                                 @RequestParam int pageSize) {
         log.info("---------------- 获取所有权限 ----------------------");
         List<PermissionResource> ps = permissionResourceService.list();
-        return ResultUtil.buildSuccessResult(ps);
+        Page<PermissionResource> permissionResourcesPage= PageUtil.listToPage(ps,pageNum,pageSize);
+        Page<PermissionDTO> permissionDTOS=PageUtil.pageChange(permissionResourcesPage,PermissionDTO.class);
+        return ResultUtil.buildSuccessResult(permissionDTOS);
     }
 
-    @ApiOperation("获取所有菜单")
-    @GetMapping(value = "/api/role/menu")
-    public Result listMenus() {
-        log.info("---------------- 获取所有菜单 ----------------------");
-        List<AdminMenu> ms = adminMenuService.list();
-        return ResultUtil.buildSuccessResult(ms);
-    }
 
-    @ApiOperation("获取所有用户")
-    @GetMapping(value = "/api/role/user")
-    public Result listUsers() {
+   /* @ApiOperation("获取所有用户")
+    @GetMapping(value = "/api/roles/users")
+    public Result<List<User>> listUsers() {
         log.info("---------------- 获取所有用户 ----------------------");
         List<User> users = userService.listIsEnabled();
         return ResultUtil.buildSuccessResult(users);
-    }
+    }*/
 
 }

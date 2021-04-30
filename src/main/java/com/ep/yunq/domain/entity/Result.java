@@ -10,17 +10,16 @@ import lombok.Data;
  **/
 
 @Data
-public class Result {
+public class Result<T> {
     private int code;
     private String message;
-    private Object data;
+    private T data;
 
-    public Result(int code, String message, Object data) {
+    public Result(int code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
     }
-
     public Result() {
     }
 }

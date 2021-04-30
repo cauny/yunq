@@ -11,16 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface UserDAO extends JpaRepository<User,Integer> {
-    /* 根据用户名查找用户对象 */
-    User findByUsername(String username);
     /* 根据id查找用户对象 */
     User findById(int id);
 
     /* 根据手机号查找用户对象 */
     User findByPhone(String phone);
-
-    /* 根据用户名和密码查找用户对象 */
-    User findByUsernameAndPassword(String username,String password);
 
     @Query(value = "select new User(u.id,u.username,u.phone,u.enabled) from User u where u.enabled = 1")
     List<User> findAllByEnabled();
@@ -31,5 +26,7 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     void deleteAllById(int id);
 
     Page<User> findAll(Pageable pageable);
+
+    List<User> findAllByUsernameLikeOrPhoneLike(String keyword1, String keyword2);
 
 }

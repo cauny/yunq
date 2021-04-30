@@ -16,9 +16,11 @@ import java.util.List;
 public interface CourseDAO extends JpaRepository<Course, Integer> {
     Course findById(int id);
 
+    Course findByCode(String code);
+
     Page<Course> findAllByCreator(int id, Pageable pageable);
 
     Page<Course> findAll(Pageable pageable);
-
-    Page<Course> findAllByNameLikeAndTeacherLikeAndGradeLikeAndSemesterLikeOrderBySemesterAsc(String k1, String k2, String k3, String k4, Pageable pageable);
+    
+    Page<Course> findAllByNameLikeOrTeacherLikeOrGradeLikeOrSemesterLikeOrderBySemesterAsc(String k1, String k2, String k3, String k4, Pageable pageable);
 }

@@ -14,6 +14,7 @@ import java.io.File;
 @Data
 public class CourseDTO {
     private int id;
+    private String code;
     private String name;    //
     private String grade;    //
     private String semester;    //

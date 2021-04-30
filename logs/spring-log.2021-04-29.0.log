@@ -1,0 +1,187 @@
+19:25:00.908 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 修改学校机构 ----------------------
+19:26:03.407 [http-nio-8080-exec-6] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 修改学校机构 ----------------------
+19:36:03.894 [http-nio-8080-exec-2] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:36:08.089 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:36:24.174 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:36:54.973 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:36:58.399 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:37:04.450 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:37:06.091 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:37:08.167 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:41:08.841 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:41:21.291 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:42:36.420 [http-nio-8080-exec-2] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:42:51.535 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:43:41.529 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:44:10.135 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:47:00.235 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:47:49.573 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:49:23.635 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:49:56.545 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:50:23.683 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:50:41.551 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:51:10.292 [http-nio-8080-exec-2] INFO  c.e.y.c.PermissionController - ---------------- 添加权限 ----------------------
+19:51:10.551 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:51:16.044 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:51:22.535 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:51:22.805 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:51:27.552 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+19:51:39.560 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 批量删除权限 ----------------------
+19:51:39.813 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+19:51:48.416 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 搜索权限 ----------------------
+19:52:51.351 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 搜索权限 ----------------------
+19:53:15.951 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required int parameter 'pageNum' is not present]
+19:53:18.873 [http-nio-8080-exec-4] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required int parameter 'pageNum' is not present]
+19:53:38.360 [http-nio-8080-exec-5] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required int parameter 'pageNum' is not present]
+19:53:43.058 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+19:53:47.207 [http-nio-8080-exec-6] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 搜索学校机构 ----------------------
+20:26:10.841 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:37:06.798 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize instance of `java.util.LinkedHashMap<java.lang.Object,java.lang.Object>` out of START_ARRAY token; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize instance of `java.util.LinkedHashMap<java.lang.Object,java.lang.Object>` out of START_ARRAY token
+ at [Source: (PushbackInputStream); line: 1, column: 2]]
+20:40:43.866 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+20:41:33.958 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:42:38.851 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:43:18.973 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+20:44:41.673 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:45:01.498 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:48:09.989 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:48:12.766 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+20:48:13.639 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+20:48:23.689 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:48:43.176 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:49:41.291 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required int parameter 'pageNum' is not present]
+20:50:09.460 [http-nio-8080-exec-10] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.bind.MissingServletRequestParameterException: Required int parameter 'pageNum' is not present]
+20:50:11.151 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 搜索用户 ----------------------
+20:50:32.698 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:51:03.291 [http-nio-8080-exec-2] INFO  c.e.yunq.controller.ParamsController - ---------------- 获取所有系统参数 ----------------------
+20:51:03.291 [http-nio-8080-exec-4] INFO  c.e.yunq.controller.ParamsController - ---------------- 获取所有系统参数 ----------------------
+20:51:08.441 [http-nio-8080-exec-5] INFO  c.e.yunq.controller.ParamsController - ---------------- 修改系统参数 ----------------------
+20:51:08.788 [http-nio-8080-exec-7] INFO  c.e.yunq.controller.ParamsController - ---------------- 获取所有系统参数 ----------------------
+20:52:33.629 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+20:52:33.644 [http-nio-8080-exec-8] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.orm.jpa.JpaSystemException: Null value was assigned to a property [class com.ep.yunq.domain.entity.AdminMenu.enabled] of primitive type setter of com.ep.yunq.domain.entity.AdminMenu.enabled; nested exception is org.hibernate.PropertyAccessException: Null value was assigned to a property [class com.ep.yunq.domain.entity.AdminMenu.enabled] of primitive type setter of com.ep.yunq.domain.entity.AdminMenu.enabled] with root cause
+java.lang.IllegalArgumentException: Can not set int field com.ep.yunq.domain.entity.AdminMenu.enabled to null value
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:167)
+	at sun.reflect.UnsafeFieldAccessorImpl.throwSetIllegalArgumentException(UnsafeFieldAccessorImpl.java:171)
+	at sun.reflect.UnsafeIntegerFieldAccessorImpl.set(UnsafeIntegerFieldAccessorImpl.java:80)
+	at java.lang.reflect.Field.set(Field.java:764)
+	at org.hibernate.property.access.spi.SetterFieldImpl.set(SetterFieldImpl.java:52)
+	at org.hibernate.tuple.entity.AbstractEntityTuplizer.setPropertyValues(AbstractEntityTuplizer.java:681)
+	at org.hibernate.tuple.entity.PojoEntityTuplizer.setPropertyValues(PojoEntityTuplizer.java:144)
+	at org.hibernate.persister.entity.AbstractEntityPersister.setPropertyValues(AbstractEntityPersister.java:5166)
+	at org.hibernate.engine.internal.TwoPhaseLoad.initializeEntityFromEntityEntryLoadedState(TwoPhaseLoad.java:282)
+	at org.hibernate.engine.internal.TwoPhaseLoad.initializeEntity(TwoPhaseLoad.java:183)
+	at org.hibernate.engine.internal.TwoPhaseLoad.initializeEntity(TwoPhaseLoad.java:151)
+	at org.hibernate.loader.Loader.initializeEntitiesAndCollections(Loader.java:1199)
+	at org.hibernate.loader.Loader.processResultSet(Loader.java:1001)
+	at org.hibernate.loader.Loader.doQuery(Loader.java:959)
+	at org.hibernate.loader.Loader.doQueryAndInitializeNonLazyCollections(Loader.java:349)
+	at org.hibernate.loader.Loader.doList(Loader.java:2849)
+	at org.hibernate.loader.Loader.doList(Loader.java:2831)
+	at org.hibernate.loader.Loader.listIgnoreQueryCache(Loader.java:2663)
+	at org.hibernate.loader.Loader.list(Loader.java:2658)
+	at org.hibernate.loader.custom.CustomLoader.list(CustomLoader.java:338)
+	at org.hibernate.internal.SessionImpl.listCustomQuery(SessionImpl.java:2141)
+	at org.hibernate.internal.AbstractSharedSessionContract.list(AbstractSharedSessionContract.java:1172)
+	at org.hibernate.query.internal.NativeQueryImpl.doList(NativeQueryImpl.java:176)
+	at org.hibernate.query.internal.AbstractProducedQuery.list(AbstractProducedQuery.java:1593)
+	at org.hibernate.query.Query.getResultList(Query.java:165)
+	at sun.reflect.GeneratedMethodAccessor226.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.orm.jpa.SharedEntityManagerCreator$DeferredQueryInvocationHandler.invoke(SharedEntityManagerCreator.java:406)
+	at com.sun.proxy.$Proxy155.getResultList(Unknown Source)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution$CollectionExecution.doExecute(JpaQueryExecution.java:126)
+	at org.springframework.data.jpa.repository.query.JpaQueryExecution.execute(JpaQueryExecution.java:88)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.doExecute(AbstractJpaQuery.java:155)
+	at org.springframework.data.jpa.repository.query.AbstractJpaQuery.execute(AbstractJpaQuery.java:143)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.doInvoke(RepositoryMethodInvoker.java:137)
+	at org.springframework.data.repository.core.support.RepositoryMethodInvoker.invoke(RepositoryMethodInvoker.java:121)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.doInvoke(QueryExecutorMethodInterceptor.java:152)
+	at org.springframework.data.repository.core.support.QueryExecutorMethodInterceptor.invoke(QueryExecutorMethodInterceptor.java:131)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.projection.DefaultMethodInvokingMethodInterceptor.invoke(DefaultMethodInvokingMethodInterceptor.java:80)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.transaction.interceptor.TransactionInterceptor$1.proceedWithInvocation(TransactionInterceptor.java:123)
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:388)
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:137)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:145)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.interceptor.ExposeInvocationInterceptor.invoke(ExposeInvocationInterceptor.java:97)
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:186)
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:215)
+	at com.sun.proxy.$Proxy130.findAllOrderByParentId(Unknown Source)
+	at com.ep.yunq.domain.service.AdminMenuService.all(AdminMenuService.java:254)
+	at com.ep.yunq.controller.MenuController.all(MenuController.java:122)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:498)
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:197)
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:141)
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:106)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:894)
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:808)
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1060)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:962)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1006)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:898)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:626)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:883)
+	at javax.servlet.http.HttpServlet.service(HttpServlet.java:733)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:227)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:119)
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:189)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:162)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:202)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:542)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:143)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:346)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:374)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:887)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1684)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+	at java.lang.Thread.run(Thread.java:748)
+20:53:22.745 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:53:23.842 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+20:56:30.120 [http-nio-8080-exec-2] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+20:57:28.320 [http-nio-8080-exec-7] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+20:58:42.604 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:58:42.807 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+20:58:53.596 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 批量删除角色 ----------------------
+20:58:53.866 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:59:16.873 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:59:16.935 [http-nio-8080-exec-3] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+20:59:21.407 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 搜索角色 ----------------------
+20:59:41.229 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:00:25.892 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:00:26.066 [http-nio-8080-exec-7] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+21:00:56.976 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:00:57.157 [http-nio-8080-exec-8] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Failed to convert value of type 'java.lang.String' to required type 'java.lang.Integer'; nested exception is java.lang.NumberFormatException: For input string: "lazy"]
+21:00:58.913 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 修改角色信息 ----------------------
+21:01:06.045 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 修改角色信息 ----------------------
+21:01:13.860 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 添加新角色 ----------------------
+21:01:14.120 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------

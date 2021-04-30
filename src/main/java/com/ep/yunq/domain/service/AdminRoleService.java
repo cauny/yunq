@@ -44,6 +44,10 @@ public class AdminRoleService {
         return adminRoleDAO.findByName(name);
     }
 
+    public List<AdminRole> listIsEnabled() {
+        return adminRoleDAO.findAllByEnabled();
+    }
+
     public List<AdminRole> list() {
         List<AdminRole> roles = adminRoleDAO.findAll();
         List<PermissionResource> perms;

@@ -23,6 +23,7 @@ public class Course {
     @Column(name = "id")
     int id;
     private String name;    //
+    private String code;
     private String grade;    //
     private String semester;    //
     private String school;    //

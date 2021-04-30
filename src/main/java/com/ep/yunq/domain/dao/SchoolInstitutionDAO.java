@@ -33,4 +33,6 @@ public interface SchoolInstitutionDAO extends JpaRepository<SchoolInstitution,In
     int deleteAllByLevelLike(String level);
 
 
+
+
 }

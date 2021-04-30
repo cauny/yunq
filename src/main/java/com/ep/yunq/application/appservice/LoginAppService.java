@@ -1,8 +1,8 @@
 package com.ep.yunq.application.appservice;
 
+import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.User;
-import com.ep.yunq.application.dto.UserBasicInfo;
 import com.ep.yunq.domain.service.AdminRoleService;
 import com.ep.yunq.domain.service.UserInfoService;
 import com.ep.yunq.domain.service.UserService;
@@ -19,9 +19,6 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @classname: LoginAppService
@@ -43,19 +40,18 @@ public class LoginAppService {
     @Resource
     SmsUtil smsUtil;
 
-    public Result phoneLoginByPwd(String phone, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        String username = userService.findByPhone(phone).getUsername();
-        String message = userService.authUser(username, password);
+    public Result<UserLoginDTO> phoneLoginByPwd(String phone, String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        String message = userService.authUser(phone, password);
         if (!"登录成功".equals(message)) {
-            log.info("用户：{},登录失败", username);
+            log.info("用户：{},登录失败", phone);
             return ResultUtil.buildFailResult(message);
         }
-        log.info("用户：{},登录成功", username);
-        Map<String, Object> responseData = userService.loginMessage(phone);
+        log.info("用户：{},登录成功", phone);
+        UserLoginDTO responseData = userService.loginMessage(phone);
         return ResultUtil.buildSuccessResult(responseData);
     }
 
-    public Result phoneLoginByVerificationCode(String phone, String verificationCode) {
+    public Result<UserLoginDTO> phoneLoginByVerificationCode(String phone, String verificationCode) {
         if (!userService.isExistByPhone(phone)) {
             String message = "用户不存在";
             return ResultUtil.buildFailResult(message);
@@ -69,18 +65,11 @@ public class LoginAppService {
         }
         log.info("用户：{},登录成功", phone);
 
-        User user = new User();
-        user = userService.findByPhone(phone);
-        UserBasicInfo userBasicInfo = userInfoService.createByUser(user);
-
-        String token = userService.useToken(user);
-        Map<String, Object> responseData = new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userInfo", userBasicInfo);
-
+        UserLoginDTO responseData = userService.loginMessage(phone);
         return ResultUtil.buildSuccessResult(responseData);
     }
 
-    public Result getCode(String phone) {
+    public Result<String> getCode(String phone) {
         log.info("---------------- 获取验证码 ----------------------");
         String verificationCode;
         //1. 判断是否缓存该账号验证码
@@ -105,7 +94,7 @@ public class LoginAppService {
         }
     }
 
-    public Result forgetPassword(String phone, String password, String verificationCode) {
+    public Result<String> forgetPassword(String phone, String password, String verificationCode) {
         log.info("---------------- 重置密码 ----------------------");
         if (StringUtils.isEmpty(phone)) {
             String message = "手机号为空，重置失败";
@@ -137,4 +126,5 @@ public class LoginAppService {
         log.info("---------------- 重置成功 ----------------------");
         return ResultUtil.buildSuccessResult(message, null);
     }
+
 }

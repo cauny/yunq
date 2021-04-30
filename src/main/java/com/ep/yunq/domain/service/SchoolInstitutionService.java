@@ -2,6 +2,7 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.domain.dao.SchoolInstitutionDAO;
 import com.ep.yunq.domain.entity.SchoolInstitution;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,6 +18,7 @@ import java.util.*;
  * @Date: 2021/4/11 10:58
  * 功能描述：
  **/
+@Slf4j
 @Service
 public class SchoolInstitutionService {
     @Autowired
@@ -35,7 +37,7 @@ public class SchoolInstitutionService {
     public String setLevel(int parentId){
         /* 找到父节点的等级 */
         String level =schoolInstitutionDAO.findLevelById(parentId);
-        if (level.isEmpty()) {
+        if (level==null) {
             level = String.valueOf(parentId) + ".";
         } else {
             level = level  + String.valueOf(parentId) + ".";
@@ -82,6 +84,17 @@ public class SchoolInstitutionService {
         return message;
     }
 
+    public String batchDelete(List<Integer> sids) {
+        String message = "";
+        for (int sid : sids) {
+            message = delete(sid);
+            if (!"删除成功".equals(message)) {
+                break;
+            }
+        }
+        return message;
+    }
+
     public String edit(SchoolInstitution sInstitution) {
         String message = "";
         try {
@@ -108,6 +121,7 @@ public class SchoolInstitutionService {
 
     public List<SchoolInstitution> search(String keywords) {
         List<SchoolInstitution> sInstitutions = schoolInstitutionDAO.findAllByNameLike("%" + keywords + "%");
+        log.info("搜索"+sInstitutions);
         List<SchoolInstitution> list = list();
         Iterator<SchoolInstitution> iterator = list.iterator();
         List<String> idList =new ArrayList<>();
@@ -124,14 +138,28 @@ public class SchoolInstitutionService {
             }
         }
         return list;
+
+        /*for (SchoolInstitution sInstitution: sInstitutions) {
+            List<SchoolInstitution> colleges=getAllByParentId(sInstitution.getId());
+            sInstitution.setChildren(colleges);
+            for(SchoolInstitution college:colleges){
+                college.setChildren(getAllByParentId(college.getId()));
+            }
+        }
+        return sInstitutions;*/
     }
+
 
     public List<SchoolInstitution> list() {
         Sort sort = Sort.by(Sort.Direction.ASC, "sort");
         List<SchoolInstitution> sInstitutions = schoolInstitutionDAO.findAll(sort);
 
         for (SchoolInstitution sInstitution: sInstitutions) {
-            sInstitution.setChildren(getAllByParentId(sInstitution.getId()));
+            List<SchoolInstitution> colleges=getAllByParentId(sInstitution.getId());
+            sInstitution.setChildren(colleges);
+            for(SchoolInstitution college:colleges){
+                college.setChildren(getAllByParentId(college.getId()));
+            }
         }
 
         Iterator<SchoolInstitution> iterator = sInstitutions.iterator();

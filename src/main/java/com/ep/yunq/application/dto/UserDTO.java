@@ -1,32 +1,22 @@
 package com.ep.yunq.application.dto;
 
+import com.ep.yunq.domain.entity.AdminRole;
 import lombok.Data;
 
+import javax.persistence.Transient;
 import java.util.List;
 
 /**
  * @classname: UserDTO
  * @Author: yan
- * @Date: 2021/4/20 10:56
+ * @Date: 2021/4/30 12:03
  * 功能描述：
  **/
 @Data
 public class UserDTO {
     int id;
-    private String username;
-    private String phone;
-    private String avatar;
-    private List<String> roles;
-    private String defaultRole;
-
-    public UserDTO() {
-    }
-
-    public UserDTO(String username, String phone, String avatar, List<String> roles, String defaultRole) {
-        this.username = username;
-        this.phone = phone;
-        this.avatar = avatar;
-        this.roles = roles;
-        this.defaultRole = defaultRole;
-    }
+    private String username;    //用户名
+    private String phone;   //手机号
+    private Integer enabled;       //是否使用
+    private List<AdminRole> roles;
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -29,5 +30,8 @@ public interface AdminRoleDAO extends JpaRepository<AdminRole, Integer> {
     void deleteAllById(int id);
 
     Page<AdminRole> findAll(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from role where enabled = '1' ")
+    List<AdminRole> findAllByEnabled();
 
 }

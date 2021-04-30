@@ -2,8 +2,13 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.domain.dao.AdminMenuDAO;
 import com.ep.yunq.domain.entity.*;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +38,7 @@ public class AdminMenuService {
         return adminMenuDAO.findById(id);
     }
 
-    public List<AdminMenu> getMenusByUserId(int uid){
+    public Page<AdminMenu> getMenusByUserId(int uid,int pageNumber,int pageSize){
         User user=userService.findById(uid);
         List<AdminRole> roleList = adminRoleService.listRolesByUser(user.getId());
         List<AdminMenu> menus = new ArrayList<>();
@@ -52,12 +57,24 @@ public class AdminMenuService {
                     menus.add(menu);
                 }
             }
-
         }
-        return handleMenus(menus);
+        Page<AdminMenu> menusPage= PageUtil.listToPage(menus,pageNumber,pageSize);
+        return handleMenus(menusPage);
 
     }
 
+    public Page<AdminMenu> getMenusByRoleId(int rid,int pageNumber,int pageSize) {
+        List<AdminMenu> menus = new ArrayList<>();
+        List<AdminRoleToMenu> rms = adminRoleToMenuService.findAllByRoleId(rid);
+        for (AdminRoleToMenu rm : rms) {
+            AdminMenu menu =adminMenuDAO.findById(rm.getMenuId());
+            menu.setChildren(null);
+            menus.add(menu);
+        }
+        Page<AdminMenu> menusPage= PageUtil.listToPage(menus,pageNumber,pageSize);
+        return handleMenus(menusPage);
+
+    }
     public List<AdminMenu> getMenusByRoleId(int rid) {
         List<AdminMenu> menus = new ArrayList<>();
         List<AdminRoleToMenu> rms = adminRoleToMenuService.findAllByRoleId(rid);
@@ -70,13 +87,20 @@ public class AdminMenuService {
 
     }
 
-    public List<AdminMenu> list() {
+    /*public List<AdminMenu> list() {
         List<AdminMenu> menus = adminMenuDAO.findAll();
+        return handleMenus(menus);
+    }*/
+    public Page<AdminMenu> list(int pageNumber,int pageSize) {
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Page<AdminMenu> menus = adminMenuDAO.findAll(pageable);
         return handleMenus(menus);
     }
 
-    public List<AdminMenu> handleMenus(List<AdminMenu>menus) {
+    /*public List<AdminMenu> handleMenus(List<AdminMenu> menus) {
         List<AdminMenu> deleteMenus = new ArrayList<>();
+
         for (AdminMenu menu: menus){
             for (AdminMenu menu2: menus) {
                 if (menu.getId() == menu2.getParentId()) {
@@ -96,8 +120,57 @@ public class AdminMenuService {
             menus.remove(menu);
         }
         return menus;
+    }*/
+    public Page<AdminMenu> handleMenus(Page<AdminMenu> menusPage) {
+        List<AdminMenu> deleteMenus = new ArrayList<>();
+        Pageable pageable=menusPage.getPageable();
+        long totalElements=menusPage.getTotalElements();
+        List<AdminMenu> menus=menusPage.getContent();
+        for (AdminMenu menu: menus){
+            for (AdminMenu menu2: menus) {
+                if (menu.getId() == menu2.getParentId()) {
+                    if (null == menu.getChildren()) {
+                        List<AdminMenu> children = new ArrayList<>();
+                        children.add(menu2);
+                        menu.setChildren(children);
+                        deleteMenus.add(menu2);
+                    } else {
+                        menu.getChildren().add(menu2);
+                        deleteMenus.add(menu2);
+                    }
+                }
+            }
+        }
+        for (AdminMenu menu: deleteMenus) {
+            menus.remove(menu);
+        }
+
+        return PageUtil.listToPage(menus,pageable,totalElements);
     }
 
+    public List<AdminMenu> handleMenus(List<AdminMenu> menus) {
+        List<AdminMenu> deleteMenus = new ArrayList<>();
+        for (AdminMenu menu: menus){
+            for (AdminMenu menu2: menus) {
+                if (menu.getId() == menu2.getParentId()) {
+                    if (null == menu.getChildren()) {
+                        List<AdminMenu> children = new ArrayList<>();
+                        children.add(menu2);
+                        menu.setChildren(children);
+                        deleteMenus.add(menu2);
+                    } else {
+                        menu.getChildren().add(menu2);
+                        deleteMenus.add(menu2);
+                    }
+                }
+            }
+        }
+        for (AdminMenu menu: deleteMenus) {
+            menus.remove(menu);
+        }
+
+        return menus;
+    }
     public String add(AdminMenu adminMenu){
         String message = "";
         try {
@@ -152,7 +225,7 @@ public class AdminMenuService {
         return message;
     }
 
-    public List<AdminMenu> search(String keywords) {
+    public Page<AdminMenu> search(String keywords,int pageNumber,int pageSize) {
         List<AdminMenu> menus =adminMenuDAO.search("%" + keywords + "%");
         List<AdminMenu> deleteMenus = new ArrayList<AdminMenu>();
         for (AdminMenu adminMenu: menus){
@@ -173,12 +246,18 @@ public class AdminMenuService {
         for (AdminMenu adminMenu:deleteMenus) {
             menus.remove(adminMenu);
         }
-        return menus;
+        Page<AdminMenu> menusPage= PageUtil.listToPage(menus,pageNumber,pageSize);
+        return handleMenus(menusPage);
     }
 
-    public List<AdminMenu> all() {
+    public Page<AdminMenu> all(int pageNumber,int pageSize) {
         List<AdminMenu> menus = adminMenuDAO.findAllOrderByParentId();
-        return handleMenus(menus);
+        Page<AdminMenu> menusPage= PageUtil.listToPage(menus,pageNumber,pageSize);
+        return handleMenus(menusPage);
+    }
+
+    public List<AdminMenu> findAllByParentId(int mid){
+        return adminMenuDAO.findAllByParentId(mid);
     }
 
 

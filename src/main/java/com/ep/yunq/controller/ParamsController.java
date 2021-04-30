@@ -38,31 +38,35 @@ public class ParamsController {
 
     @ApiOperation("获取系统参数")
     @GetMapping(value = "/api/params")
-    public Result getAllSysParam(@RequestParam(required = false) String phone,
-                                 @RequestParam int pageNum,
+    public Result<Page<SysParamDTO>> getAllSysParam(@RequestParam int pageNum,
                                  @RequestParam int pageSize) {
         log.info("---------------- 获取所有系统参数 ----------------------");
+        Page<SysParam> params = sysParamService.list(pageNum, pageSize);
+        Page<SysParamDTO> sysParamDTO = PageUtil.pageChange(params, SysParamDTO.class);
+        return ResultUtil.buildSuccessResult(sysParamDTO);
+    }
+
+    @ApiOperation("根据用户id获取系统参数")
+    @GetMapping(value = "/api/params/{userId}")
+    public Result<SysParamDTO> getSysParamByUserId(@PathVariable("userId") Integer userId) {
+        log.info("---------------- 获取系统参数 ----------------------");
         ModelMapper modelMapper = new ModelMapper();
-        if (phone == null) {
-            Page<SysParam> params = sysParamService.list(pageNum, pageSize);
-            Page<SysParamDTO> sysParamDTO = PageUtil.pageChange(params,SysParamDTO.class);
-            return ResultUtil.buildSuccessResult(sysParamDTO);
-        } else {
-            SysParam sysParam = sysParamService.getByUserId(userService.findByPhone(phone).getId());
-            SysParamDTO sysParamDTO = modelMapper.map(sysParam, SysParamDTO.class);
-            log.info("sysParamDTO" + sysParamDTO);
-            return ResultUtil.buildSuccessResult(sysParamDTO);
+        SysParam sysParam = sysParamService.getByUserId(userId);
+        if (sysParam == null) {
+            return ResultUtil.buildFailResult("该用户不存在");
         }
+        SysParamDTO sysParamDTO = modelMapper.map(sysParam, SysParamDTO.class);
+        return ResultUtil.buildSuccessResult(sysParamDTO);
     }
 
 
     @ApiOperation("修改系统参数")
     @PutMapping(value = "/api/params")
-    public Result editSysParam(@RequestBody SysParamDTO sysParam) {
+    public Result<String> editSysParam(@RequestBody SysParamDTO sysParam) {
         log.info("---------------- 修改系统参数 ----------------------");
         String message = sysParamService.edit(sysParam);
         if ("修改成功".equals(message)) {
-            return ResultUtil.buildSuccessResult(message,null);
+            return ResultUtil.buildSuccessResult(message, null);
         } else {
             return ResultUtil.buildFailResult(message);
         }

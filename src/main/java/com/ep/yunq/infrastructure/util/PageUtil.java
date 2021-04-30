@@ -2,9 +2,7 @@ package com.ep.yunq.infrastructure.util;
 
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Type;
@@ -35,4 +33,35 @@ public class PageUtil {
         Page<R> newPages=new PageImpl<>(pages,pageable,totalElements);
         return newPages;
     }
+
+    public static <T> Page<T> listToPage(List<T> list,Pageable pageable,Long totalElements){
+        Page<T> pages=new PageImpl<>(list,pageable,totalElements);
+        return pages;
+    }
+
+    public static <T> Page<T> listToPage(List<T> list,int pageNumber,int pageSize){
+        Sort sort=Sort.by(Sort.Direction.ASC,"id");
+        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        //当前页第一条数据在list中的位置
+        int start = (int) pageable.getOffset();
+        //当前页最后一条数据在list中的位置
+        int end = (start + pageable.getPageSize()) > list.size() ? list.size() : (start + pageable.getPageSize());
+        Page<T> pages=new PageImpl<>(list.subList(start,end),pageable,list.size());
+        return pages;
+    }
+
+    public static <R,T> List<R> listChange(List<T> list,Type type){
+        ModelMapper modelMapper=new ModelMapper();
+        List<R> newLists=new ArrayList<>();
+        for(T t:list){
+            R r=modelMapper.map(t,type);
+            newLists.add(r);
+        }
+        return newLists;
+    }
+
+
+
+
+
 }

@@ -1,20 +1,22 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.application.appservice.LoginAppService;
-import com.ep.yunq.application.appservice.RegisterAppService;
-import com.ep.yunq.domain.entity.Result;
+import com.ep.yunq.application.dto.UserDTO;
+import com.ep.yunq.application.dto.UserLoginDTO;
+import com.ep.yunq.domain.entity.*;
+import com.ep.yunq.domain.service.AdminRoleService;
+import com.ep.yunq.domain.service.AdminUserToRoleService;
+import com.ep.yunq.domain.service.UserInfoService;
 import com.ep.yunq.domain.service.UserService;
-import com.ep.yunq.infrastructure.util.RedisUtil;
-import com.ep.yunq.infrastructure.util.ResultUtil;
-import com.ep.yunq.infrastructure.util.SmsUtil;
+import com.ep.yunq.infrastructure.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @classname: UserController
@@ -30,116 +32,109 @@ public class UserController {
     @Autowired
     UserService userService;
     @Autowired
-    SmsUtil smsUtil;
+    AdminUserToRoleService adminUserToRoleService;
     @Autowired
-    RedisUtil redisUtil;
+    AdminRoleService adminRoleService;
     @Autowired
-    LoginAppService loginAppService;
-    @Autowired
-    RegisterAppService registerAppService;
+    UserInfoService userInfoService;
 
-    //管理员可以访问主页和测试页，普通用户访问主页
-    /*手机密码登录*/
-    @ApiOperation("密码登录")
-    @PostMapping(value = "/api/loginByPwd")
-    public Result phoneLoginByPwd(@RequestParam String phone, @RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-/*        phone = HtmlUtils.htmlEscape(phone);
-        password = HtmlUtils.htmlEscape(password);*/
-        try {
-            Result responseData = loginAppService.phoneLoginByPwd(phone, password);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
+
+    /**
+     * -------------------------- 用户 --------------------------------------
+     **/
+
+    @ApiOperation("增加用户")
+    @PostMapping(value = "/api/admins/users")
+    public Result addUser(@RequestBody User user) {
+        log.info("---------------- 增加用户 ----------------------");
+        String message = userService.registerByAdmin(user, "student");
+        if ("注册成功".equals(message))
+            return ResultUtil.buildSuccessResult(message);
+        else
+            return ResultUtil.buildFailResult(message);
+    }
+
+    @ApiOperation("删除用户")
+    @DeleteMapping(value = "/api/admins/users")
+    public Result deleteUser(@RequestParam int uid) {
+        log.info("---------------- 删除用户 ----------------------");
+        String message = userService.delete(uid);
+        if ("删除成功".equals(message)) {
+            return ResultUtil.buildSuccessResult(message);
+        } else {
+            return ResultUtil.buildFailResult(message);
         }
     }
 
-    /*手机验证码登录*/
-    @ApiOperation("验证码登录")
-    @PostMapping(value = "/api/loginByVerificationCode")
-    public Result phoneLoginByVerificationCode(@RequestParam String phone, @RequestParam String verificationCode) {
-        /*phone = HtmlUtils.htmlEscape(phone);
-        verificationCode = HtmlUtils.htmlEscape(verificationCode);*/
-        try {
-            Result responseData = loginAppService.phoneLoginByVerificationCode(phone, verificationCode);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
+    @ApiOperation("批量删除用户")
+    @DeleteMapping(value = "/api/admins/users/batches")
+    public Result batchDeleteUser(@RequestBody List<Integer> userIds) {
+        log.info("---------------- 批量删除用户 ----------------------");
+        String message = userService.batchDelete(userIds);
+        if ("删除成功".equals(message)) {
+            return ResultUtil.buildSuccessResult(message);
+        } else {
+            return ResultUtil.buildFailResult(message);
         }
     }
 
-
-    @ApiOperation("获取验证码")
-    @GetMapping(value = "/api/getCode")
-    public Result getCode(@RequestParam String phone) {
-        /*phone = HtmlUtils.htmlEscape(phone);*/
-        try {
-            Result responseData = loginAppService.getCode(phone);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
-        }
+    @ApiOperation("修改用户信息")
+    @PutMapping("/api/admins/users")
+    public Result editUser(@RequestBody UserDTO requestUser) {
+        log.info("---------------- 修改用户信息 ----------------------");
+        String message = userService.editUser(requestUser);
+        if ("修改成功".equals(message))
+            return ResultUtil.buildSuccessResult(message);
+        else
+            return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("忘记密码")
-    @PostMapping(value = "/api/forgetPassword")
-    public Result forgetPassword(@RequestParam String phone,
-                                 @RequestParam String password,
-                                 @RequestParam String verificationCode) {
-        /*phone = HtmlUtils.htmlEscape(phone);*/
-        try {
-            Result responseData = loginAppService.forgetPassword(phone, password, verificationCode);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
-        }
+
+    @ApiOperation("重置密码")
+    @PutMapping(value = "/api/admins/users/passwords")
+    public Result resetPassword(@RequestBody User requestUser) {
+        log.info("---------------- 重置密码 ----------------------");
+        String message = userService.resetPassword(requestUser);
+        if ("重置成功".equals(message))
+            return ResultUtil.buildSuccessResult(message);
+        else
+            return ResultUtil.buildFailResult(message);
     }
 
-    @ApiOperation("判断手机号是否存在，存在为true")
-    @GetMapping("/api/phone-exist")
-    public Result isPhoneExist(@RequestParam String phone) {
-        boolean message;
-        try {
-            message = userService.isExistByPhone(phone);
-            if (message == true) {
-                return ResultUtil.buildSuccessResult(true);
-            }
-            return ResultUtil.buildSuccessResult(false);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
-        }
-
+    @ApiOperation("搜索用户")
+    @GetMapping(value = "/api/admins/users/search")
+    public Result<Page<UserDTO>> search(@RequestParam String keywords, @RequestParam int pageNum,
+                                        @RequestParam int pageSize) {
+        log.info("---------------- 搜索用户 ----------------------");
+        List<User> us = userService.search(keywords);
+        log.info("搜索"+us);
+        Page<User> usersPage = PageUtil.listToPage(us, pageNum, pageSize);
+        Page<UserDTO> userDTOS = PageUtil.pageChange(usersPage, UserDTO.class);
+        return ResultUtil.buildSuccessResult(userDTOS);
     }
 
-    @CrossOrigin
-    @ApiOperation("web端注册")
-    @PostMapping(value = "/api/register")
-    public Result register(@RequestParam String username, @RequestParam String phone,
-                           @RequestParam String password, @RequestParam String role,
-                           @RequestParam String verificationCode) {
-        try {
-            Result responseData = registerAppService.register(username, phone, password, role, verificationCode);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
-        }
+    @ApiOperation("获取所有用户")
+    @GetMapping(value = "/api/admins/users")
+    public Result<Page<User>> listUsers(@RequestParam int pageNum, @RequestParam int pageSize) {
+        log.info("---------------- 获取所有用户 ----------------------");
+        Page<User> us = userService.list(pageNum, pageSize);
+        return ResultUtil.buildSuccessResult(us);
     }
 
-    @ApiOperation("移动端注册")
-    @PostMapping(value = "/api/mobileRegister")
-    public Result mobileRegister(@RequestParam String username, @RequestParam String phone,
-                                 @RequestParam String password, @RequestParam String verificationCode) {
-        try {
-            Result responseData = registerAppService.mobileRegister(username, phone, password, verificationCode);
-            return responseData;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResultUtil.buildFailResult("参数异常");
-        }
+    /**
+     * -------------------------- 用户信息 --------------------------------------
+     **/
+
+    @ApiOperation("修改用户信息表信息")
+    @PutMapping(value = "/api/admins/userInfos")
+    public Result editUserInfo(@RequestBody UserInfo userInfo) {
+        log.info("---------------- 修改用户信息 ----------------------");
+        String message = userInfoService.edit(userInfo);
+        if ("修改成功".equals(message))
+            return ResultUtil.buildSuccessResult(message);
+        else
+            return ResultUtil.buildFailResult(message);
     }
+
+
 }

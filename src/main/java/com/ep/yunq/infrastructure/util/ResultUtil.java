@@ -13,21 +13,25 @@ import org.springframework.stereotype.Component;
 public class ResultUtil {
 
     /* 返回成功信息 */
-    public static Result buildSuccessResult(String message,Object data){
+    public static <T> Result<T> buildSuccessResult(String message,T data){
         return buildResult(ConstantUtil.SUCCESS,message,data);}
 
     /* 返回成功信息 */
-    public static Result buildSuccessResult(Object data){ return buildResult(ConstantUtil.SUCCESS,"成功",data);}
+    public static <T> Result<T> buildSuccessResult(T data){ return buildResult(ConstantUtil.SUCCESS,"成功",data);}
 
     /* 返回失败信息 */
-    public static Result buildFailResult(String message){  return buildResult(ConstantUtil.FAIL,message,null);}
+    public static <T> Result<T> buildFailResult(String message){  return buildResult(ConstantUtil.FAIL,message,null);}
 
     /* 返回出错信息 */
-    public static Result buildExceptionResult(Object data){  return buildResult(ConstantUtil.FAIL,"出错",data);}
+    public static <T> Result<T> buildExceptionResult(T data){  return buildResult(ConstantUtil.FAIL,"出错",data);}
 
     /* 返回值 */
-    public static Result buildResult(ConstantUtil constant,String message,Object data){
-        return new Result(constant.code,message,data);
+    public static <T> Result<T> buildResult(ConstantUtil constant,String message,T data){
+        return new Result<T>(constant.code,message,data);
+    }
+
+    public static <T> Result<T> build(Result<T> res,T data){
+        return new Result<T>(res.getCode(), res.getMessage(), data);
     }
 
 }

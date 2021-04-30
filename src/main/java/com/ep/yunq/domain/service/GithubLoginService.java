@@ -85,7 +85,7 @@ public class GithubLoginService {
             if(userInfo.getAvatar()==null){
                 userInfo.setAvatar(avatar);
             }
-            userInfoService.add(userInfo);
+            userInfoService.addOrUpdate(userInfo);
 
             //设置用户角色
             int rid=adminRoleService.findByName(role).getId();

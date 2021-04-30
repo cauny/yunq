@@ -42,8 +42,8 @@ public class GithubLoginController {
 
     //回调地址
     @ApiOperation("访问回调")
-    @GetMapping("/api/callback")
-    public Result callback(@RequestParam String code, @RequestParam String state) throws Exception {
+    @GetMapping("/api/github/callback")
+    public Result<Map<String, Object>> callback(@RequestParam String code, @RequestParam String state) throws Exception {
         String message = "";
         Map<String, Object> responseData = new IdentityHashMap<>();
         if (!StringUtils.isEmpty(code) && !StringUtils.isEmpty(state)) {
@@ -105,8 +105,8 @@ public class GithubLoginController {
     }
 
     @ApiOperation("绑定手机")
-    @PutMapping("/api/bind-user")
-    public Result bindUser(@RequestParam String phone,
+    @PutMapping("/api/github/bind-users")
+    public Result<String> bindUser(@RequestParam String phone,
                            @RequestParam String verificationCode,
                            @RequestParam Integer userId,
                            @RequestParam String password) {

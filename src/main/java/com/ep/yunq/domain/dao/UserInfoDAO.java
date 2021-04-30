@@ -15,6 +15,9 @@ public interface UserInfoDAO extends JpaRepository<UserInfo,Integer> {
     /* 根据用户名查找用户信息 */
     UserInfo findByUsername(String username);
 
+
+    UserInfo findById(int id);
+
     /* 根据用户id查找用户信息 */
     @Query("from UserInfo i where i.user.id = ?1 ")
     UserInfo findByUserId(int uid);

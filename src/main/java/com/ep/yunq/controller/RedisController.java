@@ -25,7 +25,7 @@ public class RedisController {
     private RedisUtil redisUtil;
 
     @GetMapping("/api/common/redis/set")
-    public Result redisset(@RequestParam("key")String key, @RequestParam("value")String value){
+    public Result<String> redisSet(@RequestParam("key")String key, @RequestParam("value")String value){
         log.info("---------------- 获取缓存 ----------------------");
         boolean isSuccess = redisUtil.set(key, value, 20);
         if (true == isSuccess) {
@@ -38,13 +38,13 @@ public class RedisController {
     }
 
     @GetMapping("/api/common/redis/get")
-    public Result redisget(@RequestParam("key")String key){
+    public Result<Object> redisGet(@RequestParam("key")String key){
         log.info("----------------存入缓存 ----------------------");
         return ResultUtil.buildSuccessResult(redisUtil.get(key));
     }
 
     @GetMapping("/api/common/redis/expire")
-    public Result expire(@RequestParam("key")String key){
+    public Result<String> expire(@RequestParam("key")String key){
         log.info("---------------- 设置缓存时间 ----------------------");
         boolean isSuccess = redisUtil.expire(key,ExpireTime);
         if (true == isSuccess) {

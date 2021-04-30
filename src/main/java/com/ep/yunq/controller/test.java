@@ -1,8 +1,10 @@
 package com.ep.yunq.controller;
 
-import com.ep.yunq.application.dto.UserDTO;
+import com.ep.yunq.application.dto.SchoolInstitutionDTO;
+import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.domain.service.*;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -17,10 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 @Slf4j
@@ -65,7 +64,7 @@ public class test {
 
     @GetMapping("/api/list")
     public Result pageTest(@RequestParam int pageNum,@RequestParam int pageSize){
-        Page<User> res= userService.userPage(pageNum,pageSize);
+        Page<User> res= userService.list(pageNum,pageSize);
         return ResultUtil.buildSuccessResult(res);
     }
 
@@ -77,8 +76,8 @@ public class test {
         ModelMapper modelMapper = new ModelMapper();
         log.info("role:",user.getRoles());
 //        UserDTO userDTO=modelMapper.map(user,UserDTO.class);
-        UserDTO userDTO=modelMapper.map(userInfo,UserDTO.class);
-        return ResultUtil.buildSuccessResult(userDTO);
+        UserLoginDTO userLoginDTO =modelMapper.map(userInfo, UserLoginDTO.class);
+        return ResultUtil.buildSuccessResult(userLoginDTO);
     }
 
     @ApiOperation("test3")
@@ -101,6 +100,27 @@ public class test {
 
         return ResultUtil.buildSuccessResult(userAuths1);
     }
+
+    @ApiOperation("test5")
+    @GetMapping("/api/test5")
+    @RequestBody
+    public Page<User> est5(@RequestParam int pageNum,@RequestParam int pageSize){
+
+        List<User> users=userService.listIsEnabled();
+        Page<User> us= PageUtil.listToPage(users,pageNum,pageSize);
+        return us;
+    }
+
+    @ApiOperation("test6")
+    @GetMapping("/api/test6")
+    @RequestBody
+    public Result est(@RequestBody SchoolInstitutionDTO schoolInstitutionDTO){
+
+        ModelMapper modelMapper = new ModelMapper();
+        SchoolInstitution schoolInstitution=modelMapper.map(schoolInstitutionDTO,SchoolInstitution.class);
+        return ResultUtil.buildSuccessResult(schoolInstitution);
+    }
+
 
 
 }
