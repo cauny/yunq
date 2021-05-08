@@ -42,7 +42,7 @@ public class CourseService {
     SmsUtil smsUtil;
 
     public void addOrUpdate(Course course) {
-        course.setModifitionDate(new Date());
+        course.setModificationDate(new Date());
         courseDAO.save(course);
     }
 
@@ -138,7 +138,7 @@ public class CourseService {
             courseInDB.setTeachProgress(course.getTeachProgress());
             courseInDB.setExamArrange(course.getExamArrange());
             courseInDB.setModifier(course.getModifier());
-            courseInDB.setModifitionDate(new Date());
+            courseInDB.setModificationDate(new Date());
             /*courseInDB.setSchoolId(course.getSchoolId());
             courseInDB.setCollegeId(course.getCollegeId());*/
 

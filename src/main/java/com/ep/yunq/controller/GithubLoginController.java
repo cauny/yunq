@@ -1,5 +1,6 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.domain.entity.UserAuths;
@@ -43,9 +44,9 @@ public class GithubLoginController {
     //回调地址
     @ApiOperation("访问回调")
     @GetMapping("/api/github/callback")
-    public Result<Map<String, Object>> callback(@RequestParam String code, @RequestParam String state) throws Exception {
+    public Result<UserLoginDTO> callback(@RequestParam String code, @RequestParam String state) throws Exception {
         String message = "";
-        Map<String, Object> responseData = new IdentityHashMap<>();
+        UserLoginDTO responseData = new UserLoginDTO();
         if (!StringUtils.isEmpty(code) && !StringUtils.isEmpty(state)) {
             //拿到我们的code,去请求token
             //发送一个请求到
@@ -74,11 +75,7 @@ public class GithubLoginController {
                 user.setEnabled(1);
                 user = userService.addAndReturn(user);
 
-                UserAuths userAuths = new UserAuths();
-                userAuths.setUserId(user.getId());
-                userAuths.setIdentifier(String.valueOf(id));
-                userAuths.setCredential(token);
-                userAuths.setIdentityType("github");
+                UserAuths userAuths = new UserAuths(user.getId(),"github",String.valueOf(id),token);
                 //默认角色为学生
                 message = githubLoginService.githubRegister(user, "student", avatar, userAuths);
                 if (!message.equals("注册成功")) {
@@ -88,15 +85,6 @@ public class GithubLoginController {
                 return ResultUtil.buildSuccessResult(message, responseData);
 
             }
-            // 成功则登陆,判断上次是否绑定手机号
-            /*User user=userService.findByGithubId(id);
-            if(user.getPhone()==null){
-                message="补充手机号和密码";
-                responseData.clear();
-                responseData.put("githubId",id);
-                return ResultUtil.buildResult(ConstantUtil.USER_INFO_UNCOMPLETE,message,responseData);
-            }*/
-            /*responseData=userService.loginMessage(user.getPhone());*/
             responseData = userService.loginMessageByUserId(userAuthsService.findByIdentityTypeAndIdentifier("github", String.valueOf(id)).getUserId());
             return ResultUtil.buildSuccessResult(responseData);
         }

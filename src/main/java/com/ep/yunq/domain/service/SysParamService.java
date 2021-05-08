@@ -94,13 +94,4 @@ public class SysParamService {
         sysParam.setUser(user);
         return sysParam;
     }
-
-    public Page<SysParamDTO> pageChange(Page<SysParam> pageOld){
-        Pageable pageable = pageOld.getPageable();
-        ModelMapper modelMapper = new ModelMapper();
-
-        List<SysParamDTO> dtos = modelMapper.map(pageOld.getContent(), new TypeToken<List<SysParamDTO>>() {}.getType());
-        Page<SysParamDTO> pageNew = new PageImpl<>(dtos, pageable, pageOld.getTotalElements());
-        return pageNew;
-    }
 }

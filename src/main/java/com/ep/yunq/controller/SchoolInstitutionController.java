@@ -35,9 +35,8 @@ public class SchoolInstitutionController {
     public Result<Page<SchoolInstitutionDTO>> getAllSchoolInstitution(@RequestParam int pageNum,
                                                                       @RequestParam int pageSize) {
         log.info("---------------- 获取所有学校机构 ----------------------");
-        List<SchoolInstitution> schoolInstitutions= schoolInstitutionService.list();
-        Page<SchoolInstitution> schoolInstitutionsPage= PageUtil.listToPage(schoolInstitutions,pageNum,pageSize);
-        Page<SchoolInstitutionDTO> schoolInstitutionDTOS=PageUtil.pageChange(schoolInstitutionsPage,SchoolInstitutionDTO.class);
+        List<SchoolInstitutionDTO> schoolInstitutions= schoolInstitutionService.getSchool(0);
+        Page<SchoolInstitutionDTO> schoolInstitutionDTOS=PageUtil.listToPage(schoolInstitutions,pageNum,pageSize);
         return ResultUtil.buildSuccessResult(schoolInstitutionDTOS);
     }
 
@@ -103,9 +102,9 @@ public class SchoolInstitutionController {
                                                                    @RequestParam int pageNum,
                                                                    @RequestParam int pageSize) {
         log.info("---------------- 搜索学校机构 ----------------------");
-        List<SchoolInstitution> schoolInstitutions= schoolInstitutionService.search(keywords);
-        Page<SchoolInstitution> schoolInstitutionsPage= PageUtil.listToPage(schoolInstitutions,pageNum,pageSize);
-        Page<SchoolInstitutionDTO> schoolInstitutionDTOS=PageUtil.pageChange(schoolInstitutionsPage,SchoolInstitutionDTO.class);
+        List<SchoolInstitutionDTO> schoolInstitutions= schoolInstitutionService.search(keywords);
+        /*Page<SchoolInstitution> schoolInstitutionsPage= PageUtil.listToPage(schoolInstitutions,pageNum,pageSize);*/
+        Page<SchoolInstitutionDTO> schoolInstitutionDTOS=PageUtil.listToPage(schoolInstitutions,pageNum,pageSize);
         return ResultUtil.buildSuccessResult(schoolInstitutionDTOS);
     }
 
@@ -113,8 +112,7 @@ public class SchoolInstitutionController {
     @GetMapping( "/api/sys/schools/children")
     public Result<List<SchoolInstitutionDTO>> findChildren(@RequestParam int sid) {
         log.info("---------------- 查找子节点 ----------------------");
-        List<SchoolInstitution> schoolInstitutions= schoolInstitutionService.getSchool(sid);
-        List<SchoolInstitutionDTO> schoolInstitutionDTOS=PageUtil.listChange(schoolInstitutions,SchoolInstitutionDTO.class);
+        List<SchoolInstitutionDTO> schoolInstitutionDTOS=schoolInstitutionService.getSchool(sid);
         return ResultUtil.buildSuccessResult(schoolInstitutionDTOS);
     }
 

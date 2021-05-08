@@ -1,5 +1,7 @@
 package com.ep.yunq.domain.service;
 
+import com.ep.yunq.application.dto.AllStudentSignInCourseDTO;
+import com.ep.yunq.application.dto.CourseStudentSignInDTO;
 import com.ep.yunq.domain.dao.StudentSignInDAO;
 import com.ep.yunq.domain.entity.CourseSignIn;
 import com.ep.yunq.domain.entity.StudentSignIn;
@@ -41,7 +43,7 @@ public class StudentSignInService {
     }
 
     public boolean isSignIn(int cid, int uid){
-        StudentSignIn studentSignIn = studentSignInDAO.findByCourseSignInAndStudent(cid, uid);
+        StudentSignIn studentSignIn = studentSignInDAO.findByCourseSignInAndStudentId(cid, uid);
         if (null == studentSignIn)
             return false;
         else
@@ -91,8 +93,8 @@ public class StudentSignInService {
         return message;
     }
 
-    public List<Map<String,Object>> getAllSignInByUserId(int uid, int cid){
-        List<StudentSignIn> studentSignIns = studentSignInDAO.findAllByStudentAndCourseId(uid, cid);
+    /*public List<Map<String,Object>> getAllSignInByUserId(int uid, int cid){
+        List<StudentSignIn> studentSignIns = studentSignInDAO.findAllByStudentIdAndCourseSignIn(uid, cid);
         List<CourseSignIn> courseSignIns = courseSignInService.listAllByCourse(cid);
         List<Map<String,Object>> maps = new ArrayList<>();
         for (CourseSignIn courseSignIn: courseSignIns){
@@ -111,20 +113,39 @@ public class StudentSignInService {
 
         }
         return maps;
+    }*/
+    public List<CourseStudentSignInDTO> getAllSignInByUserId(int uid, int cid){
+        List<StudentSignIn> studentSignIns = studentSignInDAO.findAllByStudentIdAndCourseSignIn(uid, cid);
+        List<CourseSignIn> courseSignIns = courseSignInService.listAllByCourse(cid);
+        List<CourseStudentSignInDTO> maps = new ArrayList<>();
+        for (CourseSignIn courseSignIn: courseSignIns){
+            CourseStudentSignInDTO courseStudentSignInDTO=new CourseStudentSignInDTO();
+            courseStudentSignInDTO.setCourseId(courseSignIn.getId());
+            courseStudentSignInDTO.setMode(courseSignIn.getMode());
+            courseStudentSignInDTO.setTime(sdf.format(courseSignIn.getStartTime()));
+            courseStudentSignInDTO.setIsSignIn(false);
+            for (StudentSignIn studentSignIn: studentSignIns){
+                if (courseSignIn.getId() == studentSignIn.getCourseSignIn().getId()){
+                    courseStudentSignInDTO.setIsSignIn(true);
+                    break;
+                }
+            }
+            maps.add(courseStudentSignInDTO);
+        }
+        return maps;
     }
 
-    public List<Map<String,Object>> getAllSignInByCourseSignIn(int csiid){
+    public List<AllStudentSignInCourseDTO> getAllSignInByCourseSignIn(int csiid){
         List<Map<String,Object>> maps = studentSignInDAO.findAllByCourseSignIn(csiid);
-        List<Map<String,Object>> result = new ArrayList<>();
+        List<AllStudentSignInCourseDTO> result = new ArrayList<>();
         for (Map<String,Object> map: maps){
-            Map<String,Object> tmp = new HashMap<>();
-            tmp.put("ino",map.get("ino"));
-            tmp.put("name",map.get("name"));
-            tmp.put("time",sdf.format(map.get("time")));
-            tmp.put("mode",map.get("mode"));
+            AllStudentSignInCourseDTO tmp=new AllStudentSignInCourseDTO();
+            tmp.setIno((String) map.get("ino"));
+            tmp.setName((String) map.get("name"));
+            tmp.setTime(sdf.format(map.get("time")));
+            tmp.setMode((String) map.get("mode"));
             result.add(tmp);
         }
-
         return result;
     }
 

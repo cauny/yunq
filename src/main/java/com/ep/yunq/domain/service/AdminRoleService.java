@@ -4,10 +4,12 @@ import com.ep.yunq.domain.dao.AdminRoleDAO;
 import com.ep.yunq.domain.entity.AdminMenu;
 import com.ep.yunq.domain.entity.AdminRole;
 import com.ep.yunq.domain.entity.PermissionResource;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -54,7 +56,7 @@ public class AdminRoleService {
         List<AdminMenu> menus;
         for (AdminRole role : roles) {
             perms = permissionResourceService.listPermsByRoleId(role.getId());
-            menus = adminMenuService.getMenusByRoleId(role.getId());
+            menus = PageUtil.listChange(adminMenuService.getMenusByRoleId(role.getId()),AdminMenu.class);
             role.setPerms(perms);
             role.setMenus(menus);
         }
@@ -85,22 +87,12 @@ public class AdminRoleService {
         return roles;
     }
 
-    public void deleteByUid(int id) {
-        adminRoleDAO.deleteAllById(id);
+    public void add(AdminRole adminRole) {
+        adminRole.setCreationDate(new Date());
+        adminRoleDAO.save(adminRole);
     }
-
-    /* 对角色表进行更新和添加操作 */
-    public void addAndUpdate(AdminRole adminRole) {
-        //检查该对象是否存在，存在时比较是否一样，不一样的时删除然后添加，对象不存在直接添加
-        if (findByName(adminRole.getName()) == null) {
-            adminRoleDAO.save(adminRole);
-        } else if (findByName(adminRole.getName()).getEnabled() != adminRole.getEnabled()) {
-            deleteByUid(adminRole.getId());
-            adminRoleDAO.save(adminRole);
-        }
-    }
-
-    public void addOrUpdate(AdminRole adminRole) {
+    public void update(AdminRole adminRole){
+        adminRole.setModificationDate(new Date());
         adminRoleDAO.save(adminRole);
     }
 
@@ -147,7 +139,8 @@ public class AdminRoleService {
                 } else {
                     adminRoleInDB.setName(requestRole.getName());
                     adminRoleInDB.setNameZh(requestRole.getNameZh());
-                    addOrUpdate(adminRoleInDB);
+                    adminRoleInDB.setModificationDate(new Date());
+                    update(adminRoleInDB);
                     List<AdminMenu> menus = requestRole.getMenus();
                     List<PermissionResource> perms = requestRole.getPerms();
                     message = editRoleMenuAndPerm(requestRole.getId(), menus, perms);
@@ -166,26 +159,6 @@ public class AdminRoleService {
         if (!"更新成功".equals(message))
             return message;
         message = adminRoleToPerService.updateRolePerm(rid, perms);
-        return message;
-    }
-
-    public String updateRoleStatus(AdminRole requestRole) {
-        String message = "";
-        try {
-            AdminRole adminRoleInDB = findById(requestRole.getId());
-            if (null == adminRoleInDB) {
-                message = "该角色不存在";
-
-            } else {
-                adminRoleInDB.setEnabled(requestRole.getEnabled());
-                addOrUpdate(adminRoleInDB);
-                message = "更新成功";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            message = "参数错误，修改失败";
-        }
-
         return message;
     }
 

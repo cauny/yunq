@@ -33,18 +33,6 @@ public class GithubLoginService {
     @Autowired
     UserAuthsService userAuthsService;
 
-    /*public String isExistUserByGithubId(int githubId){
-        String message="";
-        User user=new User();
-        user=userService.findByGithubId(githubId);
-        if(user==null){
-            message="用户不存在";
-            return message;
-        }
-        message="用户存在";
-        return message;
-
-    }*/
     public String isExistUserByGithubId(int githubId){
         String message="";
         UserAuths userAuths=new UserAuths();
@@ -58,29 +46,10 @@ public class GithubLoginService {
 
     }
 
-    /*public String bindGithubAndUser(int userId,int githubId){
-        String message="";
-        User user=new User();
-        user=userService.findByPhone(phone);
-        if(user==null){
-            message="用户不存在，新建账户";
-            return message;
-        }
-        if(user.getGithubId()!=null){
-            message="用户已绑定github";
-            return message;
-        }
-        user.setGithubId(githubId);
-        userService.update(user);
-        message="成功绑定用户";
-        return message;
-
-    }*/
-
     public String githubRegister(User user,String role,String avatar,UserAuths userAuths){
         String message="";
         try {
-            UserInfo userInfo=new UserInfo(user);
+            /*UserInfo userInfo=new UserInfo(user);
             userInfo.setDefaultRole(role);
             if(userInfo.getAvatar()==null){
                 userInfo.setAvatar(avatar);
@@ -95,12 +64,13 @@ public class GithubLoginService {
             adminUserToRoleService.add(adminUserToRole);
 
             SysParam sysParam = new SysParam(new Date(), user);
-            sysParamService.addOrUpdate(sysParam);
-
+            sysParamService.addOrUpdate(sysParam);*/
+            message=userService.createUser(user,role);
+            if(message.equals("创建成功")){
+                message = "注册成功";
+            }
             userAuths.setUserId(user.getId());
             userAuthsService.add(userAuths);
-
-            message="注册成功";
             return message;
 
         }catch (Exception e){
@@ -133,18 +103,12 @@ public class GithubLoginService {
             //保存到用户表和用户信息表里
             user.setSalt(salt);
             user.setPassword(encodedPwd);
-            userService.add(user);
+            userService.update(user);
             message = "重置成功";
         } catch (Exception e) {
             e.printStackTrace();
             message = "参数异常，重置失败";
         }
-
         return message;
     }
-
-   /* public String bindPhone(String phone){
-        user
-
-    }*/
 }

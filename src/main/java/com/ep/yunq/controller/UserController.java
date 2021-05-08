@@ -45,9 +45,10 @@ public class UserController {
 
     @ApiOperation("增加用户")
     @PostMapping(value = "/api/admins/users")
-    public Result addUser(@RequestBody User user) {
+    public Result addUser(@RequestBody User user,
+                          @RequestParam Integer creatorId) {
         log.info("---------------- 增加用户 ----------------------");
-        String message = userService.registerByAdmin(user, "student");
+        String message = userService.registerByAdmin(user, "student", creatorId);
         if ("注册成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -80,15 +81,15 @@ public class UserController {
 
     @ApiOperation("修改用户信息")
     @PutMapping("/api/admins/users")
-    public Result editUser(@RequestBody UserDTO requestUser) {
+    public Result editUser(@RequestBody UserDTO requestUser,
+                           @RequestParam Integer modifierId) {
         log.info("---------------- 修改用户信息 ----------------------");
-        String message = userService.editUser(requestUser);
+        String message = userService.editUser(requestUser, modifierId);
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
             return ResultUtil.buildFailResult(message);
     }
-
 
     @ApiOperation("重置密码")
     @PutMapping(value = "/api/admins/users/passwords")
@@ -107,7 +108,6 @@ public class UserController {
                                         @RequestParam int pageSize) {
         log.info("---------------- 搜索用户 ----------------------");
         List<User> us = userService.search(keywords);
-        log.info("搜索"+us);
         Page<User> usersPage = PageUtil.listToPage(us, pageNum, pageSize);
         Page<UserDTO> userDTOS = PageUtil.pageChange(usersPage, UserDTO.class);
         return ResultUtil.buildSuccessResult(userDTOS);
@@ -115,10 +115,11 @@ public class UserController {
 
     @ApiOperation("获取所有用户")
     @GetMapping(value = "/api/admins/users")
-    public Result<Page<User>> listUsers(@RequestParam int pageNum, @RequestParam int pageSize) {
+    public Result<Page<UserDTO>> listUsers(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取所有用户 ----------------------");
         Page<User> us = userService.list(pageNum, pageSize);
-        return ResultUtil.buildSuccessResult(us);
+        Page<UserDTO> userDTOS=PageUtil.pageChange(us,UserDTO.class);
+        return ResultUtil.buildSuccessResult(userDTOS);
     }
 
     /**

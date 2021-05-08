@@ -1,6 +1,8 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.dto.AllStudentSignInCourseDTO;
 import com.ep.yunq.application.dto.CourseSignInDTO;
+import com.ep.yunq.application.dto.CourseStudentSignInDTO;
 import com.ep.yunq.domain.entity.CourseSignIn;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.StudentSignIn;
@@ -11,6 +13,7 @@ import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +41,8 @@ public class SignInController {
     @Autowired
     StudentSignInService studentSignInService;
 
-    @PostMapping("/api/class/signIn/add")
+    @ApiOperation("创建课程签到")
+    @PostMapping("/api/signIn")
     public Result<String> addCourseSignIn(@RequestBody CourseSignIn courseSignIn) {
         log.info("---------------- 创建课程签到 ----------------------");
         String message = courseSignInService.add(courseSignIn);
@@ -48,7 +52,8 @@ public class SignInController {
             return ResultUtil.buildFailResult(message);
     }
 
-    @GetMapping("/api/class/signIn/all")
+    @ApiOperation("获取课程的所有签到")
+    @GetMapping("/api/signIn")
     public Result<Page<CourseSignInDTO>> getAllCourseSignInByCourse(@RequestParam int cid,
                                                                  @RequestParam int pageNum,
                                                                  @RequestParam int pageSize) {
@@ -59,7 +64,8 @@ public class SignInController {
         return ResultUtil.buildSuccessResult(courseSignInDTOS);
     }
 
-    @GetMapping("/api/class/stu/signIn/now")
+    @ApiOperation("获取课程的当前签到")
+    @GetMapping("/api/signIn/courses")
     public Result<CourseSignInDTO> getCurrentCourseSignInByCourse(@RequestParam int cid) {
         log.info("---------------- 获取课程的当前签到 ----------------------");
         CourseSignIn courseSignIn = courseSignInService.getCurrentSignInByCourseId(cid);
@@ -68,7 +74,8 @@ public class SignInController {
         return ResultUtil.buildSuccessResult(courseSignInDTO);
     }
 
-    @GetMapping("/api/class/signIn/end")
+    @ApiOperation("结束签到")
+    @PutMapping("/api/signIn/end")
     public Result<String> endCourseSignIn(@RequestParam int csuid) {
         log.info("---------------- 结束签到 ----------------------");
         String message= courseSignInService.endSignIn(csuid);
@@ -80,7 +87,8 @@ public class SignInController {
 
 
 
-    @PostMapping("/api/class/stu/signIn")
+    @ApiOperation("学生签到")
+    @PostMapping("/api/signIn/students")
     public Result<String> signIn(@RequestBody StudentSignIn studentSignIn) {
         log.info("---------------- 学生签到 ----------------------");
         String message= studentSignInService.add(studentSignIn);
@@ -97,17 +105,19 @@ public class SignInController {
         }
     }
 
-    @GetMapping("/api/class/stu/signIn/all")
-    public Result<List<Map<String, Object>>> getAllSignInByCourse(@RequestParam int cid,@RequestParam int uid) {
+    @ApiOperation("获取学生某课程下的所有签到")
+    @GetMapping("/api/signIn/students")
+    public Result<List<CourseStudentSignInDTO>> getAllSignInByCourse(@RequestParam int cid,@RequestParam int uid) {
         log.info("---------------- 学生所有签到 ----------------------");
-        List<Map<String, Object>> maps = studentSignInService.getAllSignInByUserId(uid, cid);
+        List<CourseStudentSignInDTO> maps = studentSignInService.getAllSignInByUserId(uid, cid);
         return ResultUtil.buildSuccessResult(maps);
     }
 
-    @GetMapping("/api/class/signIn/stu")
-    public Result<List<Map<String, Object>>> getAllSignInStudentByCourseSignIn(@RequestParam int csiid) {
-        log.info("---------------- 课程签到的学生 ----------------------");
-        List<Map<String, Object>> maps = studentSignInService.getAllSignInByCourseSignIn(csiid);
+    @ApiOperation("获取课程签到的学生")
+    @GetMapping("/api/signIn/students/courses")
+    public Result<List<AllStudentSignInCourseDTO>> getAllSignInStudentByCourseSignIn(@RequestParam int csiid) {
+        log.info("---------------- 获取课程签到的学生 ----------------------");
+        List<AllStudentSignInCourseDTO> maps = studentSignInService.getAllSignInByCourseSignIn(csiid);
         return ResultUtil.buildSuccessResult(maps);
     }
     

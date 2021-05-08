@@ -4,6 +4,7 @@ import com.ep.yunq.application.dto.SchoolInstitutionDTO;
 import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.domain.service.*;
+import com.ep.yunq.infrastructure.util.PBKDF2Util;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -15,11 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -39,6 +45,11 @@ public class test {
     UserAuthsService userAuthsService;
     @Autowired
     UserInfoService userInfoService;
+    @Autowired
+    PBKDF2Util pbkdf2Util;
+    @Autowired
+    SchoolInstitutionService schoolInstitution;
+
 
     Logger logger= LoggerFactory.getLogger(getClass());
 
@@ -120,6 +131,18 @@ public class test {
         SchoolInstitution schoolInstitution=modelMapper.map(schoolInstitutionDTO,SchoolInstitution.class);
         return ResultUtil.buildSuccessResult(schoolInstitution);
     }
+
+    @ApiOperation("test7")
+    @GetMapping("/api/test7")
+    @RequestBody
+    public Result<List<SchoolInstitutionDTO>> rrest(@RequestParam Integer id){
+        List<Integer> ids=new ArrayList<>();
+        ids.add(id);
+        List<SchoolInstitutionDTO> tmp=schoolInstitution.findFa(ids);
+        return ResultUtil.buildSuccessResult(tmp);
+    }
+
+
 
 
 

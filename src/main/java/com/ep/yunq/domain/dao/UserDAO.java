@@ -25,7 +25,7 @@ public interface UserDAO extends JpaRepository<User,Integer> {
     @Transactional
     void deleteAllById(int id);
 
-    Page<User> findAll(Pageable pageable);
+    List<User> findAll();
 
     List<User> findAllByUsernameLikeOrPhoneLike(String keyword1, String keyword2);
 

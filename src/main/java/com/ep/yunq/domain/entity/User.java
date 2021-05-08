@@ -1,9 +1,11 @@
 package com.ep.yunq.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,19 +15,28 @@ import java.util.List;
  * 功能描述：用户实体类
  **/
 @Entity
-@Table(name="user")
-@JsonIgnoreProperties({"handler","hibernateLazyInitializer"})
+@Table(name = "user")
+@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 @Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id")
+    @Column(name = "id")
     int id;
     private String username;    //用户名
     private String phone;   //手机号
     private String password;    //密码
     private String salt;    //盐
     private Integer enabled;       //是否使用
+
+    private Integer creator;
+    private Integer modifier;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "creation_date")
+    private Date creationDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "modification_date")
+    private Date modificationDate;
 
     @Transient
     private List<AdminRole> roles;

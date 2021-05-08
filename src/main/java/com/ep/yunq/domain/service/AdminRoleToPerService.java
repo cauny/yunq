@@ -43,12 +43,14 @@ public class AdminRoleToPerService {
     public String updateRolePerm(int rid, List<PermissionResource> perms) {
         String message = "";
         try{
-            deleteAllByRid(rid);
-            for (PermissionResource perm: perms){
-                AdminRoleToPer rp = new AdminRoleToPer();
-                rp.setRoleId(rid);
-                rp.setPermissionId(perm.getId());
-                adminRoleToPerDAO.save(rp);
+            if(perms.size()!=0){
+                deleteAllByRid(rid);
+                for (PermissionResource perm: perms){
+                    AdminRoleToPer rp = new AdminRoleToPer();
+                    rp.setRoleId(rid);
+                    rp.setPermissionId(perm.getId());
+                    adminRoleToPerDAO.save(rp);
+                }
             }
             message = "更新成功";
         } catch (Exception e) {

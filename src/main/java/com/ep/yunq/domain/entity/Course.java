@@ -2,6 +2,7 @@ package com.ep.yunq.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.models.auth.In;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,8 +36,8 @@ public class Course {
     private String examArrange;    //
     private String cover;    //
     private String qrcode;    //
-    private int creator;
-    private int modifier;
+    private Integer creator;
+    private Integer modifier;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -44,6 +45,6 @@ public class Course {
     private Date creationDate;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column(name = "modifition_date")
-    private Date modifitionDate;
+    @Column(name = "modification_date")
+    private Date modificationDate;
 }

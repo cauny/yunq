@@ -1,9 +1,11 @@
 package com.ep.yunq.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +16,7 @@ import java.util.List;
  **/
 
 @Entity
-@Table(name="role")
+@Table(name = "role")
 @JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 @Data
 public class AdminRole {
@@ -27,6 +29,15 @@ public class AdminRole {
     private String name;
     private String nameZh;
     private Integer enabled;
+
+    private Integer creator;
+    private Integer modifier;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "creation_date")
+    private Date creationDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Column(name = "modification_date")
+    private Date modificationDate;
 
     @Transient
     private List<PermissionResource> perms;

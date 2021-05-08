@@ -17,4 +17,8 @@ public class UserLoginDTO {
     public UserLoginDTO() {
     }
 
+    public UserLoginDTO(UserBasicInfo userInfo, String token) {
+        this.userInfo = userInfo;
+        this.token = token;
+    }
 }

@@ -13,10 +13,10 @@ import java.util.Map;
   **/
 public interface StudentSignInDAO extends JpaRepository<StudentSignIn,Integer> {
     @Query(value = "from StudentSignIn where courseSignIn.id = ?1 and studentId =?2")
-    StudentSignIn findByCourseSignInAndStudent(int cid, int uid);
+    StudentSignIn findByCourseSignInAndStudentId(int cid, int uid);
 
     @Query(value = "from StudentSignIn  where studentId = ?1 and courseSignIn.course.id = ?2 ")
-    List<StudentSignIn> findAllByStudentAndCourseId(int uid, int cid);
+    List<StudentSignIn> findAllByStudentIdAndCourseSignIn(int uid, int cid);
 
     @Query(nativeQuery = true, value = "select ss.time, ss.mode ,ui.ino, ui.name from student_signin ss " +
             " left join `user_info` ui on ui.user_id= ss.student_id " +

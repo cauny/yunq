@@ -51,7 +51,7 @@ public class RoleController {
             String message = "该角色已存在";
             return ResultUtil.buildFailResult(message);
         } else {
-            adminRoleService.addOrUpdate(requestRole);
+            adminRoleService.add(requestRole);
             String message = "添加角色成功";
             return ResultUtil.buildSuccessResult(message,null);
         }

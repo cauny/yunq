@@ -40,6 +40,7 @@ public class CourseSignIn {
     private Integer status;
 
     private Integer countDown;
+    private Integer isFinished;
 
     @ManyToOne()
     @JoinColumn(name = "course_id")

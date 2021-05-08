@@ -4,6 +4,7 @@ import com.ep.yunq.domain.entity.AdminMenu;
 import com.ep.yunq.domain.entity.SysParam;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public interface AdminMenuDAO extends JpaRepository<AdminMenu,Integer> {
     AdminMenu findById(int id);
 
-    List<AdminMenu> findAllByParentId(int parentId);
+    List<AdminMenu> findAllByParentId(int parentId, Sort sort);
 
     @Query(nativeQuery = true, value = "select * from menu where" +
             " name like ?1 or path like ?1 or name_zh like ?1 or component like ?1 ")

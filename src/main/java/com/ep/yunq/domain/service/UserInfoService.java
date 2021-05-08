@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @classname: UserInfoService
  * @Author: yan
@@ -54,7 +56,7 @@ public class UserInfoService {
             } else {
                 User user = userInfoInDB.getUser();
                 user.setUsername(userInfo.getUsername());
-                userService.add(user);
+                userService.update(user);
 
                 userInfoInDB.setNickname(userInfo.getNickname());
                 userInfoInDB.setIno(userInfo.getIno());

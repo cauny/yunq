@@ -26,6 +26,13 @@ public class UserAuths {
     private String identifier;
     private String credential;
 
+    public UserAuths() {
+    }
 
-
+    public UserAuths(Integer userId, String identityType, String identifier, String credential) {
+        this.userId = userId;
+        this.identityType = identityType;
+        this.identifier = identifier;
+        this.credential = credential;
+    }
 }

@@ -7,6 +7,7 @@ import com.ep.yunq.domain.dao.UserDAO;
 import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.PBKDF2Util;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.RedisUtil;
 import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.jws.soap.SOAPBinding;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
@@ -45,20 +47,15 @@ public class UserService {
 
 
     public Page<User> list(int pageNumber, int pageSize) {
-        Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-        Page<User> res = userDAO.findAll(pageable);
-        return res;
-
+        List<User> users = userDAO.findAll();
+        users=addRoles(users);
+        Page<User> userPage= PageUtil.listToPage(users,pageNumber,pageSize);
+        return userPage;
     }
 
     public List<User> listIsEnabled() {
         List<User> users = userDAO.findAllByEnabled();
-        List<AdminRole> roles;
-        for (User user : users) {
-            roles = adminRoleService.listRolesByUser(user.getId());
-            user.setRoles(roles);
-        }
+        users=addRoles(users);
         return users;
     }
 
@@ -83,24 +80,16 @@ public class UserService {
         return adminRoleService.listRolesByUser(uid);
     }
 
-    /* 根据用户id删除用户 */
-    public void deleteByUid(int id) {
-        userDAO.deleteAllById(id);
-    }
-
-    /* 对用户表表进行添加操作 */
-    public void add(User user) {
+    /* 对用户表表进行更新操作 */
+    public void update(User user) {
+        user.setModificationDate(new Date());
         userDAO.save(user);
     }
 
     /* 对用户表表进行添加操作 */
     public User addAndReturn(User user) {
+        user.setCreationDate(new Date());
         return userDAO.save(user);
-    }
-
-    /* 对用户表表进行更新操作 */
-    public void update(User user) {
-        add(user);
     }
 
     /* 根据用户id查找角色名称 */
@@ -114,24 +103,16 @@ public class UserService {
         return roles;
     }
 
-    /* 用户注册 */
-    public String register(User user, String role) {
-        String message = "";
-        try {
-            String username = user.getUsername();
-            String password = user.getPassword();
-            String phone = user.getPhone();
-
-            user.setEnabled(1);
-
-            if (username.equals("") || password.equals("")) {
-                message = "用户名或密码为空，注册失败";
-                return message;
-            }
-            if (isExistByPhone(phone)) {
-                message = "手机号已被注册";
-                return message;
-            }
+    public String createUser(User user,String role) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        String message="";
+        String username = user.getUsername();
+        String password = user.getPassword();
+        String phone=user.getPhone();
+        if (phone!=null&&isExistByPhone(phone)) {
+            message = "手机号已被注册";
+            return message;
+        }
+        if(password!=null){
             //生成盐，默认长度16位
             String salt = pbkdf2Util.generateSalt();
             //对密码进行哈希加密
@@ -140,27 +121,44 @@ public class UserService {
             //保存到用户表和用户信息表里
             user.setSalt(salt);
             user.setPassword(encodedPwd);
-            user = addAndReturn(user);
+        }
+        user.setEnabled(1);
+        user = addAndReturn(user);
 
-            //刚存进去的用户表再取出uid存入
-            Integer uid = user.getId();
-            UserInfo userInfo = new UserInfo(username, user);
-            userInfo.setDefaultRole(role);
-            userInfoService.addOrUpdate(userInfo);
+        //新建userInfo
+        UserInfo userInfo = new UserInfo(username, user);
+        userInfo.setDefaultRole(role);
+        userInfoService.addOrUpdate(userInfo);
 
-            //设置用户角色
-            int rid = adminRoleService.findByName(role).getId();
-            AdminUserToRole adminUserToRole = new AdminUserToRole();
-            log.info(String.valueOf(rid));
-            adminUserToRole.setRoleId(rid);
-            adminUserToRole.setUserId(uid);
-            adminUserToRoleService.add(adminUserToRole);
+        //设置用户角色
+        int rid = adminRoleService.findByName(role).getId();
+        AdminUserToRole adminUserToRole = new AdminUserToRole();
+        log.info(String.valueOf(rid));
+        adminUserToRole.setRoleId(rid);
+        adminUserToRole.setUserId(user.getId());
+        adminUserToRoleService.add(adminUserToRole);
 
-            SysParam sysParam = new SysParam(new Date(), user);
-            sysParamService.addOrUpdate(sysParam);
+        SysParam sysParam = new SysParam(new Date(), user);
+        sysParamService.addOrUpdate(sysParam);
+        message="创建成功";
+        return message;
+    }
 
-            message = "注册成功";
-
+    /* 用户注册 */
+    public String register(User user, String role) {
+        String message = "";
+        try {
+            String username = user.getUsername();
+            String password = user.getPassword();
+            if (username.equals("") || password.equals("")) {
+                message = "用户名或密码为空，注册失败";
+                return message;
+            }
+            user.setCreator(user.getId());
+            message=createUser(user,role);
+            if(message.equals("创建成功")){
+                message = "注册成功";
+            }
         } catch (Exception e) {
             e.printStackTrace();
             message = "参数异常，注册失败";
@@ -169,49 +167,14 @@ public class UserService {
     }
 
     /* 用户注册 */
-    public String registerByAdmin(User user, String role) {
+    public String registerByAdmin(User user, String role,Integer creatorId) {
         String message = "";
         try {
-            String username = user.getUsername();
-            String password = user.getPassword();
-            String phone = user.getPhone();
-
-            user.setEnabled(1);
-            if (phone!=null&&isExistByPhone(phone)) {
-                message = "手机号已被注册";
-                return message;
+            user.setCreator(creatorId);
+            message=createUser(user,role);
+            if(message.equals("创建成功")){
+                message = "注册成功";
             }
-            if(password!=null){
-                //生成盐，默认长度16位
-                String salt = pbkdf2Util.generateSalt();
-                //对密码进行哈希加密
-                String encodedPwd = pbkdf2Util.getEncryptedPassword(password, salt);
-
-                //保存到用户表和用户信息表里
-                user.setSalt(salt);
-                user.setPassword(encodedPwd);
-            }
-            user = addAndReturn(user);
-
-            //刚存进去的用户表再取出uid存入
-            Integer uid = user.getId();
-            UserInfo userInfo = new UserInfo(username, user);
-            userInfo.setDefaultRole(role);
-            userInfoService.addOrUpdate(userInfo);
-
-            //设置用户角色
-            int rid = adminRoleService.findByName(role).getId();
-            AdminUserToRole adminUserToRole = new AdminUserToRole();
-            log.info(String.valueOf(rid));
-            adminUserToRole.setRoleId(rid);
-            adminUserToRole.setUserId(uid);
-            adminUserToRoleService.add(adminUserToRole);
-
-            SysParam sysParam = new SysParam(new Date(), user);
-            sysParamService.addOrUpdate(sysParam);
-
-            message = "注册成功";
-
         } catch (Exception e) {
             e.printStackTrace();
             message = "参数异常，注册失败";
@@ -241,7 +204,7 @@ public class UserService {
             //保存到用户表和用户信息表里
             userInDB.setSalt(salt);
             userInDB.setPassword(encodedPwd);
-            add(userInDB);
+            update(userInDB);
             message = "重置成功";
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,26 +230,6 @@ public class UserService {
             return "登录成功";
         } else {
             return "密码错误";
-        }
-
-    }
-
-    /* 用户验证码登录验证 */
-    public String authUserByVerificationCode(String phone, String verificationCode) throws InvalidKeySpecException, NoSuchAlgorithmException {
-
-        User authuser = findByPhone(phone);
-        if (authuser == null) {
-            return "用户不存在";
-        }
-        if (verificationCode == null) {
-            return "验证码为空";
-        }
-
-        String message = verifyCode(phone, verificationCode);
-        if (!message.equals("验证成功")) {
-            return message;
-        } else {
-            return "验证成功";
         }
 
     }
@@ -328,18 +271,6 @@ public class UserService {
         String responseData = jwt;
         return responseData;
     }
-    /*public Map<String, String> useToken(User user){
-        //获取角色信息
-        List<String> roles=findRolesById(findByUserName(user.getUsername()).getId());
-
-        //刷新时间5小时
-        long refreshPeriodTime = 36000L;
-        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), user.getUsername(),
-                "tom-auth-server", refreshPeriodTime >> 1, roles,
-                null, false);
-        Map<String, String> responseData = Collections.singletonMap("token", jwt);
-        return responseData;
-    }*/
 
     /* 登录后信息返回 */
     public UserLoginDTO loginMessage(String phone) {
@@ -348,21 +279,17 @@ public class UserService {
         UserBasicInfo userBasicInfo = userInfoService.createByUser(user);
 
         String token = useToken(user);
-        UserLoginDTO userLoginDTO =new UserLoginDTO();
-        userLoginDTO.setUserInfo(userBasicInfo);
-        userLoginDTO.setToken(token);
+        UserLoginDTO userLoginDTO =new UserLoginDTO(userBasicInfo,token);
         return userLoginDTO;
     }
 
-    public Map<String, Object> loginMessageByUserId(int id) {
-        User user = new User();
-        user = findById(id);
+    public UserLoginDTO loginMessageByUserId(int id) {
+        User user = findById(id);
         UserBasicInfo userBasicInfo = userInfoService.createByUser(user);
 
         String token = useToken(user);
-        Map<String, Object> responseData = new HashMap<>(Collections.singletonMap("token", token));
-        responseData.put("userInfo", userBasicInfo);
-        return responseData;
+        UserLoginDTO userLoginDTO =new UserLoginDTO(userBasicInfo,token);
+        return userLoginDTO;
     }
 
     public SurenessAccount loadAccount(int id) {
@@ -414,7 +341,7 @@ public class UserService {
         return message;
     }
 
-    public String editUser(UserDTO user) {
+    public String editUser(UserDTO user,int modifierId) {
         String message = "";
         try {
             User userInDB = userDAO.findById(user.getId());
@@ -424,8 +351,8 @@ public class UserService {
             }
             userInDB.setUsername(user.getUsername());
             userInDB.setPhone(user.getPhone());
-
-            add(userInDB);
+            userInDB.setModifier(modifierId);
+            update(userInDB);
             //如果传入角色list为null，则不修改
             if(user.getRoles()!=null){
                 message = adminUserToRoleService.saveRoleChanges(userInDB.getId(), user.getRoles());
@@ -441,18 +368,17 @@ public class UserService {
 
     public List<User> search(String keywords) {
         List<User> us = userDAO.findAllByUsernameLikeOrPhoneLike('%' + keywords + '%', '%' + keywords + '%');
-        log.info("搜索2"+us);
-        List<AdminRole> roles;
-        for (User u : us) {
-            u.setPassword("");
-            u.setSalt("");
+        List<User> users=addRoles(us);
+        return users;
+    }
 
+    public List<User> addRoles(List<User> users){
+        List<AdminRole> roles;
+        for (User u : users) {
             roles = adminRoleService.listRolesByUser(u.getId());
             u.setRoles(roles);
         }
-        return us;
+        return users;
     }
-
-
 
 }

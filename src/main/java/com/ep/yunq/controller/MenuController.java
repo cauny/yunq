@@ -1,5 +1,6 @@
 package com.ep.yunq.controller;
 
+import com.ep.yunq.application.dto.MenuDTO;
 import com.ep.yunq.application.dto.SchoolInstitutionDTO;
 import com.ep.yunq.domain.entity.AdminMenu;
 import com.ep.yunq.domain.entity.Result;
@@ -32,14 +33,15 @@ public class MenuController {
 
     @ApiOperation("获取用户菜单")
     @GetMapping("/api/menus/{userId}")
-    public Result<Page<AdminMenu>> getMenu(@PathVariable("userId") Integer userId,
+    public Result<Page<MenuDTO>> getMenu(@PathVariable("userId") Integer userId,
                                            @RequestParam int pageNum,
                                            @RequestParam int pageSize){
         log.info("---------------- 获取用户菜单 ----------------------");
 
-        Page<AdminMenu> menus = adminMenuService.getMenusByUserId(userId,pageNum,pageSize);
-        if (0 != menus.getContent().size()) {
-            return ResultUtil.buildSuccessResult(menus);
+        List<MenuDTO> menus = adminMenuService.getMenusByUserId(userId);
+        Page<MenuDTO> menuPage=PageUtil.listToPage(menus,pageNum,pageSize);
+        if (0 != menuPage.getContent().size()) {
+            return ResultUtil.buildSuccessResult(menuPage);
         }
         else {
             /*AdminMenu menu = adminMenuService.findById(1);
@@ -53,12 +55,13 @@ public class MenuController {
 
     @ApiOperation("获取角色菜单")
     @GetMapping("/api/menus/roles")
-    public Result<Page<AdminMenu>> listAllMenusByRoleId(@RequestParam Integer roleId,
+    public Result<Page<MenuDTO>> listAllMenusByRoleId(@RequestParam Integer roleId,
                                                         @RequestParam int pageNum,
                                                         @RequestParam int pageSize) {
         log.info("---------------- 获取角色菜单 ----------------------");
-        Page<AdminMenu> menus = adminMenuService.getMenusByRoleId(roleId,pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(menus);
+        List<MenuDTO> menus = adminMenuService.getMenusByRoleId(roleId);
+        Page<MenuDTO> menuPage=PageUtil.listToPage(menus,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(menuPage);
     }
 
     @ApiOperation("添加菜单")
@@ -86,7 +89,7 @@ public class MenuController {
 
     @ApiOperation("批量删除菜单")
     @DeleteMapping("/api/menus/batches")
-    public Result<String> batchDeleteMenu(@RequestBody LinkedHashMap menuIds) {
+    public Result<String> batchDeleteMenu(@RequestBody List<Integer> menuIds) {
         log.info("---------------- 批量删除菜单 ----------------------");
         String message = adminMenuService.batchDelete(menuIds);
         if ("删除成功".equals(message)) {
@@ -109,30 +112,39 @@ public class MenuController {
 
     @ApiOperation("搜索菜单")
     @GetMapping(value = "/api/menus/search")
-    public Result<Page<AdminMenu>> search(@RequestParam String keywords,
+    public Result<Page<MenuDTO>> search(@RequestParam String keywords,
                                           @RequestParam int pageNum,
                                           @RequestParam int pageSize){
         log.info("---------------- 搜索菜单 ----------------------");
-        Page<AdminMenu> ms = adminMenuService.search(keywords,pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(ms);
+        List<MenuDTO> ms = adminMenuService.search(keywords);
+        Page<MenuDTO> menuPage=PageUtil.listToPage(ms,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(menuPage);
     }
 
     @ApiOperation("获取所有菜单")
     @GetMapping(value = "/api/menus")
-    public Result<Page<AdminMenu>> all(@RequestParam int pageNum,
+    public Result<Page<MenuDTO>> all(@RequestParam int pageNum,
                                        @RequestParam int pageSize){
         log.info("---------------- 获取所有菜单 ----------------------");
-        Page<AdminMenu> ms = adminMenuService.all(pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(ms);
+        List<MenuDTO> ms = adminMenuService.all();
+        Page<MenuDTO> menuPage=PageUtil.listToPage(ms,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(menuPage);
     }
 
     @ApiOperation("查找学校机构子节点")
     @GetMapping( "/api/menus/children")
-    public Result<List<AdminMenu>> findChildren(@RequestParam int mid) {
+    public Result<List<MenuDTO>> findChildren(@RequestParam int mid) {
         log.info("---------------- 查找子节点 ----------------------");
-        List<AdminMenu> adminMenus= adminMenuService.findAllByParentId(mid);
-        /*List<SchoolInstitutionDTO> schoolInstitutionDTOS= PageUtil.listChange(schoolInstitutions,SchoolInstitutionDTO.class);*/
+        List<MenuDTO> adminMenus= adminMenuService.findAllByParentId(mid);
         return ResultUtil.buildSuccessResult(adminMenus);
+    }
+
+    @ApiOperation("查找学校机构父节点")
+    @GetMapping( "/api/menus/father")
+    public Result<String> findFatherName(@RequestParam int mid) {
+        log.info("---------------- 查找子节点 ----------------------");
+        String result= adminMenuService.findFather(mid);
+        return ResultUtil.buildSuccessResult(result);
     }
 
 }

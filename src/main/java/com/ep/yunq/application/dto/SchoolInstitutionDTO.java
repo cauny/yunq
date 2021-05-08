@@ -18,6 +18,7 @@ public class SchoolInstitutionDTO {
     private String name;
     private int sort;
     private int parentId;
+    private Boolean hasChildren;
 
     private List<SchoolInstitutionDTO> children;
 }

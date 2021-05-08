@@ -1,8 +1,6 @@
 package com.ep.yunq.domain.dao;
 
 import com.ep.yunq.domain.entity.Course;
-import com.ep.yunq.domain.entity.SysParam;
-import com.ep.yunq.domain.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

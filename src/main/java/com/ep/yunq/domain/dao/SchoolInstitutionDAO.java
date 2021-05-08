@@ -1,6 +1,7 @@
 package com.ep.yunq.domain.dao;
 
 import com.ep.yunq.domain.entity.SchoolInstitution;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,7 +26,7 @@ public interface SchoolInstitutionDAO extends JpaRepository<SchoolInstitution,In
     List<SchoolInstitution> findAllByNameLike(String keywords);
 
     /* 根据父id查找所有子机构 */
-    List<SchoolInstitution> findAllByParentId(int parentId);
+    List<SchoolInstitution> findAllByParentId(int parentId, Sort sort);
 
     @Modifying
     @Transactional
