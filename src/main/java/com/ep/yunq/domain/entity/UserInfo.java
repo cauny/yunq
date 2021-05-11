@@ -1,5 +1,6 @@
 package com.ep.yunq.domain.entity;
 
+import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
@@ -42,12 +43,12 @@ public class UserInfo {
     @Transient
     private List<AdminRole> roles;
 
-
     public UserInfo() {
 
     }
 
     public UserInfo(String username, User user) {
+        this.avatar= ConstantUtil.FILE_Url_User.string+"1.jpg";
         this.username = username;
         this.user = user;
     }

@@ -7,6 +7,7 @@ import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.domain.service.*;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
+import com.usthe.sureness.matcher.TreePathRoleMatcher;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -41,6 +42,8 @@ public class RoleController {
     AdminMenuService adminMenuService;
     @Autowired
     UserService userService;
+    @Autowired
+    TreePathRoleMatcher treePathRoleMatcher;
 
     @ApiOperation("添加新角色")
     @PostMapping(value = "/api/roles/roles")
@@ -53,6 +56,7 @@ public class RoleController {
         } else {
             adminRoleService.add(requestRole);
             String message = "添加角色成功";
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         }
     }
@@ -63,6 +67,7 @@ public class RoleController {
         log.info("---------------- 删除角色 ----------------------");
         String message = adminRoleService.delete(rid);
         if ("删除成功".equals(message)) {
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
@@ -75,6 +80,7 @@ public class RoleController {
         log.info("---------------- 批量删除角色 ----------------------");
         String message = adminRoleService.batchDelete(roleIds);
         if ("删除成功".equals(message)) {
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
@@ -101,6 +107,7 @@ public class RoleController {
         if (!"更新成功".equals(message)) {
             return ResultUtil.buildFailResult(message);
         } else {
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         }
     }
@@ -151,16 +158,6 @@ public class RoleController {
         }
     }*/
 
-    @ApiOperation("获取所有权限")
-    @GetMapping(value = "/api/roles/perms")
-    public Result<Page<PermissionDTO>> listPerms(@RequestParam int pageNum,
-                                                 @RequestParam int pageSize) {
-        log.info("---------------- 获取所有权限 ----------------------");
-        List<PermissionResource> ps = permissionResourceService.list();
-        Page<PermissionResource> permissionResourcesPage= PageUtil.listToPage(ps,pageNum,pageSize);
-        Page<PermissionDTO> permissionDTOS=PageUtil.pageChange(permissionResourcesPage,PermissionDTO.class);
-        return ResultUtil.buildSuccessResult(permissionDTOS);
-    }
 
 
    /* @ApiOperation("获取所有用户")

@@ -82,10 +82,7 @@ public class SurenessConfiguration {
         annotationPathTreeProvider.setScanPackages(Collections.singletonList("com.usthe.sureness.sample.tom.controller"));*/
         // pathRoleMatcher init
         DefaultPathRoleMatcher pathRoleMatcher = new DefaultPathRoleMatcher();
-        pathRoleMatcher.setPathTreeProviderList(Arrays.asList(
-                /*documentPathTreeProvider,
-                annotationPathTreeProvider,*/
-                databasePathTreeProvider));
+        pathRoleMatcher.setPathTreeProviderList(Arrays.asList(databasePathTreeProvider));
         pathRoleMatcher.buildTree();
         return pathRoleMatcher;
     }

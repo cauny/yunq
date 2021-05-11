@@ -4,10 +4,15 @@ import com.ep.yunq.domain.dao.UserInfoDAO;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.domain.entity.UserBasicInfo;
 import com.ep.yunq.domain.entity.UserInfo;
+import com.ep.yunq.infrastructure.util.CommonUtil;
+import com.ep.yunq.infrastructure.util.ConstantUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 
 /**
@@ -47,7 +52,7 @@ public class UserInfoService {
         return userBasicInfo;
     }
 
-    public String edit(UserInfo userInfo) {
+    public String edit(UserInfo userInfo,MultipartFile file) {
         String message = "";
         try {
             UserInfo userInfoInDB = userInfoDAO.findById(userInfo.getId());
@@ -67,6 +72,15 @@ public class UserInfoService {
                 userInfoInDB.setUsername(userInfo.getUsername());
                 /*userInfoInDB.setSchoolId(userInfo.getSchoolId());
                 userInfoInDB.setCollegeId(userInfo.getCollegeId());*/
+
+                if(file!=null){
+                    File imageFolder = new File(ConstantUtil.FILE_Photo_User.string);
+                    File f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
+                            .substring(file.getOriginalFilename().length() - 4));
+                    file.transferTo(f);
+                    userInfoInDB.setAvatar(f.getName());
+                }
+
                 addOrUpdate(userInfoInDB);
 
                 //修改角色

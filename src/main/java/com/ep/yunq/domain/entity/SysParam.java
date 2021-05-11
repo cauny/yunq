@@ -23,12 +23,18 @@ public class SysParam {
     @Column(name="id")
     private int id;
 
-    private String key1;    //signin_experience
-    private String value1;  //系统参数值
-    private String key2;  //signin_range
-    private String value2;  //系统参数值
-    private String key3;  //class_time
-    private String value3;  //系统参数值
+    private String signinExperience;
+    private String signinRange;
+    private String classTime;
+
+    @Column(name = "level_1")
+    private String level1;
+
+    @Column(name = "level_2")
+    private String level2;
+
+    @Column(name = "level_3")
+    private String level3;
 
     /**
      * 更新时间
@@ -45,12 +51,12 @@ public class SysParam {
     User user;
 
     public SysParam(Date updateTime, User user) {
-        this.key1 = "signin_experience";
-        this.value1 = "2";
-        this.key2 = "signin_range";
-        this.value2 = "20";
-        this.key3 = "class_time";
-        this.value3 = "45";
+        this.signinExperience = "2";
+        this.signinRange = "20";
+        this.classTime = "45";
+        this.level1="90";
+        this.level2="75";
+        this.level3="60";
         this.updateTime = updateTime;
         this.user = user;
     }

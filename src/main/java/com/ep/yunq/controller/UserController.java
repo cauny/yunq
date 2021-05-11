@@ -14,7 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -128,9 +131,31 @@ public class UserController {
 
     @ApiOperation("修改用户信息表信息")
     @PutMapping(value = "/api/admins/userInfos")
-    public Result editUserInfo(@RequestBody UserInfo userInfo) {
+    public Result editUserInfo(@RequestBody HttpServletRequest request) {
         log.info("---------------- 修改用户信息 ----------------------");
-        String message = userInfoService.edit(userInfo);
+        MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
+        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
+                .getFiles("avatar");
+        UserInfo userInfo=new UserInfo();
+        userInfo.setId(Integer.parseInt(params.getParameter("id")));
+        userInfo.setCollege(params.getParameter("college"));
+        userInfo.setSchool(params.getParameter("school"));
+        userInfo.setMajor(params.getParameter("major"));
+        userInfo.setIno(params.getParameter("ino"));
+        userInfo.setDefaultRole(params.getParameter("defaultRole"));
+        userInfo.setNickname(params.getParameter("nickname"));
+        userInfo.setPhone(params.getParameter("phone"));
+        userInfo.setRealname(params.getParameter("realname"));
+        userInfo.setSex(Integer.parseInt(params.getParameter("sex")));
+        userInfo.setUsername(params.getParameter("username"));
+
+        String message="";
+        if(files.size()==0){
+            message=userInfoService.edit(userInfo,null);
+        }else {
+            message = userInfoService.edit(userInfo,files.get(0));
+        }
+
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else

@@ -53,9 +53,6 @@ public class SysParamService {
                 message = "该系统参数不存在，修改失败";
             }
             else {
-                sysParamInDB.setValue1(sysParam.getValue1());
-                sysParamInDB.setValue2(sysParam.getValue2());
-                sysParamInDB.setValue3(sysParam.getValue3());
                 addOrUpdate(sysParamInDB);
                 message = "修改成功";
             }

@@ -6,6 +6,8 @@ import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.service.PermissionResourceService;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
+import com.ep.yunq.sureness.provider.DatabasePathTreeProvider;
+import com.usthe.sureness.matcher.TreePathRoleMatcher;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +31,8 @@ public class PermissionController {
 
     @Autowired
     PermissionResourceService permissionResourceService;
+    @Autowired
+    TreePathRoleMatcher treePathRoleMatcher;
 
     @ApiOperation("添加权限")
     @PostMapping("api/perms")
@@ -47,6 +51,7 @@ public class PermissionController {
         log.info("---------------- 删除权限 ----------------------");
         String message = permissionResourceService.delete(pid);
         if ("删除成功".equals(message)) {
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
@@ -59,6 +64,7 @@ public class PermissionController {
         log.info("---------------- 批量删除权限 ----------------------");
         String message = permissionResourceService.batchDelete(permIds);
         if ("删除成功".equals(message)) {
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
         } else {
             return ResultUtil.buildFailResult(message);
@@ -70,10 +76,13 @@ public class PermissionController {
     public Result<String> editPerm(@RequestBody PermissionResource adminPermission) {
         log.info("---------------- 修改权限 ----------------------");
         String message = permissionResourceService.edit(adminPermission);
-        if ("修改成功".equals(message))
+        if ("修改成功".equals(message)){
+            treePathRoleMatcher.rebuildTree();
             return ResultUtil.buildSuccessResult(message,null);
-        else
+        } else{
             return ResultUtil.buildFailResult(message);
+        }
+
     }
 
 

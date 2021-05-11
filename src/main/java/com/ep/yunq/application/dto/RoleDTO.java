@@ -1,6 +1,11 @@
 package com.ep.yunq.application.dto;
 
+import com.ep.yunq.domain.entity.AdminMenu;
+import com.ep.yunq.domain.entity.PermissionResource;
 import lombok.Data;
+
+import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * @classname: RoleDTO
@@ -14,4 +19,7 @@ public class RoleDTO {
     private String name;
     private String nameZh;
     private Integer enabled;
+    private List<PermissionResource> perms;
+
+    private List<AdminMenu> menus;
 }

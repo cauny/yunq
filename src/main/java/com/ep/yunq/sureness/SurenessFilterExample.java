@@ -43,12 +43,6 @@ public class SurenessFilterExample implements Filter, HandlerInterceptor {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-
-/*        HttpServletRequest httpServletRequest= (HttpServletRequest) servletRequest;
-        if(httpServletRequest.getMethod().equals("OPTIONS")){
-            return;
-        }*/
-
         try {
             SubjectSum subject = SurenessSecurityManager.getInstance().checkIn(servletRequest);
             // You can consider using SurenessContextHolder to bind subject in threadLocal
