@@ -170,7 +170,7 @@ public class DictionaryDetailService {
         return dictionaryDetailDAO.findAllByCode(code);
     }
 
-    public String addTypeAndDetails(DictionaryType dictionaryType, List<DictionaryDetail> dictionaryDetails) {
+    public String editTypeAndDetails(DictionaryType dictionaryType, List<DictionaryDetail> dictionaryDetails) {
         String message = "";
         try {
             dictionaryTypeService.addOrUpdate(dictionaryType);
@@ -181,8 +181,25 @@ public class DictionaryDetailService {
                 addOrUpdate(dictionaryDetail);
             }
 
+            message = "修改成功";
+        } catch (Exception e) {
+            message = "参数异常，添加失败";
+        }
+
+        return message;
+    }
+
+    public String addTypeAndDetails(DictionaryType dictionaryType, List<DictionaryDetail> dictionaryDetails) {
+        String message = "";
+        try {
+            dictionaryTypeService.addOrUpdate(dictionaryType);
+            for (DictionaryDetail dictionaryDetail: dictionaryDetails) {
+                dictionaryDetail.setDictionaryType(dictionaryType);
+                addOrUpdate(dictionaryDetail);
+            }
             message = "添加成功";
         } catch (Exception e) {
+            log.info(String.valueOf(e));
             message = "参数异常，添加失败";
         }
 

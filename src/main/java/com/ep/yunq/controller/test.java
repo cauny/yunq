@@ -67,17 +67,13 @@ public class test {
         return ResultUtil.buildSuccessResult("哈哈哈哈哈哈哈哈哈哈哈");
     }
 
+    @ApiOperation("te")
     @CrossOrigin
-    @RequestMapping("/api/test")
+    @GetMapping("/api/test")
     public Result tes(){
-        return ResultUtil.buildSuccessResult("这是测试界面");
+        return ResultUtil.buildSuccessResult(userService.findById(93));
     }
 
-    @GetMapping("/api/list")
-    public Result pageTest(@RequestParam int pageNum,@RequestParam int pageSize){
-        Page<User> res= userService.list(pageNum,pageSize);
-        return ResultUtil.buildSuccessResult(res);
-    }
 
     @ApiOperation("test1")
     @GetMapping("/api/test2")

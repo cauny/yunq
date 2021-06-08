@@ -5,6 +5,7 @@ import com.ep.yunq.application.dto.SysParamDTO;
 import com.ep.yunq.domain.entity.AdminRole;
 import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.domain.entity.User;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,38 @@ public class SysParamService {
     @Autowired
     AdminRoleService adminRoleService;
 
+    public SysParam findById(int id){
+        return sysParamDAO.findById(id);
+    }
+
     public void addOrUpdate(SysParam sysParam) {
         sysParamDAO.save(sysParam);
     }
 
-    public String add(SysParam sysParam) {
+    public String createUserSysParam(User user){
+        String message = "";
+        try{
+            addOrUpdate(new SysParam("signInExperience","签到经验","2",new Date(),user));
+            addOrUpdate(new SysParam("signInRange","签到距离","500",new Date(),user));
+            addOrUpdate(new SysParam("classTime","每节课时长","45",new Date(),user));
+            addOrUpdate(new SysParam("level_1","等级1","60",new Date(),user));
+            addOrUpdate(new SysParam("level_2","等级2","80",new Date(),user));
+            addOrUpdate(new SysParam("level_3","等级3","90",new Date(),user));
+            addOrUpdate(new SysParam("defaultPwd","默认密码","123456",new Date(),user));
+            message = "添加成功";
+        }catch (Exception e) {
+            message = "参数异常，添加失败";
+            e.printStackTrace();
+        }
+        return message;
+
+    }
+
+    public String add(SysParamDTO sysParamDTO) {
         String message = "";
         try {
+            ModelMapper modelMapper=new ModelMapper();
+            SysParam sysParam=modelMapper.map(sysParamDTO,SysParam.class);
             sysParam.setUpdateTime(new Date());
             addOrUpdate(sysParam);
             message = "添加成功";
@@ -45,15 +71,17 @@ public class SysParamService {
         return message;
     }
 
-    public String edit(SysParamDTO sysParam) {
+    public String edit(SysParamDTO sysParamDTO) {
         String message = "";
         try {
-            SysParam sysParamInDB = sysParamDAO.findById(sysParam.getId());
+            SysParam sysParamInDB = sysParamDAO.findById(sysParamDTO.getId());
             if (null == sysParamInDB) {
                 message = "该系统参数不存在，修改失败";
             }
             else {
-                addOrUpdate(sysParamInDB);
+                ModelMapper modelMapper=new ModelMapper();
+                SysParam sysParam=modelMapper.map(sysParamDTO,SysParam.class);
+                addOrUpdate(sysParam);
                 message = "修改成功";
             }
         } catch (Exception e) {
@@ -63,6 +91,27 @@ public class SysParamService {
 
         return message;
     }
+
+    public String delete(Integer id) {
+        String message = "";
+        try {
+
+            SysParam sysParamInDB = findById(id);
+            if (null == sysParamInDB) {
+                message = "该系统参数不存在，删除失败";
+            }
+            else {
+                sysParamDAO.deleteById(id);
+                message = "删除成功";
+            }
+        } catch (Exception e) {
+            message = "参数异常，删除失败";
+            e.printStackTrace();
+        }
+        return message;
+    }
+
+
 
     public List<SysParam> search(String keywords) {
         List<SysParam> sysParams = sysParamDAO.search('%' + keywords + '%');

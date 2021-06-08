@@ -31,7 +31,7 @@ import java.util.Map;
  * 功能描述：
  **/
 
-@Api(tags = "课程管理")
+@Api(tags = "班课管理")
 @Slf4j
 @RestController
 public class CourseController {
@@ -50,18 +50,18 @@ public class CourseController {
 
     @ApiOperation("添加课程")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "semester", value = "年级", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "school", value = "学校", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "college", value = "院系", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "major", value = "专业", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "teacher", value = "教师", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "learnRequire", value = "学习要求", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "examArrange", value = "考试安排", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "cover", value = "封面", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "creator", value = "创建者手机号", required = true, dataType = "string"),
+            @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "grade", value = "年级", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "semester", value = "年级", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "school", value = "学校", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "college", value = "院系", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "major", value = "专业", dataTypeClass = String.class),
+            @ApiImplicitParam(name = "teacher", value = "教师", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "learnRequire", value = "学习要求", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "examArrange", value = "考试安排", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "cover", value = "封面", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "creator", value = "创建者id", required = true, dataTypeClass = String.class),
     })
     @PostMapping("/api/classes/courses")
     public Result<CourseAddDTO> addCourse(HttpServletRequest request) {
@@ -102,19 +102,19 @@ public class CourseController {
 
     @ApiOperation("修改课程包含头像")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "课程id", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "grade", value = "年级", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "semester", value = "年级", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "school", value = "学校", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "college", value = "院系", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "major", value = "专业", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "teacher", value = "教师", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "learnRequire", value = "学习要求", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "examArrange", value = "考试安排", required = false, dataType = "string"),
-            @ApiImplicitParam(name = "cover", value = "封面", required = true, dataType = "string"),
-            @ApiImplicitParam(name = "modifier", value = "修改者手机号", required = true, dataType = "string"),
+            @ApiImplicitParam(name = "id", value = "课程id", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "grade", value = "年级", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "semester", value = "年级", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "school", value = "学校", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "college", value = "院系", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "major", value = "专业",  dataTypeClass = String.class),
+            @ApiImplicitParam(name = "teacher", value = "教师", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "learnRequire", value = "学习要求", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "examArrange", value = "考试安排", required = false, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "cover", value = "封面", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "modifier", value = "修改者id", required = true, dataTypeClass = String.class),
     })
     @PutMapping("/api/classes/course-contain-covers")
     public Result<String> editCourseContainCover(HttpServletRequest request) {

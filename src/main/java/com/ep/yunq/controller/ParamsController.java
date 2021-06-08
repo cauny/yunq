@@ -71,6 +71,28 @@ public class ParamsController {
             return ResultUtil.buildFailResult(message);
         }
     }
+    @ApiOperation("删除系统参数")
+    @DeleteMapping(value = "/api/params")
+    public Result<String> deleteSysParam(@RequestParam Integer sysParamId) {
+        log.info("---------------- 删除系统参数 ----------------------");
+        String message = sysParamService.delete(sysParamId);
+        if ("删除成功".equals(message)) {
+            return ResultUtil.buildSuccessResult(message, null);
+        } else {
+            return ResultUtil.buildFailResult(message);
+        }
+    }
+    @ApiOperation("添加系统参数")
+    @PostMapping(value = "/api/params")
+    public Result<String> addSysParam(@RequestBody SysParamDTO sysParam) {
+        log.info("---------------- 添加系统参数 ----------------------");
+        String message = sysParamService.add(sysParam);
+        if ("添加成功".equals(message)) {
+            return ResultUtil.buildSuccessResult(message, null);
+        } else {
+            return ResultUtil.buildFailResult(message);
+        }
+    }
 
     /*@ApiOperation("搜索系统参数")
     @GetMapping(value = "/api/params/search")

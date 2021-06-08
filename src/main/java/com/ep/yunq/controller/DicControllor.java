@@ -215,6 +215,17 @@ public class DicControllor {
             return ResultUtil.buildFailResult(message);
     }
 
+    @ApiOperation("修改字典类型和字典明细")
+    @PutMapping("/api/dictionaries/dictionary-types-details")
+    public Result<String> editTypeAndDetail(@RequestBody Param param) {
+        log.info("---------------- 修改字典类型和字典明细 ----------------------");
+        String message = dictionaryDetailService.editTypeAndDetails(param.dictionaryType, param.dictionaryDetails);
+        if ("修改成功".equals(message))
+            return ResultUtil.buildSuccessResult(message,null);
+        else
+            return ResultUtil.buildFailResult(message);
+    }
+
 }
 
 

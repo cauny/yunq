@@ -17,6 +17,9 @@ public class UserDTO {
     int id;
     private String username;    //用户名
     private String phone;   //手机号
+    private String ino;
+    private String school;
+    private String major;
     private Integer enabled;       //是否使用
     private List<AdminRole> roles;
 }

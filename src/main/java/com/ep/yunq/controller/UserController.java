@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class UserController {
     public Result addUser(@RequestBody User user,
                           @RequestParam Integer creatorId) {
         log.info("---------------- 增加用户 ----------------------");
-        String message = userService.registerByAdmin(user, "student", creatorId);
+        String message = userService.registerByAdmin(user, creatorId);
         if ("注册成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -88,6 +89,9 @@ public class UserController {
                            @RequestParam Integer modifierId) {
         log.info("---------------- 修改用户信息 ----------------------");
         String message = userService.editUser(requestUser, modifierId);
+        if("修改成功".equals(message)){
+            message=userInfoService.editByAdmin(requestUser);
+        }
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -120,9 +124,16 @@ public class UserController {
     @GetMapping(value = "/api/admins/users")
     public Result<Page<UserDTO>> listUsers(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取所有用户 ----------------------");
-        Page<User> us = userService.list(pageNum, pageSize);
-        Page<UserDTO> userDTOS=PageUtil.pageChange(us,UserDTO.class);
-        return ResultUtil.buildSuccessResult(userDTOS);
+        List<User> us = userService.list();
+        List<UserDTO> userDTOS=PageUtil.listChange(us,UserDTO.class);
+        for(UserDTO userDTO:userDTOS){
+            UserInfo userInfo=userInfoService.findByUid(userDTO.getId());
+            userDTO.setIno(userInfo.getIno());
+            userDTO.setSchool(userInfo.getSchool());
+            userDTO.setMajor(userInfo.getMajor());
+        }
+        Page<UserDTO> users=PageUtil.listToPage(userDTOS,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(users);
     }
 
     /**

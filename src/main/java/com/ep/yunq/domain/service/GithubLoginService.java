@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @classname: GithubLoginService
@@ -65,7 +66,10 @@ public class GithubLoginService {
 
             SysParam sysParam = new SysParam(new Date(), user);
             sysParamService.addOrUpdate(sysParam);*/
-            message=userService.createUser(user,role);
+            List<AdminRole> roles=new ArrayList<>();
+            roles.add(adminRoleService.findByName(role));
+            user.setRoles(roles);
+            message=userService.createUser(user);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }

@@ -56,6 +56,10 @@ public class LoginAppService {
             String message = "用户不存在";
             return ResultUtil.buildFailResult(message);
         }
+        if (userService.findByPhone(phone).getEnabled() == 0) {
+            String message = "该用户已禁用";
+            return ResultUtil.buildFailResult(message);
+        }
 
         String message = smsUtil.checkSms(phone, verificationCode);
         /*String message=userService.authUserByVerificationCode(phone,verificationCode);*/

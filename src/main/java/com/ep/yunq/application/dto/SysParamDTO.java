@@ -13,13 +13,9 @@ import java.util.Date;
 @Data
 public class SysParamDTO {
     private int id;
-    private String signinExperience;
-    private String signinRange;
-    private String classTime;
-    private String level1;
-    private String level2;
-    private String level3;
-    private Date updateTime;
+    private String name;
+    private String nameZh;
+    private String value;
 
     public SysParamDTO() {
     }

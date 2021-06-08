@@ -15,14 +15,10 @@ import com.usthe.sureness.util.JsonWebTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import javax.jws.soap.SOAPBinding;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.*;
@@ -46,11 +42,10 @@ public class UserService {
     SysParamService sysParamService;
 
 
-    public Page<User> list(int pageNumber, int pageSize) {
+    public List<User> list() {
         List<User> users = userDAO.findAll();
         users=addRoles(users);
-        Page<User> userPage= PageUtil.listToPage(users,pageNumber,pageSize);
-        return userPage;
+        return users;
     }
 
     public List<User> listIsEnabled() {
@@ -103,7 +98,7 @@ public class UserService {
         return roles;
     }
 
-    public String createUser(User user,String role) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String createUser(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String message="";
         String username = user.getUsername();
         String password = user.getPassword();
@@ -125,21 +120,24 @@ public class UserService {
         user.setEnabled(1);
         user = addAndReturn(user);
 
+        List<AdminRole> roles=user.getRoles();
+
         //新建userInfo
         UserInfo userInfo = new UserInfo(username, user);
-        userInfo.setDefaultRole(role);
+        userInfo.setDefaultRole(roles.get(0).getName());
         userInfoService.addOrUpdate(userInfo);
 
         //设置用户角色
-        int rid = adminRoleService.findByName(role).getId();
-        AdminUserToRole adminUserToRole = new AdminUserToRole();
-        log.info(String.valueOf(rid));
-        adminUserToRole.setRoleId(rid);
-        adminUserToRole.setUserId(user.getId());
-        adminUserToRoleService.add(adminUserToRole);
+        for(AdminRole role:roles){
+            int rid = role.getId();
+            AdminUserToRole adminUserToRole = new AdminUserToRole();
+            log.info(String.valueOf(rid));
+            adminUserToRole.setRoleId(rid);
+            adminUserToRole.setUserId(user.getId());
+            adminUserToRoleService.add(adminUserToRole);
+        }
 
-        SysParam sysParam = new SysParam(new Date(), user);
-        sysParamService.addOrUpdate(sysParam);
+        sysParamService.createUserSysParam(user);
         message="创建成功";
         return message;
     }
@@ -155,7 +153,10 @@ public class UserService {
                 return message;
             }
             user.setCreator(user.getId());
-            message=createUser(user,role);
+            List<AdminRole> roles=new ArrayList<>();
+            roles.add(adminRoleService.findByName(role));
+            user.setRoles(roles);
+            message= createUser(user);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }
@@ -167,11 +168,11 @@ public class UserService {
     }
 
     /* 用户注册 */
-    public String registerByAdmin(User user, String role,Integer creatorId) {
+    public String registerByAdmin(User user,Integer creatorId) {
         String message = "";
         try {
             user.setCreator(creatorId);
-            message=createUser(user,role);
+            message= createUser(user);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }
@@ -223,6 +224,9 @@ public class UserService {
         }
         if (password == null) {
             return "密码为空";
+        }
+        if (authuser.getEnabled() == 0) {
+            return "该用户已禁用";
         }
 
         password = pbkdf2Util.getEncryptedPassword(password, authuser.getSalt());
@@ -285,6 +289,9 @@ public class UserService {
 
     public UserLoginDTO loginMessageByUserId(int id) {
         User user = findById(id);
+        if(user.getEnabled()==0){
+            return null;
+        }
         UserBasicInfo userBasicInfo = userInfoService.createByUser(user);
 
         String token = useToken(user);
@@ -344,12 +351,14 @@ public class UserService {
     public String editUser(UserDTO user,int modifierId) {
         String message = "";
         try {
-            User userInDB = userDAO.findById(user.getId());
+            User userInDB = findById(user.getId());
             if (null == userInDB) {
+                log.info("111111");
                 message = "找不到该用户，修改失败";
                 return message;
             }
             userInDB.setUsername(user.getUsername());
+            userInDB.setEnabled(user.getEnabled());
             userInDB.setPhone(user.getPhone());
             userInDB.setModifier(modifierId);
             update(userInDB);

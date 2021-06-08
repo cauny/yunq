@@ -1,5 +1,6 @@
 package com.ep.yunq.domain.service;
 
+import com.ep.yunq.application.dto.UserDTO;
 import com.ep.yunq.domain.dao.UserInfoDAO;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.domain.entity.UserBasicInfo;
@@ -92,6 +93,31 @@ public class UserInfoService {
             e.printStackTrace();
         }
 
+        return message;
+    }
+
+    public String editByAdmin(UserDTO userInfo) {
+        String message = "";
+        try {
+            UserInfo userInfoInDB = userInfoDAO.findByUserId(userInfo.getId());
+            log.info("222");
+            if (null == userInfoInDB) {
+                message = "找不到该用户信息，修改失败";
+            } else {
+                User user = userInfoInDB.getUser();
+                user.setUsername(userInfo.getUsername());
+                userService.update(user);
+
+                userInfoInDB.setIno(userInfo.getIno());
+                userInfoInDB.setSchool(userInfo.getSchool());
+                userInfoInDB.setMajor(userInfo.getMajor());
+                addOrUpdate(userInfoInDB);
+                message = "修改成功";
+            }
+        } catch (Exception e){
+            message = "参数错误，修改失败";
+            e.printStackTrace();
+        }
         return message;
     }
 

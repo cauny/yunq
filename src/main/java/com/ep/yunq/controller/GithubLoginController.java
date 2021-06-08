@@ -86,6 +86,10 @@ public class GithubLoginController {
 
             }
             responseData = userService.loginMessageByUserId(userAuthsService.findByIdentityTypeAndIdentifier("github", String.valueOf(id)).getUserId());
+            if(responseData==null){
+                message="该用户已被禁用";
+                return ResultUtil.buildFailResult(message);
+            }
             return ResultUtil.buildSuccessResult(responseData);
         }
         message = "授权登录失败";

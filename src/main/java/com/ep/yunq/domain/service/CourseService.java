@@ -19,6 +19,7 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -70,10 +71,15 @@ public class CourseService {
         try {
             // 封面
             File imageFolder = new File(ConstantUtil.FILE_Photo_Course.string);
-            File f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
-                    .substring(file.getOriginalFilename().length() - 4));
-            InputStream logo = file.getInputStream();
-            file.transferTo(f);
+            File f=new File(imageFolder,"default.png");
+            InputStream logo = new FileInputStream(f);
+            if(file!=null){
+                f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
+                        .substring(file.getOriginalFilename().length() - 4));
+                logo = file.getInputStream();
+                file.transferTo(f);
+            }
+            
             course.setCover(f.getName());
             course.setQrcode("");
             course.setCreationDate(new Date());

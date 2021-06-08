@@ -23,18 +23,10 @@ public class SysParam {
     @Column(name="id")
     private int id;
 
-    private String signinExperience;
-    private String signinRange;
-    private String classTime;
+    private String name;
+    private String nameZh;
+    private String value;
 
-    @Column(name = "level_1")
-    private String level1;
-
-    @Column(name = "level_2")
-    private String level2;
-
-    @Column(name = "level_3")
-    private String level3;
 
     /**
      * 更新时间
@@ -50,13 +42,11 @@ public class SysParam {
     @JoinColumn(name = "user_id")
     User user;
 
-    public SysParam(Date updateTime, User user) {
-        this.signinExperience = "2";
-        this.signinRange = "20";
-        this.classTime = "45";
-        this.level1="90";
-        this.level2="75";
-        this.level3="60";
+
+    public SysParam(String name, String nameZh, String value, Date updateTime, User user) {
+        this.name = name;
+        this.nameZh = nameZh;
+        this.value = value;
         this.updateTime = updateTime;
         this.user = user;
     }
