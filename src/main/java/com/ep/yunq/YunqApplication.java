@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import springfox.documentation.oas.annotations.EnableOpenApi;
 
 @SpringBootApplication
-//@ServletComponentScan
+@ServletComponentScan
 @EnableOpenApi
 public class YunqApplication {
     @Bean

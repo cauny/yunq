@@ -10,7 +10,6 @@ import lombok.Data;
  **/
 @Data
 public class CourseAddDTO {
-    private Integer id;
     private String code;
     private String imgUrl;
 }

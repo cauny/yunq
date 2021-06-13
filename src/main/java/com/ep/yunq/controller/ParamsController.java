@@ -5,6 +5,7 @@ import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.domain.service.SysParamService;
 import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -14,6 +15,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @classname: SysController
@@ -47,15 +50,18 @@ public class ParamsController {
     }
 
     @ApiOperation("根据用户id获取系统参数")
-    @GetMapping(value = "/api/params/{userId}")
-    public Result<SysParamDTO> getSysParamByUserId(@PathVariable("userId") Integer userId) {
+    @GetMapping(value = "/api/params/ids")
+    public Result<List<SysParamDTO>> getSysParamByUserId() {
         log.info("---------------- 获取系统参数 ----------------------");
-        ModelMapper modelMapper = new ModelMapper();
-        SysParam sysParam = sysParamService.getByUserId(userId);
+        Integer uid= CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        List<SysParam> sysParam = sysParamService.getByUserId(uid);
         if (sysParam == null) {
             return ResultUtil.buildFailResult("该用户不存在");
         }
-        SysParamDTO sysParamDTO = modelMapper.map(sysParam, SysParamDTO.class);
+        List<SysParamDTO> sysParamDTO = PageUtil.listChange(sysParam, SysParamDTO.class);
         return ResultUtil.buildSuccessResult(sysParamDTO);
     }
 

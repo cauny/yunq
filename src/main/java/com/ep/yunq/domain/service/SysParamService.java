@@ -130,14 +130,14 @@ public class SysParamService {
         return res;
     }
 
-    public SysParam getByUserId(int uid){
-        SysParam sysParam = sysParamDAO.findByUserId(uid);
+    public List<SysParam> getByUserId(int uid){
+        List<SysParam> sysParam = sysParamDAO.findByUserId(uid);
         if(sysParam==null){
             return null;
         }
-        List<AdminRole> roles = adminRoleService.listRolesByUser(uid);
+        /*List<AdminRole> roles = adminRoleService.listRolesByUser(uid);
         User user = new User(uid,sysParam.getUserUsername(),sysParam.getUserEnabled(),roles);
-        sysParam.setUser(user);
+        sysParam.setUser(user);*/
         return sysParam;
     }
 }

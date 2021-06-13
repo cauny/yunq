@@ -269,7 +269,7 @@ public class UserService {
 
         //刷新时间5小时
         long refreshPeriodTime = 36000L;
-        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), user.getUsername(),
+        String jwt = JsonWebTokenUtil.issueJwt(UUID.randomUUID().toString(), String.valueOf(user.getId()),
                 "tom-auth-server", refreshPeriodTime >> 1, roles,
                 null, false);
         String responseData = jwt;

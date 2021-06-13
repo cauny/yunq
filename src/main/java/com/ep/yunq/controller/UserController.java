@@ -49,10 +49,13 @@ public class UserController {
 
     @ApiOperation("增加用户")
     @PostMapping(value = "/api/admins/users")
-    public Result addUser(@RequestBody User user,
-                          @RequestParam Integer creatorId) {
+    public Result addUser(@RequestBody User user) {
         log.info("---------------- 增加用户 ----------------------");
-        String message = userService.registerByAdmin(user, creatorId);
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        String message = userService.registerByAdmin(user, uid);
         if ("注册成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -85,10 +88,13 @@ public class UserController {
 
     @ApiOperation("修改用户信息")
     @PutMapping("/api/admins/users")
-    public Result editUser(@RequestBody UserDTO requestUser,
-                           @RequestParam Integer modifierId) {
+    public Result editUser(@RequestBody UserDTO requestUser) {
         log.info("---------------- 修改用户信息 ----------------------");
-        String message = userService.editUser(requestUser, modifierId);
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        String message = userService.editUser(requestUser, uid);
         if("修改成功".equals(message)){
             message=userInfoService.editByAdmin(requestUser);
         }

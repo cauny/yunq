@@ -7,6 +7,9 @@ import com.ep.yunq.domain.service.*;
 import com.ep.yunq.infrastructure.util.PBKDF2Util;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
+import com.usthe.sureness.subject.SubjectSum;
+import com.usthe.sureness.subject.support.JwtSubject;
+import com.usthe.sureness.util.SurenessContextHolder;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -17,6 +20,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -71,7 +76,12 @@ public class test {
     @CrossOrigin
     @GetMapping("/api/test")
     public Result tes(){
-        return ResultUtil.buildSuccessResult(userService.findById(93));
+        SubjectSum subject = SurenessContextHolder.getBindSubject();
+        if (subject == null || subject.getPrincipal() == null) {
+            return ResultUtil.buildFailResult("111");
+        }
+        String appId = (String) subject.getPrincipal();
+        return ResultUtil.buildSuccessResult(appId);
     }
 
 
@@ -105,6 +115,7 @@ public class test {
     public Result est(@RequestBody UserAuths userAuths){
         UserAuths userAuths1= userAuthsService.add(userAuths);
 
+        log.info("11111");
         return ResultUtil.buildSuccessResult(userAuths1);
     }
 
@@ -113,6 +124,7 @@ public class test {
     @RequestBody
     public Page<User> est5(@RequestParam int pageNum,@RequestParam int pageSize){
 
+        log.info("11111");
         List<User> users=userService.listIsEnabled();
         Page<User> us= PageUtil.listToPage(users,pageNum,pageSize);
         return us;
@@ -123,6 +135,7 @@ public class test {
     @RequestBody
     public Result est(@RequestBody SchoolInstitutionDTO schoolInstitutionDTO){
 
+        log.info("11111");
         ModelMapper modelMapper = new ModelMapper();
         SchoolInstitution schoolInstitution=modelMapper.map(schoolInstitutionDTO,SchoolInstitution.class);
         return ResultUtil.buildSuccessResult(schoolInstitution);
@@ -134,6 +147,7 @@ public class test {
     public Result<List<SchoolInstitutionDTO>> rrest(@RequestParam Integer id){
         List<Integer> ids=new ArrayList<>();
         ids.add(id);
+        log.info("11111");
         List<SchoolInstitutionDTO> tmp=schoolInstitution.findFa(ids);
         return ResultUtil.buildSuccessResult(tmp);
     }

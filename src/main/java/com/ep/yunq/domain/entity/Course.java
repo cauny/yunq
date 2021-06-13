@@ -47,4 +47,23 @@ public class Course {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @Column(name = "modification_date")
     private Date modificationDate;
+
+
+    public Course() {
+    }
+
+    public Course(String name,String grade, String semester, String school, String college,
+                  String major, String teacher, String learnRequire, String teachProgress,
+                  String examArrange) {
+        this.name = name;
+        this.grade = grade;
+        this.semester = semester;
+        this.school = school;
+        this.college = college;
+        this.major = major;
+        this.teacher = teacher;
+        this.learnRequire = learnRequire;
+        this.teachProgress = teachProgress;
+        this.examArrange = examArrange;
+    }
 }

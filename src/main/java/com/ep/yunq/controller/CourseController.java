@@ -7,9 +7,13 @@ import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.service.CourseService;
 import com.ep.yunq.domain.service.CourseToStudentService;
 import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import com.ep.yunq.infrastructure.util.SmsUtil;
+import com.usthe.sureness.mgt.SurenessSecurityManager;
+import com.usthe.sureness.subject.SubjectSum;
+import com.usthe.sureness.util.SurenessContextHolder;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,32 +66,53 @@ public class CourseController {
             @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataTypeClass = String.class),
             @ApiImplicitParam(name = "examArrange", value = "考试安排", required = false, dataTypeClass = String.class),
             @ApiImplicitParam(name = "cover", value = "封面", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(name = "creator", value = "创建者id", required = true, dataTypeClass = String.class),
     })
     @PostMapping("/api/classes/courses")
     public Result<CourseAddDTO> addCourse(HttpServletRequest request) {
         log.info("---------------- 添加课程 ----------------------");
         String message = "";
-        MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
+
+        /*SubjectSum subject = SurenessContextHolder.getBindSubject();
+        Integer appId = (Integer) subject.getPrincipal();*/
+
+        /*MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("cover");
-        Course course = new Course();
-        course.setName(params.getParameter("name"));
-        course.setGrade(params.getParameter("grade"));
-        course.setSemester(params.getParameter("semester"));
-        course.setSchool(params.getParameter("school"));
-        course.setCollege(params.getParameter("college"));
-        course.setMajor(params.getParameter("major"));
-        course.setTeacher(params.getParameter("teacher"));
-        course.setLearnRequire(params.getParameter("learnRequire"));
-        course.setTeachProgress(params.getParameter("teachProgress"));
-        course.setExamArrange(params.getParameter("examArrange"));
-        course.setCreator(Integer.parseInt(params.getParameter("creator")));
+        String code = courseService.createCourseCode();
+        Course course = new Course(params.getParameter("name"),code,params.getParameter("grade"),params.getParameter("semester"),
+                params.getParameter("school"),params.getParameter("college"),params.getParameter("major"),params.getParameter("teacher"),
+                params.getParameter("learnRequire"),params.getParameter("teachProgress"),params.getParameter("examArrange"),
+                Integer.parseInt(params.getParameter("creator")));*/
+
+        //获取token中的用户id
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+
+        MultipartHttpServletRequest params = null;
+        List<MultipartFile> files=new ArrayList<>();
+        Course course=new Course();
+        String code = courseService.createCourseCode();
+        if (request instanceof MultipartHttpServletRequest) {
+
+            params = (MultipartHttpServletRequest) (request);
+            files = ((MultipartHttpServletRequest) request)
+                    .getFiles("cover");
+            course= CommonUtil.multipartRequestChangeToCourse(params);
+        } else {
+            files.add(0,null);
+            log.info(String.valueOf(files.get(0)));
+            log.info("String.valueOf(files.get(0))");
+            course=CommonUtil.requestChangeToCourse(request);
+
+        }
+        course.setCreator(uid);
+        course.setCode(code);
+
         /*course.setSchoolId(Integer.parseInt(params.getParameter("schoolId")));
         course.setCollegeId(Integer.parseInt(params.getParameter("collegeId")));*/
 
-        String code = courseService.createCourseCode();
-        course.setCode(code);
         message = courseService.add(course, files.get(0));
         log.info(String.valueOf(files.get(0)));
         if ("参数异常，添加失败".equals(message)) {
@@ -108,7 +134,7 @@ public class CourseController {
             @ApiImplicitParam(name = "semester", value = "年级", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "school", value = "学校", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "college", value = "院系", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(name = "major", value = "专业",  dataTypeClass = String.class),
+            @ApiImplicitParam(name = "major", value = "专业", dataTypeClass = String.class),
             @ApiImplicitParam(name = "teacher", value = "教师", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "learnRequire", value = "学习要求", required = false, dataTypeClass = String.class),
             @ApiImplicitParam(name = "teachProgress", value = "教学进度", required = false, dataTypeClass = String.class),
@@ -122,6 +148,10 @@ public class CourseController {
         MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)
                 .getFiles("cover");
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
         Course course = new Course();
         course.setId(Integer.parseInt(params.getParameter("id")));
         course.setName(params.getParameter("name"));
@@ -134,7 +164,7 @@ public class CourseController {
         course.setLearnRequire(params.getParameter("learnRequire"));
         course.setTeachProgress(params.getParameter("teachProgress"));
         course.setExamArrange(params.getParameter("examArrange"));
-        course.setModifier(Integer.parseInt(params.getParameter("modifier")));
+        course.setModifier(uid);
         String message = "";
         if (0 == files.size()) {
             message = courseService.editContainCover(course, null);
@@ -197,12 +227,15 @@ public class CourseController {
     }
 
     @ApiOperation("获取我创建的课程")
-    @GetMapping("/api/classes/courses/uid/{userId}")
-    public Result<Page<CourseDTO>> getCurrentUserCreateCourse(@PathVariable("userId") Integer userId,
-                                                              @RequestParam int pageNum,
+    @GetMapping("/api/classes/courses/uid")
+    public Result<Page<CourseDTO>> getCurrentUserCreateCourse(@RequestParam int pageNum,
                                                               @RequestParam int pageSize) {
         log.info("---------------- 获取我创建的课程 ----------------------");
-        Page<Course> courses = courseService.findAllByCreatorId(userId, pageNum, pageSize);
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        Page<Course> courses = courseService.findAllByCreatorId(uid, pageNum, pageSize);
         Page<CourseDTO> courseDTO = PageUtil.pageChange(courses, CourseDTO.class);
         return ResultUtil.buildSuccessResult(courseDTO);
     }
@@ -241,7 +274,6 @@ public class CourseController {
         }
     }
 
-
     /**
      * -------------------------- 课程学生表 --------------------------------------
      **/
@@ -257,9 +289,13 @@ public class CourseController {
 
     @ApiOperation("加入课程")
     @PostMapping("/api/classes/students/courses")
-    public Result<String> joinCourse(@RequestParam int cid, @RequestParam Integer userId) {
+    public Result<String> joinCourse(@RequestParam int cid) {
         log.info("---------------- 加入课程 ----------------------");
-        String message = courseToStudentService.joinCourse(userId, cid);
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        String message = courseToStudentService.joinCourse(uid, cid);
         if ("加入成功".equals(message))
             return ResultUtil.buildSuccessResult(message, null);
         else
@@ -268,9 +304,13 @@ public class CourseController {
 
     @ApiOperation("获取我加入的课程")
     @GetMapping("/api/classes/students/courses")
-    public Result<List<Course>> getCurrentUserJoinCourse(@RequestParam Integer userId) {
+    public Result<List<Course>> getCurrentUserJoinCourse() {
         log.info("---------------- 获取我加入的课程 ----------------------");
-        List<Course> courses = courseToStudentService.findCourseByUserId(userId);
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        List<Course> courses = courseToStudentService.findCourseByUserId(uid);
         return ResultUtil.buildSuccessResult(courses);
     }
 }

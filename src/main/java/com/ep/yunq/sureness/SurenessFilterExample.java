@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.Map;
 
@@ -44,6 +45,8 @@ public class SurenessFilterExample implements Filter, HandlerInterceptor {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         try {
+            /*log.info(servletRequest.getRemoteAddr());*/
+            /*HttpServletRequest httpRequest = (HttpServletRequest)servletRequest;*/
             SubjectSum subject = SurenessSecurityManager.getInstance().checkIn(servletRequest);
             // You can consider using SurenessContextHolder to bind subject in threadLocal
             // if bind, please remove it when end

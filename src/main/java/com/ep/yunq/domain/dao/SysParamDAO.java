@@ -22,7 +22,7 @@ public interface SysParamDAO extends JpaRepository<SysParam,Integer> {
 
     @Query(nativeQuery = true, value = "select * from sys_param  " +
             " where user_id = ?1 ")
-    SysParam findByUserId(int uid);
+    List<SysParam> findByUserId(int uid);
 
     Page<SysParam> findAll(Pageable pageable);
 }

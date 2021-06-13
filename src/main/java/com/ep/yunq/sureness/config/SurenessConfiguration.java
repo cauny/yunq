@@ -38,6 +38,7 @@ import java.util.List;
  * @Date: 2021/3/28 11:31
  * 功能描述：
  **/
+
 @Configuration
 public class SurenessConfiguration {
     /**

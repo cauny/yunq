@@ -6,6 +6,7 @@ import com.ep.yunq.domain.entity.AdminMenu;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.SchoolInstitution;
 import com.ep.yunq.domain.service.AdminMenuService;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
@@ -31,14 +32,16 @@ public class MenuController {
     @Autowired
     AdminMenuService adminMenuService;
 
-    @ApiOperation("获取用户菜单")
-    @GetMapping("/api/menus/{userId}")
-    public Result<Page<MenuDTO>> getMenu(@PathVariable("userId") Integer userId,
-                                           @RequestParam int pageNum,
+    @ApiOperation("获取当前用户菜单")
+    @GetMapping("/api/menus/ids")
+    public Result<Page<MenuDTO>> getMenu(@RequestParam int pageNum,
                                            @RequestParam int pageSize){
         log.info("---------------- 获取用户菜单 ----------------------");
-
-        List<MenuDTO> menus = adminMenuService.getMenusByUserId(userId);
+        Integer uid= CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Ton出错");
+        }
+        List<MenuDTO> menus = adminMenuService.getMenusByUserId(uid);
         Page<MenuDTO> menuPage=PageUtil.listToPage(menus,pageNum,pageSize);
         if (0 != menuPage.getContent().size()) {
             return ResultUtil.buildSuccessResult(menuPage);

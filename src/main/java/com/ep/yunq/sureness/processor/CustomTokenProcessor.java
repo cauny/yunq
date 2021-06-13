@@ -10,6 +10,7 @@ import com.usthe.sureness.processor.exception.UnauthorizedException;
 import com.usthe.sureness.provider.SurenessAccount;
 import com.usthe.sureness.provider.SurenessAccountProvider;
 import com.usthe.sureness.subject.Subject;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +23,7 @@ import java.util.UUID;
  * @Date: 2021/3/28 11:32
  * 功能描述：
  **/
+@Slf4j
 public class CustomTokenProcessor extends BaseProcessor {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomTokenProcessor.class);
