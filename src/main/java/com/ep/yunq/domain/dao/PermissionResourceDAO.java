@@ -20,12 +20,9 @@ public interface PermissionResourceDAO extends JpaRepository<PermissionResource,
     PermissionResource findById(int id);
 
     /* 查找所有可用权限路径 */
-    @Query(nativeQuery = true,value = "select * from permisson where name='1'")
-    Set<String> getAllEnableResourcePath();
+    @Query(nativeQuery = true,value = "select * from permission where status!=9")
+    List<PermissionResource> findAll();
 
-    /* 查找所有不可用权限路径 */
-    @Query(nativeQuery = true,value = "select * from permisson where name='2'")
-    Set<String> getAllDisableResourcePath();
 
     /**
      * Get uri resource and resource-role relationship chain, eg: /api/v2/host===post===[role2,role3,role4]
@@ -50,7 +47,7 @@ public interface PermissionResourceDAO extends JpaRepository<PermissionResource,
 
 
     @Query(nativeQuery = true, value = "select * from permission where" +
-            " name like ?1 or description like ?1 or uri like ?1 ")
+            " (name like ?1 or description like ?1 or uri like ?1)and status!=9 ")
     List<PermissionResource> search(String keyword1);
 
     /*List<PermissionResource> findAllByParentId(int parentId);*/

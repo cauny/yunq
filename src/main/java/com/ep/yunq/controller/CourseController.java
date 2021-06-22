@@ -56,6 +56,7 @@ public class CourseController {
     @ApiOperation("添加课程")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "className", value = "班级名字", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "grade", value = "年级", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "semester", value = "年级", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "school", value = "学校", required = true, dataTypeClass = String.class),
@@ -130,6 +131,7 @@ public class CourseController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "课程id", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "name", value = "课程名字", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "className", value = "班级名字", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "grade", value = "年级", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "semester", value = "年级", required = true, dataTypeClass = String.class),
             @ApiImplicitParam(name = "school", value = "学校", required = true, dataTypeClass = String.class),
@@ -155,6 +157,7 @@ public class CourseController {
         Course course = new Course();
         course.setId(Integer.parseInt(params.getParameter("id")));
         course.setName(params.getParameter("name"));
+        course.setName(params.getParameter("className"));
         course.setGrade(params.getParameter("grade"));
         course.setSemester(params.getParameter("semester"));
         course.setSchool(params.getParameter("school"));
@@ -260,17 +263,17 @@ public class CourseController {
         return ResultUtil.buildSuccessResult(courseDTO);
     }
 
-    @ApiOperation("获取单一课程")
-    @GetMapping("/api/classes/courses/cid/{cid}")
-    public Result<CourseDTO> getById(@PathVariable("cid") int cid) {
-        log.info("---------------- 获取单一课程 ----------------------");
-        Course course = courseService.findById(cid);
+    @ApiOperation("根据code获取课程")
+    @GetMapping("/api/classes/courses/codes")
+    public Result<CourseDTO> getByCode(String code) {
+        log.info("---------------- 根据code获取课程 ----------------------");
+        Course course=courseService.findByCode(code);
         if (null != course) {
             ModelMapper modelMapper = new ModelMapper();
             CourseDTO courseDTO = modelMapper.map(course, CourseDTO.class);
             return ResultUtil.buildSuccessResult(courseDTO);
         } else {
-            return ResultUtil.buildFailResult("请输入正确课程Id");
+            return ResultUtil.buildFailResult("请输入正确课程编码");
         }
     }
 
@@ -281,21 +284,25 @@ public class CourseController {
 
     @ApiOperation("获取课程学生")
     @GetMapping("/api/classes/students")
-    public Result<List<Map<String, String>>> getStudentsByCourseId(@RequestParam int cid) {
+    public Result<List<Map<String, String>>> getStudentsByCourseId(@RequestParam String code) {
         log.info("---------------- 获取课程学生 ----------------------");
+        Integer cid= courseToStudentService.findCourseIdByCode(code);
+        if(cid==null){
+            return ResultUtil.buildFailResult("该课程不存在");
+        }
         List<Map<String, String>> courseStus = courseToStudentService.findAllStudentByCourseId(cid);
         return ResultUtil.buildSuccessResult(courseStus);
     }
 
     @ApiOperation("加入课程")
     @PostMapping("/api/classes/students/courses")
-    public Result<String> joinCourse(@RequestParam int cid) {
+    public Result<String> joinCourse(@RequestParam String code) {
         log.info("---------------- 加入课程 ----------------------");
         Integer uid=CommonUtil.getTokenId();
         if(uid==null){
             return ResultUtil.buildFailResult("Token出错");
         }
-        String message = courseToStudentService.joinCourse(uid, cid);
+        String message = courseToStudentService.joinCourse(uid, code);
         if ("加入成功".equals(message))
             return ResultUtil.buildSuccessResult(message, null);
         else

@@ -41,7 +41,8 @@ public enum ConstantUtil {
 
 
     //签到
-    SIGNUP_Mode_Gesture("gesture"),
+    SIGNUP_Mode_OneStep("oneStep"),
+    SIGNUP_Mode_Gesture("23"),
     SIGNUP_Mode_Time("time");
 
     public int code;

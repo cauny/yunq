@@ -1,0 +1,378 @@
+09:55:47.824 [restartedMain] INFO  com.ep.yunq.YunqApplication - Starting YunqApplication using Java 1.8.0_212 on YYC-PC with PID 9276 (D:\gcxl\target\classes started by yan in D:\gcxl)
+09:55:47.824 [restartedMain] INFO  com.ep.yunq.YunqApplication - No active profile set, falling back to default profiles: default
+09:55:47.871 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+09:55:47.871 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+09:55:48.886 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+09:55:48.886 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Elasticsearch repositories in DEFAULT mode.
+09:55:48.918 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminMenuDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.918 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleToMenuDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleToPerDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminUserToRoleDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseSignInDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseToStudentDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.933 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.DictionaryDetailDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.DictionaryTypeDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.PermissionResourceDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SchoolInstitutionDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.StudentSignInDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SubjectDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SysParamDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserAuthsDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.949 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserInfoDAO. If you want this repository to be a Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ElasticsearchRepository, org.springframework.data.elasticsearch.repository.ElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 69 ms. Found 0 Elasticsearch repository interfaces.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Reactive Elasticsearch repositories in DEFAULT mode.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminMenuDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleToMenuDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminRoleToPerDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.AdminUserToRoleDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseSignInDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.CourseToStudentDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.DictionaryDetailDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.DictionaryTypeDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.PermissionResourceDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SchoolInstitutionDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.StudentSignInDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SubjectDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.SysParamDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserAuthsDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.965 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.980 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Reactive Elasticsearch - Could not safely identify store assignment for repository candidate interface com.ep.yunq.domain.dao.UserInfoDAO. If you want this repository to be a Reactive Elasticsearch repository, consider annotating your entities with one of these annotations: org.springframework.data.elasticsearch.annotations.Document (preferred), or consider extending one of the following types with your repository: org.springframework.data.elasticsearch.repository.ReactiveElasticsearchRepository.
+09:55:48.980 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 Reactive Elasticsearch repository interfaces.
+09:55:48.980 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+09:55:48.980 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+09:55:49.058 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 72 ms. Found 18 JPA repository interfaces.
+09:55:49.340 [restartedMain] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'redisConfig' of type [com.ep.yunq.infrastructure.config.RedisConfig$$EnhancerBySpringCGLIB$$66bbe3e0] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+09:55:49.668 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8080 (http)
+09:55:49.668 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+09:55:49.668 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+09:55:49.668 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.43]
+09:55:49.855 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+09:55:49.855 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1984 ms
+09:55:50.136 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+09:55:50.186 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.4.28.Final
+09:55:50.262 [restartedMain] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+09:55:50.340 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+09:55:50.871 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+09:55:50.891 [restartedMain] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.MySQL8Dialect
+09:55:51.496 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+09:55:51.512 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+09:55:52.449 [restartedMain] INFO  c.e.y.s.p.DatabasePathTreeProvider - [/api/dictionaries/**===*===[admin,teacher], /api/test===get===[admin,student,teacher], /api/sys/schools/**===*===[admin,teacher], /api/params/**===*===[admin], /api/perms/**===*===[admin,teacher], /api/subjects/**===*===[admin], /api/classes/**===*===[admin,student,teacher], /**/*.jpg===*===[admin], /api/admins/**===*===[admin,student,teacher], /api/roles/**===*===[admin], /api/signin/**===*===[admin], /api/menus/**===*===[admin]]
+09:55:52.949 [restartedMain] INFO  o.s.s.c.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+09:55:52.965 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+09:55:53.058 [restartedMain] WARN  o.s.b.a.t.ThymeleafAutoConfiguration$DefaultTemplateResolverConfiguration - Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.geo.Point to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.geo.Point as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoPoint to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoPoint as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface org.springframework.data.elasticsearch.core.geo.GeoJson to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to interface org.springframework.data.elasticsearch.core.geo.GeoJson as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonPoint to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonPoint as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiPoint to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiPoint as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonLineString to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonLineString as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiLineString as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonPolygon as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiPolygon to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonMultiPolygon as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from class org.springframework.data.elasticsearch.core.geo.GeoJsonGeometryCollection to interface java.util.Map as writing converter although it doesn't convert to a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:53.277 [restartedMain] WARN  o.s.data.convert.CustomConversions - Registering converter from interface java.util.Map to class org.springframework.data.elasticsearch.core.geo.GeoJsonGeometryCollection as reading converter although it doesn't convert from a store-supported type! You might want to check your annotation setup at the converter implementation.
+09:55:54.324 [restartedMain] INFO  o.s.d.e.support.VersionInfo - Version Spring Data Elasticsearch: 4.1.5
+09:55:54.324 [restartedMain] INFO  o.s.d.e.support.VersionInfo - Version Elasticsearch Client in build: 7.9.3
+09:55:54.324 [restartedMain] INFO  o.s.d.e.support.VersionInfo - Version Elasticsearch Client used: 7.9.3
+09:55:54.433 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+09:55:54.449 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8080 (http) with context path ''
+09:55:55.058 [restartedMain] INFO  com.ep.yunq.YunqApplication - Started YunqApplication in 7.647 seconds (JVM running for 8.849)
+12:53:10.472 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+12:53:10.472 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+12:53:10.472 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
+12:53:13.540 [http-nio-8080-exec-3] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:53:13.540 [http-nio-8080-exec-3] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:53:17.225 [http-nio-8080-exec-8] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:53:17.225 [http-nio-8080-exec-8] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:53:38.856 [http-nio-8080-exec-10] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+12:53:39.037 [http-nio-8080-exec-1] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:53:39.037 [http-nio-8080-exec-1] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:53:39.256 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:53:39.353 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:53:43.978 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:53:44.610 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:53:52.006 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:53:54.256 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:54:24.353 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:54:34.246 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:23.838 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:55:23.922 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:55:24.140 [http-nio-8080-exec-2] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:55:24.140 [http-nio-8080-exec-2] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:55:24.222 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:55:24.222 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:41.706 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:43.516 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:45.409 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:46.978 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:49.772 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:51.762 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:53.706 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:55:56.156 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:55:56.471 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+12:55:57.522 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:55:57.772 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:56:01.447 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:56:01.530 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:56:01.550 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:56:01.773 [http-nio-8080-exec-9] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:56:01.773 [http-nio-8080-exec-9] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:56:01.838 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:56:05.285 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:56:06.772 [http-nio-8080-exec-2] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:56:14.125 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:56:15.669 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:58:11.625 [http-nio-8080-exec-6] INFO  c.e.y.sureness.SurenessFilterExample - not found token : class com.usthe.sureness.subject.support.NoneSubject --target processor
+12:58:11.625 [http-nio-8080-exec-6] INFO  c.e.y.sureness.SurenessFilterExample - this request is illegal
+12:58:29.894 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 修改权限 ----------------------
+12:58:29.925 [http-nio-8080-exec-5] INFO  c.e.y.s.p.DatabasePathTreeProvider - [/api/dictionaries/**===*===[admin,teacher], /api/test===get===[admin,student,teacher], /api/sys/schools/**===*===[admin,teacher], /api/params/**===*===[admin], /api/admins/**===*===[admin,student,teacher], /api/roles/**===*===[admin], /api/perms/**===*===[admin,teacher], /api/signin/**===*===[admin], /api/menus/**===*===[admin], /api/subjects/**===*===[admin], /api/classes/**===*===[admin,student,teacher]]
+12:58:34.106 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:58:34.184 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:58:34.200 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:58:34.500 [http-nio-8080-exec-1] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:58:36.590 [http-nio-8080-exec-2] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:58:38.453 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:58:39.853 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+13:02:00.800 [http-nio-8080-exec-7] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+13:05:26.069 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+13:05:26.372 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+14:04:31.153 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+14:07:37.722 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+14:07:39.185 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+17:06:10.476 [http-nio-8080-exec-10] INFO  c.e.y.a.appservice.LoginAppService - 用户：13123191360,登录成功
+17:06:10.861 [http-nio-8080-exec-1] INFO  c.e.yunq.controller.CourseController - ---------------- 获取我创建的课程 ----------------------
+20:22:48.592 [http-nio-8080-exec-8] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+20:22:48.830 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:22:48.924 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:22:54.245 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:22:54.895 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:42:24.293 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:42:26.349 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:42:32.293 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+20:42:32.345 [http-nio-8080-exec-3] INFO  c.e.y.domain.service.UserInfoService - 222
+20:42:32.517 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:43:26.511 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:43:27.402 [http-nio-8080-exec-8] INFO  c.e.yunq.controller.CourseController - ---------------- 获取所有课程 ----------------------
+20:43:40.561 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:43:41.464 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+20:43:42.677 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:43:43.533 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:46:20.579 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:46:21.430 [http-nio-8080-exec-7] INFO  c.e.yunq.controller.CourseController - ---------------- 获取所有课程 ----------------------
+20:46:34.001 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:46:34.876 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:47:56.502 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:49:08.823 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:49:31.517 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:49:31.817 [http-nio-8080-exec-4] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:49:34.395 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:50:30.361 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:50:49.309 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:51:11.402 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:51:11.495 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:51:11.793 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:51:11.793 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:51:11.793 [http-nio-8080-exec-3] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:51:14.418 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:51:21.880 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:51:55.048 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:51:55.048 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:51:58.493 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:54:20.129 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:20.223 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:20.508 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:20.508 [http-nio-8080-exec-6] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:54:20.508 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:54:21.011 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:54:48.030 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:54:52.793 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:52.893 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:53.180 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:54:53.180 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:54:53.180 [http-nio-8080-exec-4] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:54:54.195 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:55:35.611 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:35.677 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:35.708 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:35.992 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:55:35.992 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:55:36.511 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:55:44.676 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:44.770 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:44.786 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:45.070 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:45.117 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:55:45.117 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:55:45.293 [http-nio-8080-exec-9] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:55:46.595 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+20:56:35.308 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:56:35.386 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:56:35.686 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+20:56:35.686 [http-nio-8080-exec-8] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+20:56:35.686 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+20:56:36.148 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:02:01.264 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:01.346 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:01.633 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:01.633 [http-nio-8080-exec-6] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:02:01.633 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:02:02.876 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:02:07.662 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:07.761 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:08.061 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:02:08.061 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:02:08.233 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:02:09.771 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:03:07.117 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:03:07.211 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:03:07.496 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:03:07.511 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:03:07.511 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:03:08.511 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:03:22.095 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:03:22.095 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:03:24.892 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:04:43.686 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:04:43.749 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:04:44.049 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:04:44.064 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:04:44.064 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:04:44.679 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:09:24.677 [http-nio-8080-exec-1] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:09:24.677 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:11:32.711 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:11:32.711 [http-nio-8080-exec-3] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:12:54.008 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:12:54.008 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:13:26.211 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:13:26.211 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:14:54.301 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:14:54.301 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:16:56.123 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:16:56.123 [http-nio-8080-exec-1] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:17:23.586 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:17:23.586 [http-nio-8080-exec-3] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:18:08.595 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:18:08.595 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:19:05.339 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:19:05.339 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:19:39.317 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:19:39.317 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:20:37.201 [http-nio-8080-exec-1] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:20:37.201 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:21:08.111 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:21:08.111 [http-nio-8080-exec-3] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:21:37.670 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:21:37.670 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:21:44.528 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:21:44.528 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:21:51.946 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:22:11.977 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:22:12.117 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:22:12.401 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:22:12.401 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:22:12.401 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:22:13.264 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:22:29.393 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:22:42.345 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:22:42.377 [http-nio-8080-exec-10] INFO  c.e.y.domain.service.UserInfoService - 222
+21:22:42.595 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:22:44.277 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:22:52.670 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:22:52.686 [http-nio-8080-exec-4] INFO  c.e.y.domain.service.UserInfoService - 222
+21:22:52.909 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:22:54.609 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:22:59.339 [http-nio-8080-exec-6] WARN  o.s.w.s.m.s.DefaultHandlerExceptionResolver - Resolved [org.springframework.http.converter.HttpMessageNotReadableException: JSON parse error: Cannot deserialize instance of `java.lang.String` out of START_ARRAY token; nested exception is com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot deserialize instance of `java.lang.String` out of START_ARRAY token
+ at [Source: (PushbackInputStream); line: 1, column: 144] (through reference chain: com.ep.yunq.application.dto.UserDTO["school"])]
+21:28:06.745 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:28:07.046 [http-nio-8080-exec-8] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:29:17.178 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:29:17.178 [http-nio-8080-exec-9] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:30:04.201 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:30:04.330 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:30:04.346 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:30:04.646 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:30:04.646 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:33:29.177 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:33:29.177 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:34:00.296 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:34:00.471 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:34:13.464 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:34:17.912 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:34:17.931 [http-nio-8080-exec-1] INFO  c.e.y.domain.service.UserInfoService - 222
+21:34:18.154 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:34:28.033 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:28.964 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:34:28.964 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+21:34:28.964 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+21:34:30.892 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:31.793 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+21:34:32.571 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:33.477 [http-nio-8080-exec-4] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+21:34:34.311 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:35.211 [http-nio-8080-exec-3] INFO  com.ep.yunq.controller.DicControllor - ---------------- 获取所有字典类型 ----------------------
+21:34:36.355 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:37.245 [http-nio-8080-exec-7] INFO  c.e.yunq.controller.ParamsController - ---------------- 获取所有系统参数 ----------------------
+21:34:38.117 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:38.977 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:34:39.970 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:40.845 [http-nio-8080-exec-9] INFO  c.e.yunq.controller.CourseController - ---------------- 获取所有课程 ----------------------
+21:34:45.795 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+21:34:46.654 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:34:46.654 [http-nio-8080-exec-1] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:51:36.564 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:51:36.870 [http-nio-8080-exec-6] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:51:38.061 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:52:23.911 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:52:24.227 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:52:59.754 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:52:59.754 [http-nio-8080-exec-9] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:53:08.676 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:53:34.617 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:53:34.917 [http-nio-8080-exec-1] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:53:38.270 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:53:49.586 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:53:49.901 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:53:51.254 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:54:42.248 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:54:42.548 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:54:51.393 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:54:55.017 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:54:55.032 [http-nio-8080-exec-2] INFO  c.e.y.domain.service.UserInfoService - 222
+21:54:55.362 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:55:22.718 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:55:23.017 [http-nio-8080-exec-3] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:55:25.055 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:55:28.180 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:55:28.195 [http-nio-8080-exec-7] INFO  c.e.y.domain.service.UserInfoService - 222
+21:55:28.530 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:55:41.927 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:55:42.217 [http-nio-8080-exec-10] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:58:27.376 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:58:27.376 [http-nio-8080-exec-2] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:58:31.617 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:58:34.792 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:58:34.792 [http-nio-8080-exec-1] INFO  c.e.y.domain.service.UserInfoService - 222
+21:58:35.155 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:59:07.392 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:59:07.692 [http-nio-8080-exec-7] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+21:59:08.661 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+21:59:11.949 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.UserController - ---------------- 修改用户信息 ----------------------
+21:59:11.964 [http-nio-8080-exec-5] INFO  c.e.y.domain.service.UserInfoService - 222
+21:59:12.330 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+21:59:24.745 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------

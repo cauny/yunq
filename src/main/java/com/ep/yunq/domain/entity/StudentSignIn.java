@@ -25,7 +25,7 @@ public class StudentSignIn {
     private int id;
 
     private String mode;    //
-    private Integer value;   //
+    /*private Integer value;   //*/
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;  //

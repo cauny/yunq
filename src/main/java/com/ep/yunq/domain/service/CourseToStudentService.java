@@ -5,6 +5,7 @@ import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.CourseToStudent;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +17,7 @@ import java.util.*;
  * @Date: 2021/4/13 10:06
  * 功能描述：
  **/
+@Slf4j
 @Service
 public class CourseToStudentService {
     @Autowired
@@ -30,22 +32,25 @@ public class CourseToStudentService {
         courseToStudentDAO.save(courseToStudent);
     }
 
-    public boolean isJoin(int uid, int cid){
-        CourseToStudent courseToStudent = courseToStudentDAO.findByCourseAndUser(cid, uid);
+    public boolean isJoin(int uid, String code){
+        CourseToStudent courseToStudent = courseToStudentDAO.findByCourseCodeAndUser(code, uid);
         if (null == courseToStudent)
             return false;
         else
             return true;
     }
 
-    public String joinCourse(int uid,int cid) {
+    public String joinCourse(int uid,String code) {
         String message = "";
         try {
-            if (isJoin(cid, uid)){
+            if (isJoin(uid, code)){
                 return "请勿重复加入课程";
             }
             User user = userService.findById(uid);
-            Course course = courseService.getById(cid);
+            Course course = courseService.findByCode(code);
+            if(course==null){
+                return "该课程不存在";
+            }
             CourseToStudent courseToStudent = new CourseToStudent();
             courseToStudent.setExperience(0);
             courseToStudent.setStu(user);
@@ -59,6 +64,14 @@ public class CourseToStudentService {
             e.printStackTrace();
         }
         return message;
+    }
+
+    public Integer findCourseIdByCode(String code){
+        Course course=courseService.findByCode(code);
+        if(course==null){
+            return null;
+        }
+        return course.getId();
     }
 
     public List<Map<String,String>> findAllStudentByCourseId(int cid) {
@@ -77,7 +90,7 @@ public class CourseToStudentService {
         List<Course> courses = courseToStudentDAO.findCourseByUserId(uid);
         for (Course course:courses) {
             course.setCover(ConstantUtil.FILE_Url_Course.string+course.getCover());
-            /*course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());*/
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());
         }
         return courses;
     }

@@ -5,6 +5,7 @@ import com.ep.yunq.application.dto.RoleDTO;
 import com.ep.yunq.application.dto.SchoolInstitutionDTO;
 import com.ep.yunq.domain.entity.*;
 import com.ep.yunq.domain.service.*;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import com.usthe.sureness.matcher.TreePathRoleMatcher;
@@ -42,6 +43,8 @@ public class RoleController {
     AdminMenuService adminMenuService;
     @Autowired
     UserService userService;
+    @Autowired
+    UserInfoService userInfoService;
     @Autowired
     TreePathRoleMatcher treePathRoleMatcher;
 
@@ -144,6 +147,23 @@ public class RoleController {
         Page<AdminRole> adminRolesPage= PageUtil.listToPage(ad,pageNum,pageSize);
         Page<RoleDTO> roleDTOS=PageUtil.pageChange(adminRolesPage,RoleDTO.class);
         return ResultUtil.buildSuccessResult(roleDTOS);
+    }
+
+    @ApiOperation("修改当前用户默认角色")
+    @PutMapping(value = "/api/roles/defaults")
+    public Result<String> editDefaultRole(@RequestParam String role) {
+        log.info("---------------- 修改当前用户默认角色 ----------------------");
+        Integer uid= CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        String message= userInfoService.editDefaultRole(role,uid);
+        if(message.equals("修改成功")){
+            return ResultUtil.buildSuccessResult(message);
+        }else {
+            return ResultUtil.buildFailResult(message);
+        }
+
     }
 
     /*@ApiOperation("分配用户")

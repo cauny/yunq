@@ -39,7 +39,7 @@ public class MenuController {
         log.info("---------------- 获取用户菜单 ----------------------");
         Integer uid= CommonUtil.getTokenId();
         if(uid==null){
-            return ResultUtil.buildFailResult("Ton出错");
+            return ResultUtil.buildFailResult("Token出错");
         }
         List<MenuDTO> menus = adminMenuService.getMenusByUserId(uid);
         Page<MenuDTO> menuPage=PageUtil.listToPage(menus,pageNum,pageSize);

@@ -29,9 +29,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoField;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -56,7 +56,51 @@ public class test {
     SchoolInstitutionService schoolInstitution;
 
 
-    Logger logger= LoggerFactory.getLogger(getClass());
+    LocalDateTime localDateTime = LocalDateTime.of(2021, 06, 22, 16, 50, 01);
+    @GetMapping("/api/test/demo")
+    public void demo(){
+
+        /**
+         * localDateTime.get(ChronoField.YEAR); 获取年
+         * localDateTime.get(ChronoField.MONTH_OF_YEAR); 获取月
+         * localDateTime.get(ChronoField.DAY_OF_MONTH);  获取日
+         * localDateTime.get(ChronoField.HOUR_OF_DAY); 获取小时
+         * localDateTime.get(ChronoField.MINUTE_OF_HOUR); 获取分
+         * localDateTime.get(ChronoField.SECOND_OF_MINUTE); 获取秒
+         */
+
+        System.out.println(
+                localDateTime.get(ChronoField.YEAR)+":"
+                        +localDateTime.get(ChronoField.MONTH_OF_YEAR)+":"
+                        +localDateTime.get(ChronoField.DAY_OF_MONTH)+":"
+                        +localDateTime.get(ChronoField.HOUR_OF_DAY)+":"
+                        +localDateTime.get(ChronoField.MINUTE_OF_HOUR)+":"
+                        +localDateTime.get(ChronoField.SECOND_OF_MINUTE)
+        );
+
+        Calendar calendar = Calendar.getInstance();
+
+        /**
+         * 指定触发的时间
+         * */
+        calendar.set(Calendar.YEAR, localDateTime.get(ChronoField.YEAR)); // 设置年份
+        calendar.set(Calendar.DAY_OF_MONTH, localDateTime.get(ChronoField.DAY_OF_MONTH));//设置日期
+        calendar.set(Calendar.MONTH, localDateTime.get(ChronoField.MONTH_OF_YEAR)-1);//设置日期为月份   这里3表示4月份    4就表示5月份
+        calendar.set(Calendar.HOUR_OF_DAY, localDateTime.get(ChronoField.HOUR_OF_DAY)); //设置触发时
+        calendar.set(Calendar.MINUTE, localDateTime.get(ChronoField.MINUTE_OF_HOUR)); //设置触发分
+        calendar.set(Calendar.SECOND, localDateTime.get(ChronoField.SECOND_OF_MINUTE)); //设置触发秒
+
+        Date time = calendar.getTime();
+        Timer timer = new Timer();
+        timer.schedule(new RemindTask(), time);
+    }
+    class RemindTask extends TimerTask {
+
+        public void run() {
+            System.out.println("localDateTime:"+localDateTime);
+        }
+    }
+
 
     @CrossOrigin
     @GetMapping("/api/index")

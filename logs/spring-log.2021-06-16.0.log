@@ -1,0 +1,24 @@
+11:50:17.182 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+11:50:17.186 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+11:50:17.215 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 29 ms
+11:50:28.420 [http-nio-8080-exec-4] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+11:50:28.578 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+11:50:28.849 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+11:51:20.710 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+11:51:21.361 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+11:51:21.677 [http-nio-8080-exec-9] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+11:51:25.858 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.UserController - ---------------- 搜索用户 ----------------------
+11:51:29.572 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+11:51:35.508 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+11:51:36.418 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+11:51:36.420 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+11:51:36.420 [http-nio-8080-exec-5] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+11:56:57.930 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+11:56:57.930 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+11:56:58.236 [http-nio-8080-exec-8] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+11:58:44.486 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.RoleController - ---------------- 添加新角色 ----------------------
+11:58:51.423 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.RoleController - ---------------- 添加新角色 ----------------------
+11:58:51.464 [http-nio-8080-exec-10] INFO  c.e.y.s.p.DatabasePathTreeProvider - [/api/dictionaries/**===*===[admin,teacher], /api/test===get===[admin,student,teacher], /api/sys/schools/**===*===[admin,teacher], /api/params/**===*===[admin], /api/admins/**===*===[admin,student,teacher], /api/roles/**===*===[admin], /api/perms/**===*===[admin,teacher], /api/signin/**===*===[admin], /api/menus/**===*===[admin], /api/subjects/**===*===[admin], /api/classes/**===*===[admin,student,teacher]]
+11:58:51.686 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+11:58:54.659 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取角色菜单 ----------------------
+11:58:54.966 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------

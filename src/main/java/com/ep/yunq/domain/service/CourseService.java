@@ -47,20 +47,28 @@ public class CourseService {
         courseDAO.save(course);
     }
 
-    public Course findByCode(String code){  return courseDAO.findByCode(code);}
+    public Course findByCode(String code) {
+        Course course=courseDAO.findByCode(code);
+        if (course==null){
+            return null;
+        }
+        course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
+        course.setQrcode(ConstantUtil.FILE_Url_QrCode.string + course.getQrcode());
+        return course;
+    }
 
     public Course getById(int id) {
         return courseDAO.findById(id);
     }
 
     /* 随机生成课程码 */
-    public String createCourseCode(){
-        boolean isUsed=true;
-        String code="";
-        while(isUsed){
-            code= smsUtil.createRandomVcode();
-            if(findByCode(code)==null){
-                isUsed=false;
+    public String createCourseCode() {
+        boolean isUsed = true;
+        String code = "";
+        while (isUsed) {
+            code = smsUtil.createRandomVcode();
+            if (findByCode(code) == null) {
+                isUsed = false;
             }
         }
         return code;
@@ -71,15 +79,15 @@ public class CourseService {
         try {
             // 封面
             File imageFolder = new File(ConstantUtil.FILE_Photo_Course.string);
-            File f=new File(imageFolder,"default.png");
+            File f = new File(imageFolder, "default.png");
             InputStream logo = new FileInputStream(f);
-            if(file!=null){
+            if (file != null) {
                 f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
                         .substring(file.getOriginalFilename().length() - 4));
                 logo = file.getInputStream();
                 file.transferTo(f);
             }
-            
+
             course.setCover(f.getName());
             course.setQrcode("");
             course.setCreationDate(new Date());
@@ -88,7 +96,7 @@ public class CourseService {
             // 二维码
             String qrcode = CommonUtil.creatUUID() + ".jpg";
             String imagePath = ConstantUtil.FILE_QrCode.string + qrcode;
-            String content = String.valueOf(course.getId());
+            String content = String.valueOf(course.getCode());
             QrcodeUtil.encodeimage(imagePath, "JPEG", content, 430, 430, logo);
             String imgURL = ConstantUtil.FILE_Url_QrCode.string + qrcode;
             course.setQrcode(qrcode);
@@ -211,19 +219,19 @@ public class CourseService {
     }
 
     public Page<Course> findAllByCreatorId(int uid, int pageNumber, int pageSize) {
-        Sort sort=Sort.by(Sort.Direction.ASC,"id");
-        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
-        Page<Course> courses=courseDAO.findAllByCreator(uid,pageable);
+        Sort sort = Sort.by(Sort.Direction.ASC, "id");
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Page<Course> courses = courseDAO.findAllByCreator(uid, pageable);
         for (Course course : courses) {
             course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
-            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string + course.getQrcode());
         }
         return courses;
     }
 
-    public Page<Course> findAll( int pageNumber, int pageSize) {
+    public Page<Course> findAll(int pageNumber, int pageSize) {
         Sort sort = Sort.by(Sort.Direction.ASC, "semester", "grade");
-        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Course> courses = courseDAO.findAll(pageable);
         for (Course course : courses) {
             course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
@@ -232,11 +240,11 @@ public class CourseService {
         return courses;
     }
 
-    public Page<Course> search(String keywords,int pageNumber, int pageSize) {
+    public Page<Course> search(String keywords, int pageNumber, int pageSize) {
         Sort sort = Sort.by(Sort.Direction.ASC, "id");
-        Pageable pageable= PageRequest.of(pageNumber,pageSize,sort);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
         Page<Course> courses = courseDAO.findAllByNameLikeOrTeacherLikeOrGradeLikeOrSemesterLikeOrderBySemesterAsc(
-                "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%",pageable);
+                "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", "%" + keywords + "%", pageable);
 
         return courses;
     }
@@ -247,7 +255,7 @@ public class CourseService {
             if (null == course)
                 return null;
             course.setCover(ConstantUtil.FILE_Url_Course.string + course.getCover());
-            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string+course.getQrcode());
+            course.setQrcode(ConstantUtil.FILE_Url_QrCode.string + course.getQrcode());
             return course;
         } catch (Exception e) {
             e.printStackTrace();

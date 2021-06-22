@@ -23,5 +23,6 @@ public class CourseSignInDTO {
     private BigDecimal longitude;
     private BigDecimal latitude;
     private Integer status;
+    private Integer isFinished;
     private Integer countDown;
 }

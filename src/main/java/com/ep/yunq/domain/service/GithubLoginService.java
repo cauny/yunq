@@ -69,7 +69,7 @@ public class GithubLoginService {
             List<AdminRole> roles=new ArrayList<>();
             roles.add(adminRoleService.findByName(role));
             user.setRoles(roles);
-            message=userService.createUser(user);
+            message=userService.createUser(user,null);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }

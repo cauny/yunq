@@ -49,13 +49,13 @@ public class UserController {
 
     @ApiOperation("增加用户")
     @PostMapping(value = "/api/admins/users")
-    public Result addUser(@RequestBody User user) {
+    public Result addUser(@RequestBody UserDTO user) {
         log.info("---------------- 增加用户 ----------------------");
         Integer uid=CommonUtil.getTokenId();
         if(uid==null){
             return ResultUtil.buildFailResult("Token出错");
         }
-        String message = userService.registerByAdmin(user, uid);
+        String message = userService.registerByAdmin(user,uid);
         if ("注册成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -121,9 +121,9 @@ public class UserController {
                                         @RequestParam int pageSize) {
         log.info("---------------- 搜索用户 ----------------------");
         List<User> us = userService.search(keywords);
-        Page<User> usersPage = PageUtil.listToPage(us, pageNum, pageSize);
-        Page<UserDTO> userDTOS = PageUtil.pageChange(usersPage, UserDTO.class);
-        return ResultUtil.buildSuccessResult(userDTOS);
+        List<UserDTO> userDTOS= userService.initUserDTO(us);
+        Page<UserDTO> userDTOPages = PageUtil.listToPage(userDTOS,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(userDTOPages);
     }
 
     @ApiOperation("获取所有用户")
@@ -131,13 +131,7 @@ public class UserController {
     public Result<Page<UserDTO>> listUsers(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取所有用户 ----------------------");
         List<User> us = userService.list();
-        List<UserDTO> userDTOS=PageUtil.listChange(us,UserDTO.class);
-        for(UserDTO userDTO:userDTOS){
-            UserInfo userInfo=userInfoService.findByUid(userDTO.getId());
-            userDTO.setIno(userInfo.getIno());
-            userDTO.setSchool(userInfo.getSchool());
-            userDTO.setMajor(userInfo.getMajor());
-        }
+        List<UserDTO> userDTOS=userService.initUserDTO(us);
         Page<UserDTO> users=PageUtil.listToPage(userDTOS,pageNum,pageSize);
         return ResultUtil.buildSuccessResult(users);
     }

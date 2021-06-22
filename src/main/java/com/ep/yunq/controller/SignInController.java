@@ -3,9 +3,11 @@ package com.ep.yunq.controller;
 import com.ep.yunq.application.dto.AllStudentSignInCourseDTO;
 import com.ep.yunq.application.dto.CourseSignInDTO;
 import com.ep.yunq.application.dto.CourseStudentSignInDTO;
+import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.CourseSignIn;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.StudentSignIn;
+import com.ep.yunq.domain.service.CourseService;
 import com.ep.yunq.domain.service.CourseSignInService;
 import com.ep.yunq.domain.service.StudentSignInService;
 import com.ep.yunq.domain.service.UserService;
@@ -13,6 +15,8 @@ import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,13 +45,23 @@ public class SignInController {
     @Autowired
     CourseSignInService courseSignInService;
     @Autowired
+    CourseService courseService;
+    @Autowired
     StudentSignInService studentSignInService;
 
     @ApiOperation("创建课程签到")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "mode", value = "签到模式", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "value", value = "签到分钟数", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "longitude", value = "经度", required = true, dataTypeClass = BigDecimal.class),
+            @ApiImplicitParam(name = "latitude", value = "纬度", required = true, dataTypeClass = BigDecimal.class),
+            @ApiImplicitParam(name = "course", value = "传一个course类（code有值就行）", required = true)
+    })
     @PostMapping("/api/signIn")
-    public Result<String> addCourseSignIn(@RequestBody CourseSignIn courseSignIn) {
+    public Result<String> addCourseSignIn(@RequestBody CourseSignIn courseSignIn,@RequestParam String code) {
         log.info("---------------- 创建课程签到 ----------------------");
-        String message = courseSignInService.add(courseSignIn);
+        log.info(code);
+        String message = courseSignInService.add(courseSignIn,code);
         if ("创建成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -54,24 +70,35 @@ public class SignInController {
 
     @ApiOperation("获取课程的所有签到")
     @GetMapping("/api/signIn")
-    public Result<Page<CourseSignInDTO>> getAllCourseSignInByCourse(@RequestParam int cid,
+    public Result<Page<CourseSignInDTO>> getAllCourseSignInByCourse(@RequestParam String code,
                                                                  @RequestParam int pageNum,
                                                                  @RequestParam int pageSize) {
         log.info("---------------- 获取课程的所有签到 ----------------------");
-        List<CourseSignIn> courseSignIns = courseSignInService.listAllByCourse(cid);
-        Page<CourseSignIn> courseSignInPage= PageUtil.listToPage(courseSignIns,pageNum,pageSize);
-        Page<CourseSignInDTO> courseSignInDTOS= PageUtil.pageChange(courseSignInPage,CourseSignInDTO.class);
-        return ResultUtil.buildSuccessResult(courseSignInDTOS);
+        try {
+            List<CourseSignIn> courseSignIns = courseSignInService.listAllByCourse(courseService.findByCode(code).getId());
+            Page<CourseSignIn> courseSignInPage= PageUtil.listToPage(courseSignIns,pageNum,pageSize);
+            Page<CourseSignInDTO> courseSignInDTOS= PageUtil.pageChange(courseSignInPage,CourseSignInDTO.class);
+            return ResultUtil.buildSuccessResult(courseSignInDTOS);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.buildFailResult("参数错误");
+        }
     }
 
     @ApiOperation("获取课程的当前签到")
     @GetMapping("/api/signIn/courses")
-    public Result<CourseSignInDTO> getCurrentCourseSignInByCourse(@RequestParam int cid) {
+    public Result<CourseSignInDTO> getCurrentCourseSignInByCourse(@RequestParam String code) {
         log.info("---------------- 获取课程的当前签到 ----------------------");
-        CourseSignIn courseSignIn = courseSignInService.getCurrentSignInByCourseId(cid);
-        ModelMapper modelMapper = new ModelMapper();
-        CourseSignInDTO courseSignInDTO=modelMapper.map(courseSignIn,CourseSignInDTO.class);
-        return ResultUtil.buildSuccessResult(courseSignInDTO);
+        try {
+            CourseSignIn courseSignIn = courseSignInService.getCurrentSignInByCourseId(courseService.findByCode(code).getId());
+            ModelMapper modelMapper = new ModelMapper();
+            CourseSignInDTO courseSignInDTO=modelMapper.map(courseSignIn,CourseSignInDTO.class);
+            return ResultUtil.buildSuccessResult(courseSignInDTO);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.buildFailResult("参数错误");
+        }
+
     }
 
     @ApiOperation("结束签到")
@@ -107,10 +134,16 @@ public class SignInController {
 
     @ApiOperation("获取学生某课程下的所有签到")
     @GetMapping("/api/signIn/students")
-    public Result<List<CourseStudentSignInDTO>> getAllSignInByCourse(@RequestParam int cid,@RequestParam int uid) {
+    public Result<List<CourseStudentSignInDTO>> getAllSignInByCourse(@RequestParam String code,@RequestParam int uid) {
         log.info("---------------- 学生所有签到 ----------------------");
-        List<CourseStudentSignInDTO> maps = studentSignInService.getAllSignInByUserId(uid, cid);
-        return ResultUtil.buildSuccessResult(maps);
+        try {
+            List<CourseStudentSignInDTO> maps = studentSignInService.getAllSignInByUserId(uid, courseService.findByCode(code).getId());
+            return ResultUtil.buildSuccessResult(maps);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.buildFailResult("参数错误");
+        }
+
     }
 
     @ApiOperation("获取课程签到的学生")

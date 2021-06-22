@@ -13,6 +13,7 @@ import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
 import com.usthe.sureness.util.JsonWebTokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -98,7 +99,7 @@ public class UserService {
         return roles;
     }
 
-    public String createUser(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
+    public String createUser(User user,UserInfo uInfo) throws NoSuchAlgorithmException, InvalidKeySpecException {
         String message="";
         String username = user.getUsername();
         String password = user.getPassword();
@@ -124,7 +125,17 @@ public class UserService {
 
         //新建userInfo
         UserInfo userInfo = new UserInfo(username, user);
-        userInfo.setDefaultRole(roles.get(0).getName());
+        if(uInfo!=null){
+            userInfo.setIno(uInfo.getIno());
+            userInfo.setSchool(uInfo.getSchool());
+            userInfo.setMajor(uInfo.getMajor());
+        }
+        if(roles.size()==0){
+            userInfo.setDefaultRole("student");
+        }else{
+            userInfo.setDefaultRole(roles.get(0).getName());
+        }
+
         userInfoService.addOrUpdate(userInfo);
 
         //设置用户角色
@@ -156,7 +167,7 @@ public class UserService {
             List<AdminRole> roles=new ArrayList<>();
             roles.add(adminRoleService.findByName(role));
             user.setRoles(roles);
-            message= createUser(user);
+            message= createUser(user,null);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }
@@ -168,11 +179,14 @@ public class UserService {
     }
 
     /* 用户注册 */
-    public String registerByAdmin(User user,Integer creatorId) {
+    public String registerByAdmin(UserDTO userDTO,Integer creatorId) {
         String message = "";
         try {
+            ModelMapper modelMapper=new ModelMapper();
+            User user=modelMapper.map(userDTO,User.class);
             user.setCreator(creatorId);
-            message= createUser(user);
+            UserInfo userInfo=modelMapper.map(userDTO,UserInfo.class);
+            message= createUser(user,userInfo);
             if(message.equals("创建成功")){
                 message = "注册成功";
             }
@@ -388,6 +402,18 @@ public class UserService {
             u.setRoles(roles);
         }
         return users;
+    }
+
+    //初始化UserDTO，合并User表和UserInfo表
+    public List<UserDTO> initUserDTO(List<User> us){
+        List<UserDTO> userDTOS=PageUtil.listChange(us,UserDTO.class);
+        for(UserDTO userDTO:userDTOS){
+            UserInfo userInfo=userInfoService.findByUid(userDTO.getId());
+            userDTO.setIno(userInfo.getIno());
+            userDTO.setSchool(userInfo.getSchool());
+            userDTO.setMajor(userInfo.getMajor());
+        }
+        return userDTOS;
     }
 
 }

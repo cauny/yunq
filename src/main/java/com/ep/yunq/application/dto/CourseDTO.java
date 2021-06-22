@@ -16,6 +16,7 @@ public class CourseDTO {
     private int id;
     private String code;
     private String name;    //
+    private String className;    //
     private String grade;    //
     private String semester;    //
     private String school;    //

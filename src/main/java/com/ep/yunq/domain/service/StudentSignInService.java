@@ -70,14 +70,12 @@ public class StudentSignInService {
                     courseStudentService.addExperience(studentSignIn.getCourseSignIn().getCourse().getId(), uid);
                     message = "签到成功";
                 }
-            } else if (ConstantUtil.SIGNUP_Mode_Gesture.string.equals(studentSignIn.getMode())) {
+            } else if (ConstantUtil.SIGNUP_Mode_OneStep.string.equals(studentSignIn.getMode())) {
                 GlobalCoordinates source = new GlobalCoordinates(studentSignIn.getLatitude().doubleValue(), studentSignIn.getLongitude().doubleValue());
                 GlobalCoordinates target = new GlobalCoordinates(studentSignIn.getCourseSignIn().getLatitude().doubleValue(), studentSignIn.getCourseSignIn().getLongitude().doubleValue());
                 double dist = CommonUtil.getDistanceMeter(source, target, Ellipsoid.Sphere);
                 if (dist >= ConstantUtil.Sys_Param_distance.code){
                     message = "超出签到范围";
-                } else if (!studentSignIn.getValue().equals(studentSignIn.getCourseSignIn().getValue())) {
-                    message = "手势错误";
                 } else {
                     addOrUpdate(studentSignIn);
                     courseStudentService.addExperience(studentSignIn.getCourseSignIn().getCourse().getId(), uid);

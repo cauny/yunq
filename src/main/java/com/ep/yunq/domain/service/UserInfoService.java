@@ -95,6 +95,24 @@ public class UserInfoService {
 
         return message;
     }
+    public String editDefaultRole(String role,Integer uid) {
+        String message = "";
+        try {
+            UserInfo userInfo=findByUid(uid);
+            log.info(role);
+            if(adminRoleService.findByName(role)==null){
+                message="没有该角色";
+            }else{
+                userInfo.setDefaultRole(role);
+                addOrUpdate(userInfo);
+                message="修改成功";
+            }
+        }catch (Exception e){
+            message = "参数错误，修改失败";
+            e.printStackTrace();
+        }
+        return message;
+    }
 
     public String editByAdmin(UserDTO userInfo) {
         String message = "";

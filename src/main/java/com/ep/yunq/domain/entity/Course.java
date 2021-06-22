@@ -24,6 +24,7 @@ public class Course {
     @Column(name = "id")
     int id;
     private String name;    //
+    private String className;
     private String code;
     private String grade;    //
     private String semester;    //
@@ -52,10 +53,11 @@ public class Course {
     public Course() {
     }
 
-    public Course(String name,String grade, String semester, String school, String college,
+    public Course(String name,String className,String grade, String semester, String school, String college,
                   String major, String teacher, String learnRequire, String teachProgress,
                   String examArrange) {
         this.name = name;
+        this.className=className;
         this.grade = grade;
         this.semester = semester;
         this.school = school;
