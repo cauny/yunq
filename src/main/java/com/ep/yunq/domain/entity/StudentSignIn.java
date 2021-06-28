@@ -34,10 +34,20 @@ public class StudentSignIn {
     private BigDecimal latitude;    //
     private Integer studentId;    //
 
-    private float distance;
+    private Double distance;
 
     @ManyToOne()
     @JoinColumn(name = "course_signin_id")
     private CourseSignIn courseSignIn;  //
 
+    public StudentSignIn() {
+    }
+
+    public StudentSignIn( Date time, BigDecimal longitude, BigDecimal latitude, Integer studentId, Double distance) {
+        this.time = time;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.studentId = studentId;
+        this.distance = distance;
+    }
 }

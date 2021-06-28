@@ -17,12 +17,15 @@ import java.util.Date;
 public class CourseSignInDTO {
     private int id;
     private String mode;
-    private Integer value;  //签到分钟数
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date startTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date endTime;
     private BigDecimal longitude;
     private BigDecimal latitude;
-    private Integer status;
+    /*private Integer status;*/
     private Integer isFinished;
-    private Integer countDown;
+    /*private Integer countDown;*/
 }

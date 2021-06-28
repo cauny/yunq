@@ -37,6 +37,10 @@ public class CourseSignInService {
     public String add(CourseSignIn courseSignIn,String code) {
         String message = "";
         try {
+            if(courseSignInDAO.findByCourseId(courseService.findByCode(code).getId())!=null){
+                message="当前有正在签到任务，请先停止再创建";
+                return message;
+            }
             if(ConstantUtil.SIGNUP_Mode_Time.string.equals(courseSignIn.getMode())) {
                 courseSignIn.setStartTime(new Date());
                 Calendar endTime = Calendar.getInstance();
@@ -76,8 +80,7 @@ public class CourseSignInService {
     }
 
     public CourseSignIn getCurrentSignInByCourseId(int cid){
-        CourseSignIn courseSignIn = courseSignInDAO.findByCourseIdAndDate(cid, new Date());
-
+        CourseSignIn courseSignIn = courseSignInDAO.findByCourseId(cid);
         return courseSignIn;
     }
 
@@ -85,6 +88,10 @@ public class CourseSignInService {
         String message = "";
         try {
             CourseSignIn courseSignInInDB = courseSignInDAO.findById(cspid);
+            if(courseSignInInDB.getIsFinished()==1){
+                message="该签到已结束";
+                return message;
+            }
             courseSignInInDB.setEndTime(new Date());
             courseSignInInDB.setIsFinished(1);
             addOrUpdate(courseSignInInDB);
@@ -98,6 +105,7 @@ public class CourseSignInService {
 
     public void timeTrigger(LocalDateTime localDateTime, Integer csid){
         Calendar calendar = Calendar.getInstance();
+        log.info("设置触发器");
 
         /**
          * 指定触发的时间
@@ -116,6 +124,7 @@ public class CourseSignInService {
             public void run() {
                 CourseSignIn courseSignIn=findById(csid);
                 courseSignIn.setIsFinished(1);
+                log.info("触发器触发");
                 addOrUpdate(courseSignIn);
             }
         }, time);

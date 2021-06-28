@@ -140,4 +140,8 @@ public class SysParamService {
         sysParam.setUser(user);*/
         return sysParam;
     }
+    public SysParam findByUserIdAndName(int uid,String name){
+        return sysParamDAO.findByUserIdAndName(uid,name);
+
+    }
 }

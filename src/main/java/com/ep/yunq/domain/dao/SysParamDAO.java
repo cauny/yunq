@@ -25,4 +25,8 @@ public interface SysParamDAO extends JpaRepository<SysParam,Integer> {
     List<SysParam> findByUserId(int uid);
 
     Page<SysParam> findAll(Pageable pageable);
+
+    @Query(nativeQuery = true, value = "select * from sys_param  " +
+            " where user_id = ?1 And name=?2 ")
+    SysParam findByUserIdAndName(int userId,String name);
 }

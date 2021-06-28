@@ -47,10 +47,6 @@ public class MenuController {
             return ResultUtil.buildSuccessResult(menuPage);
         }
         else {
-            /*AdminMenu menu = adminMenuService.findById(1);
-            menus.add(menu);
-            menu = adminMenuService.findById(5);
-            menus.add(menu);*/
             return ResultUtil.buildFailResult("当前用户无菜单");
         }
 

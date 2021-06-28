@@ -2,11 +2,13 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.application.dto.AllStudentSignInCourseDTO;
 import com.ep.yunq.application.dto.CourseStudentSignInDTO;
+import com.ep.yunq.application.dto.StudentDTO;
 import com.ep.yunq.domain.dao.StudentSignInDAO;
 import com.ep.yunq.domain.entity.CourseSignIn;
 import com.ep.yunq.domain.entity.StudentSignIn;
 import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
+import com.ep.yunq.infrastructure.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GlobalCoordinates;
@@ -50,9 +52,12 @@ public class StudentSignInService {
             return true;
     }
 
-    public String add(StudentSignIn studentSignIn) {
+    public String add(StudentSignIn studentSignIn,Integer courseSignId) {
         String message = "";
         int uid = studentSignIn.getStudentId();
+        CourseSignIn courseSignIn=courseSignInService.findById(courseSignId);
+        studentSignIn.setCourseSignIn(courseSignIn);
+        studentSignIn.setMode(courseSignIn.getMode());
         try {
             if (isSignIn(studentSignIn.getCourseSignIn().getId(), uid)){
                 return "请勿重复签到！";
@@ -135,16 +140,57 @@ public class StudentSignInService {
 
     public List<AllStudentSignInCourseDTO> getAllSignInByCourseSignIn(int csiid){
         List<Map<String,Object>> maps = studentSignInDAO.findAllByCourseSignIn(csiid);
+        Integer courseId=courseSignInService.findById(csiid).getCourse().getId();
         List<AllStudentSignInCourseDTO> result = new ArrayList<>();
         for (Map<String,Object> map: maps){
             AllStudentSignInCourseDTO tmp=new AllStudentSignInCourseDTO();
             tmp.setIno((String) map.get("ino"));
-            tmp.setName((String) map.get("name"));
+            tmp.setName((String) map.get("username"));
+            tmp.setUserId((Integer) map.get("user_id"));
             tmp.setTime(sdf.format(map.get("time")));
-            tmp.setMode((String) map.get("mode"));
+            tmp.setDistance((Double) map.get("distance"));
+            tmp.setCover((String) map.get("avatar"));
+            tmp.setExperience(courseStudentService.findByCourseIdAndUserId(courseId,(Integer) map.get("user_id")).getExperience());
+            tmp.setLevel(courseStudentService.findByCourseIdAndUserId(courseId,(Integer) map.get("user_id")).getLevel());
             result.add(tmp);
         }
         return result;
+    }
+
+    public Map<String,Object> getStudentInCourseSignIn(int courseSignInId){
+        List<AllStudentSignInCourseDTO> maps = getAllSignInByCourseSignIn(courseSignInId);
+        Collections.sort(maps, new Comparator<AllStudentSignInCourseDTO>() {
+            @Override
+            public int compare(AllStudentSignInCourseDTO o1, AllStudentSignInCourseDTO o2) {
+                return o2.getExperience()-o1.getExperience();
+            }
+        });
+        int courseId=courseSignInService.findById(courseSignInId).getCourse().getId();
+        List<StudentDTO> courseStus=courseStudentService.findAllStudentByCourseId(courseId);
+        List<AllStudentSignInCourseDTO> courseStus2= PageUtil.listChange(courseStus,AllStudentSignInCourseDTO.class);
+        List<AllStudentSignInCourseDTO> unsigned=new ArrayList<>();
+        for(AllStudentSignInCourseDTO s:courseStus2){
+            int flag=0;
+            for(AllStudentSignInCourseDTO sed:maps){
+                if(s.getUserId()==sed.getUserId()){
+                    flag=1;
+                    break;
+                }
+            }
+            if(flag==0){
+                unsigned.add(s);
+            }
+        }
+        Collections.sort(unsigned, new Comparator<AllStudentSignInCourseDTO>() {
+            @Override
+            public int compare(AllStudentSignInCourseDTO o1, AllStudentSignInCourseDTO o2) {
+                return o2.getExperience()-o1.getExperience();
+            }
+        });
+        Map<String,Object> map=new HashMap<>();
+        map.put("signed",maps);
+        map.put("unsigned",unsigned);
+        return map;
     }
 
 }

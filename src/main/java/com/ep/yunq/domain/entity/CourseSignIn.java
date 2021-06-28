@@ -27,11 +27,11 @@ public class CourseSignIn {
     private String mode;
     private Integer value;  //签到分钟数
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @Column(name = "start_time")
     private Date startTime;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     @Column(name = "end_time")
     private Date endTime;
 
@@ -54,5 +54,12 @@ public class CourseSignIn {
         this.mode = mode;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public CourseSignIn(String mode, Integer value, BigDecimal longitude, BigDecimal latitude) {
+        this.mode = mode;
+        this.value = value;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 }

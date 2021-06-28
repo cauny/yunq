@@ -2,6 +2,7 @@ package com.ep.yunq.controller;
 
 import com.ep.yunq.application.dto.CourseAddDTO;
 import com.ep.yunq.application.dto.CourseDTO;
+import com.ep.yunq.application.dto.StudentDTO;
 import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.service.CourseService;
@@ -72,18 +73,6 @@ public class CourseController {
     public Result<CourseAddDTO> addCourse(HttpServletRequest request) {
         log.info("---------------- 添加课程 ----------------------");
         String message = "";
-
-        /*SubjectSum subject = SurenessContextHolder.getBindSubject();
-        Integer appId = (Integer) subject.getPrincipal();*/
-
-        /*MultipartHttpServletRequest params = ((MultipartHttpServletRequest) request);
-        List<MultipartFile> files = ((MultipartHttpServletRequest) request)
-                .getFiles("cover");
-        String code = courseService.createCourseCode();
-        Course course = new Course(params.getParameter("name"),code,params.getParameter("grade"),params.getParameter("semester"),
-                params.getParameter("school"),params.getParameter("college"),params.getParameter("major"),params.getParameter("teacher"),
-                params.getParameter("learnRequire"),params.getParameter("teachProgress"),params.getParameter("examArrange"),
-                Integer.parseInt(params.getParameter("creator")));*/
 
         //获取token中的用户id
         Integer uid=CommonUtil.getTokenId();
@@ -284,13 +273,13 @@ public class CourseController {
 
     @ApiOperation("获取课程学生")
     @GetMapping("/api/classes/students")
-    public Result<List<Map<String, String>>> getStudentsByCourseId(@RequestParam String code) {
+    public Result<List<StudentDTO>> getStudentsByCourseId(@RequestParam String code) {
         log.info("---------------- 获取课程学生 ----------------------");
         Integer cid= courseToStudentService.findCourseIdByCode(code);
         if(cid==null){
             return ResultUtil.buildFailResult("该课程不存在");
         }
-        List<Map<String, String>> courseStus = courseToStudentService.findAllStudentByCourseId(cid);
+        List<StudentDTO> courseStus = courseToStudentService.findAllStudentByCourseId(cid);
         return ResultUtil.buildSuccessResult(courseStus);
     }
 

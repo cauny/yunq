@@ -13,11 +13,11 @@ import java.util.List;
   **/
 public interface CourseSignInDAO extends JpaRepository<CourseSignIn,Integer> {
 
-    @Query(value = "select new CourseSignIn(cs.id, cs.mode, cs.startTime, cs.endTime) from CourseSignIn cs where cs.course.id = ?1 order by cs.startTime desc ")
+    @Query(value = "from CourseSignIn cs where cs.course.id = ?1 order by cs.startTime desc ")
     List<CourseSignIn> findAllByCourse(int cid);
 
     CourseSignIn findById(int id);
 
-    @Query(value = "from CourseSignIn where course.id = ?1 and startTime < ?2 and (endTime > ?2 or endTime = '' or endTime is NULL )")
-    CourseSignIn findByCourseIdAndDate(int cid, Date date);
+    @Query(value = "from CourseSignIn where course.id = ?1 and isFinished=0")
+    CourseSignIn findByCourseId(int cid);
 }

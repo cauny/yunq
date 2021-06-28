@@ -11,8 +11,12 @@ import lombok.Data;
  **/
 @Data
 public class AllStudentSignInCourseDTO {
+    private Integer userId;
     private String ino;
     private String name;
     private String time;
-    private String mode;
+    private String cover;
+    private Integer experience;
+    private String level;
+    private Double distance;
 }

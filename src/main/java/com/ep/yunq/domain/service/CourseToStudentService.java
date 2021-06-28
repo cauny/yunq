@@ -1,8 +1,10 @@
 package com.ep.yunq.domain.service;
 
+import com.ep.yunq.application.dto.StudentDTO;
 import com.ep.yunq.domain.dao.CourseToStudentDAO;
 import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.CourseToStudent;
+import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,12 @@ public class CourseToStudentService {
     UserService userService;
     @Autowired
     CourseService courseService;
+    @Autowired
+    SysParamService sysParamService;
+
+    public CourseToStudent findByCourseIdAndUserId(int cid,int uid){
+        return courseToStudentDAO.findByCourseAndUser(cid,uid);
+    }
 
     public void addOrUpdate(CourseToStudent courseToStudent) {
         courseToStudent.setUpdateTime(new Date());
@@ -74,16 +82,20 @@ public class CourseToStudentService {
         return course.getId();
     }
 
-    public List<Map<String,String>> findAllStudentByCourseId(int cid) {
+    public List<StudentDTO> findAllStudentByCourseId(int cid) {
         List<Map<String,String>> temps = courseToStudentDAO.findAllUserByCourseId(cid);
-        List<Map<String,String>> maps = new ArrayList<>();
+        List<StudentDTO> studentDTOS=new ArrayList<>();
         for (Map temp:temps) {
-            Map<String,String> map = new HashMap<>();
-            map.putAll(temp);
-            map.put("cover",ConstantUtil.FILE_Url_User.string + temp.get("cover"));
-            maps.add(map);
+            StudentDTO studentDTO=new StudentDTO();
+            studentDTO.setIno(String.valueOf(temp.get("ino")));
+            studentDTO.setUserId(Integer.valueOf(String.valueOf(temp.get("user_id"))));
+            studentDTO.setExperience(Integer.valueOf(String.valueOf(temp.get("experience"))));
+            studentDTO.setUsername(String.valueOf(temp.get("username")));
+            studentDTO.setCover((String) temp.get("avatar"));
+            studentDTO.setLevel((String) temp.get("level"));
+            studentDTOS.add(studentDTO);
         }
-        return maps;
+        return studentDTOS;
     }
 
     public List<Course> findCourseByUserId(int uid){
@@ -97,8 +109,19 @@ public class CourseToStudentService {
 
     public void addExperience(int cid,int uid){
         CourseToStudent courseToStudentInDB = courseToStudentDAO.findByCourseAndUser(cid, uid);
-        int experience = courseToStudentInDB.getExperience() + ConstantUtil.Sys_Param_Experience.code;
+        SysParam sysParam=sysParamService.findByUserIdAndName(uid,"experience");
+        int experience = courseToStudentInDB.getExperience() +Integer.parseInt(sysParam.getValue());
         courseToStudentInDB.setExperience(experience);
+        if(experience>Integer.parseInt(sysParamService.findByUserIdAndName(uid,"level_3").getValue())){
+            courseToStudentInDB.setLevel("优秀");
+        }else if(experience>Integer.parseInt(sysParamService.findByUserIdAndName(uid,"level_2").getValue())){
+            courseToStudentInDB.setLevel("良好");
+        }else if(experience>Integer.parseInt(sysParamService.findByUserIdAndName(uid,"level_1").getValue())){
+            courseToStudentInDB.setLevel("中等");
+        }else{
+            courseToStudentInDB.setLevel("不合格");
+        }
+
         addOrUpdate(courseToStudentInDB);
     }
 

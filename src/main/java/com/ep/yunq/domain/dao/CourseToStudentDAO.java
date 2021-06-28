@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface CourseToStudentDAO extends JpaRepository<CourseToStudent,Integer> {
-    @Query(nativeQuery = true, value = "select cs.id, cs.experience, ui.ino, ui.username,cs.user_id " +
+    @Query(nativeQuery = true, value = "select cs.id, cs.experience, cs.level,ui.ino,ui.avatar, ui.username,cs.user_id " +
             "from course_to_stu cs left join user_info ui on ui.user_id = cs.user_id where cs.course_id = ?1 ")
     List<Map<String,String>> findAllUserByCourseId(int cid);
 

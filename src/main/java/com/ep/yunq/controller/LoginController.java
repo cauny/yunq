@@ -44,8 +44,6 @@ public class LoginController {
     @ApiOperation("密码登录")
     @PostMapping(value = "/api/users/login/passwords")
     public Result<UserLoginDTO> phoneLoginByPwd(@RequestParam String phone, @RequestParam String password) throws InvalidKeySpecException, NoSuchAlgorithmException {
-/*        phone = HtmlUtils.htmlEscape(phone);
-        password = HtmlUtils.htmlEscape(password);*/
         try {
             return loginAppService.phoneLoginByPwd(phone, password);
         } catch (Exception e) {
@@ -58,8 +56,6 @@ public class LoginController {
     @ApiOperation("验证码登录")
     @PostMapping(value = "/api/users/login/codes")
     public Result<UserLoginDTO> phoneLoginByVerificationCode(@RequestParam String phone, @RequestParam String verificationCode) {
-        /*phone = HtmlUtils.htmlEscape(phone);
-        verificationCode = HtmlUtils.htmlEscape(verificationCode);*/
         try {
             return loginAppService.phoneLoginByVerificationCode(phone, verificationCode);
         } catch (Exception e) {
@@ -72,7 +68,6 @@ public class LoginController {
     @ApiOperation("获取验证码")
     @GetMapping(value = "/api/users/getCodes")
     public Result<String> getCode(@RequestParam String phone) {
-        /*phone = HtmlUtils.htmlEscape(phone);*/
         try {
             Result<String> responseData = loginAppService.getCode(phone);
             return responseData;
@@ -87,7 +82,6 @@ public class LoginController {
     public Result<String> forgetPassword(@RequestParam String phone,
                                          @RequestParam String password,
                                          @RequestParam String verificationCode) {
-        /*phone = HtmlUtils.htmlEscape(phone);*/
         try {
             Result<String> responseData = loginAppService.forgetPassword(phone, password, verificationCode);
             return responseData;

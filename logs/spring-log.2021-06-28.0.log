@@ -1,0 +1,40 @@
+10:57:31.126 [http-nio-8080-exec-8] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+10:57:31.493 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+10:57:32.213 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+10:57:36.749 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+10:57:37.381 [http-nio-8080-exec-3] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+10:57:38.501 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+10:57:39.080 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.UserController - ---------------- 获取所有用户 ----------------------
+10:57:39.379 [http-nio-8080-exec-5] INFO  c.e.y.c.SchoolInstitutionController - ---------------- 获取所有学校机构 ----------------------
+10:57:39.426 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+10:57:39.459 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+10:57:39.549 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+10:57:39.549 [http-nio-8080-exec-9] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+10:57:41.180 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取角色菜单 ----------------------
+10:57:41.486 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+10:57:42.691 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+10:57:42.691 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取角色菜单 ----------------------
+10:57:43.210 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取角色菜单 ----------------------
+10:57:43.512 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.RoleController - ---------------- 获取所有角色 ----------------------
+12:38:11.321 [http-nio-8080-exec-3] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+12:38:11.357 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:38:12.690 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:38:44.850 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:38:45.491 [http-nio-8080-exec-6] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:38:46.272 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:38:46.327 [http-nio-8080-exec-9] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:38:46.596 [http-nio-8080-exec-10] INFO  c.e.y.c.PermissionController - ---------------- 获取所有权限 ----------------------
+12:38:46.596 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:44:47.191 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:44:50.547 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+12:44:53.245 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:28.047 [http-nio-8080-exec-9] INFO  c.e.y.a.appservice.LoginAppService - 用户：13506976031,登录成功
+14:33:28.384 [http-nio-8080-exec-10] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:29.091 [http-nio-8080-exec-7] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:31.177 [http-nio-8080-exec-1] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:31.807 [http-nio-8080-exec-3] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+14:33:33.825 [http-nio-8080-exec-2] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:33.888 [http-nio-8080-exec-4] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:33.930 [http-nio-8080-exec-5] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------
+14:33:34.282 [http-nio-8080-exec-6] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取所有菜单 ----------------------
+14:33:36.042 [http-nio-8080-exec-8] INFO  c.ep.yunq.controller.MenuController - ---------------- 获取用户菜单 ----------------------

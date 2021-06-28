@@ -18,8 +18,8 @@ public interface StudentSignInDAO extends JpaRepository<StudentSignIn,Integer> {
     @Query(value = "from StudentSignIn  where studentId = ?1 and courseSignIn.course.id = ?2 ")
     List<StudentSignIn> findAllByStudentIdAndCourseSignIn(int uid, int cid);
 
-    @Query(nativeQuery = true, value = "select ss.time, ss.mode ,ui.ino, ui.name from student_signin ss " +
+    @Query(nativeQuery = true, value = "select ss.time ,ss.distance,ui.ino, ui.username,ui.user_id,ui.avatar from student_signin ss " +
             " left join `user_info` ui on ui.user_id= ss.student_id " +
-            " where ss.course_signin_id = ?1 order by id asc")
+            " where ss.course_signin_id = ?1 order by ss.course_signin_id asc")
     List<Map<String,Object>> findAllByCourseSignIn(int csiid);
 }

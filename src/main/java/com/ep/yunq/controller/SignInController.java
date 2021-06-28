@@ -3,14 +3,13 @@ package com.ep.yunq.controller;
 import com.ep.yunq.application.dto.AllStudentSignInCourseDTO;
 import com.ep.yunq.application.dto.CourseSignInDTO;
 import com.ep.yunq.application.dto.CourseStudentSignInDTO;
+import com.ep.yunq.application.dto.StudentDTO;
 import com.ep.yunq.domain.entity.Course;
 import com.ep.yunq.domain.entity.CourseSignIn;
 import com.ep.yunq.domain.entity.Result;
 import com.ep.yunq.domain.entity.StudentSignIn;
-import com.ep.yunq.domain.service.CourseService;
-import com.ep.yunq.domain.service.CourseSignInService;
-import com.ep.yunq.domain.service.StudentSignInService;
-import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.domain.service.*;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
 import com.ep.yunq.infrastructure.util.ResultUtil;
@@ -18,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @classname: SignInController
@@ -48,19 +46,22 @@ public class SignInController {
     CourseService courseService;
     @Autowired
     StudentSignInService studentSignInService;
+    @Autowired
+    CourseToStudentService courseToStudentService;
 
     @ApiOperation("创建课程签到")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "mode", value = "签到模式", required = true, dataTypeClass = String.class),
-            @ApiImplicitParam(name = "value", value = "签到分钟数", required = true, dataTypeClass = String.class),
+            @ApiImplicitParam(name = "value", value = "签到分钟数", required = true, dataTypeClass = Integer.class),
             @ApiImplicitParam(name = "longitude", value = "经度", required = true, dataTypeClass = BigDecimal.class),
             @ApiImplicitParam(name = "latitude", value = "纬度", required = true, dataTypeClass = BigDecimal.class),
-            @ApiImplicitParam(name = "course", value = "传一个course类（code有值就行）", required = true)
     })
     @PostMapping("/api/signIn")
-    public Result<String> addCourseSignIn(@RequestBody CourseSignIn courseSignIn,@RequestParam String code) {
+    public Result<String> addCourseSignIn(@RequestParam String mode,@RequestParam Integer value,
+                                          @RequestParam BigDecimal longitude,@RequestParam BigDecimal latitude,
+                                          @RequestParam String code) {
         log.info("---------------- 创建课程签到 ----------------------");
-        log.info(code);
+        CourseSignIn courseSignIn=new CourseSignIn(mode,value,longitude,latitude);
         String message = courseSignInService.add(courseSignIn,code);
         if ("创建成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
@@ -91,6 +92,9 @@ public class SignInController {
         log.info("---------------- 获取课程的当前签到 ----------------------");
         try {
             CourseSignIn courseSignIn = courseSignInService.getCurrentSignInByCourseId(courseService.findByCode(code).getId());
+            if(courseSignIn==null){
+                return ResultUtil.buildFailResult("当前无签到");
+            }
             ModelMapper modelMapper = new ModelMapper();
             CourseSignInDTO courseSignInDTO=modelMapper.map(courseSignIn,CourseSignInDTO.class);
             return ResultUtil.buildSuccessResult(courseSignInDTO);
@@ -103,9 +107,9 @@ public class SignInController {
 
     @ApiOperation("结束签到")
     @PutMapping("/api/signIn/end")
-    public Result<String> endCourseSignIn(@RequestParam int csuid) {
+    public Result<String> endCourseSignIn(@RequestParam int courseSignInId) {
         log.info("---------------- 结束签到 ----------------------");
-        String message= courseSignInService.endSignIn(csuid);
+        String message= courseSignInService.endSignIn(courseSignInId);
         if ("结束签到".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
@@ -115,10 +119,22 @@ public class SignInController {
 
 
     @ApiOperation("学生签到")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "longitude", value = "经度", required = true, dataTypeClass = BigDecimal.class),
+            @ApiImplicitParam(name = "latitude", value = "纬度", required = true, dataTypeClass = BigDecimal.class),
+            @ApiImplicitParam(name = "courseSignId", value = "课程签到id", required = true, dataTypeClass = Integer.class),
+    })
     @PostMapping("/api/signIn/students")
-    public Result<String> signIn(@RequestBody StudentSignIn studentSignIn) {
+    public Result<String> signIn(@RequestParam Double distance,
+                                 @RequestParam BigDecimal longitude,@RequestParam BigDecimal latitude,
+                                 @RequestParam Integer courseSignId) {
         log.info("---------------- 学生签到 ----------------------");
-        String message= studentSignInService.add(studentSignIn);
+        Integer uid= CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        StudentSignIn studentSignIn=new StudentSignIn( new Date(), longitude, latitude,uid,distance);
+        String message= studentSignInService.add(studentSignIn,courseSignId);
         if ("签到成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else if ("请勿重复签到！".equals(message)) {
@@ -148,10 +164,15 @@ public class SignInController {
 
     @ApiOperation("获取课程签到的学生")
     @GetMapping("/api/signIn/students/courses")
-    public Result<List<AllStudentSignInCourseDTO>> getAllSignInStudentByCourseSignIn(@RequestParam int csiid) {
+    public Result<Map<String,Object>> getAllSignInStudentByCourseSignIn(@RequestParam int courseSignInId) {
         log.info("---------------- 获取课程签到的学生 ----------------------");
-        List<AllStudentSignInCourseDTO> maps = studentSignInService.getAllSignInByCourseSignIn(csiid);
-        return ResultUtil.buildSuccessResult(maps);
+        try {
+            Map<String,Object> map= studentSignInService.getStudentInCourseSignIn(courseSignInId);
+            return ResultUtil.buildSuccessResult(map);
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResultUtil.buildFailResult("参数错误");
+        }
     }
     
 }

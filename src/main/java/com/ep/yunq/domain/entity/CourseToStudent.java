@@ -28,6 +28,8 @@ public class CourseToStudent {
      */
     private int experience;
 
+    private String level;
+
     /**
      * 学生
      */

@@ -5,10 +5,7 @@ import com.ep.yunq.domain.entity.UserBasicInfo;
 import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.dao.UserDAO;
 import com.ep.yunq.domain.entity.*;
-import com.ep.yunq.infrastructure.util.ConstantUtil;
-import com.ep.yunq.infrastructure.util.PBKDF2Util;
-import com.ep.yunq.infrastructure.util.PageUtil;
-import com.ep.yunq.infrastructure.util.RedisUtil;
+import com.ep.yunq.infrastructure.util.*;
 import com.usthe.sureness.provider.DefaultAccount;
 import com.usthe.sureness.provider.SurenessAccount;
 import com.usthe.sureness.util.JsonWebTokenUtil;
@@ -179,12 +176,17 @@ public class UserService {
     }
 
     /* 用户注册 */
-    public String registerByAdmin(UserDTO userDTO,Integer creatorId) {
+    public String registerByAdmin(UserDTO userDTO) {
         String message = "";
         try {
+            Integer uid= CommonUtil.getTokenId();
+            if(uid==null){
+                message="Token出错";
+                return message;
+            }
             ModelMapper modelMapper=new ModelMapper();
             User user=modelMapper.map(userDTO,User.class);
-            user.setCreator(creatorId);
+            user.setCreator(uid);
             UserInfo userInfo=modelMapper.map(userDTO,UserInfo.class);
             message= createUser(user,userInfo);
             if(message.equals("创建成功")){
@@ -362,19 +364,23 @@ public class UserService {
         return message;
     }
 
-    public String editUser(UserDTO user,int modifierId) {
+    public String editUser(UserDTO user) {
         String message = "";
         try {
+            Integer uid= CommonUtil.getTokenId();
+            if(uid==null){
+                message="Token出错";
+                return message;
+            }
             User userInDB = findById(user.getId());
             if (null == userInDB) {
-                log.info("111111");
                 message = "找不到该用户，修改失败";
                 return message;
             }
             userInDB.setUsername(user.getUsername());
             userInDB.setEnabled(user.getEnabled());
             userInDB.setPhone(user.getPhone());
-            userInDB.setModifier(modifierId);
+            userInDB.setModifier(uid);
             update(userInDB);
             //如果传入角色list为null，则不修改
             if(user.getRoles()!=null){
