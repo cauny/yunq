@@ -2,11 +2,13 @@ package com.ep.yunq.domain.service;
 
 import com.ep.yunq.application.dto.UserDTO;
 import com.ep.yunq.domain.dao.UserInfoDAO;
+import com.ep.yunq.domain.entity.AdminRole;
 import com.ep.yunq.domain.entity.User;
 import com.ep.yunq.domain.entity.UserBasicInfo;
 import com.ep.yunq.domain.entity.UserInfo;
 import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @classname: UserInfoService
@@ -46,8 +49,14 @@ public class UserInfoService {
 
     public UserBasicInfo createByUser(User user){
         UserInfo userInfo=findByUid(user.getId());
+        String ino;
+        if(userInfo.getIno()==null){
+            ino="";
+        }else {
+            ino=userInfo.getIno();
+        }
         UserBasicInfo userBasicInfo=new UserBasicInfo(user.getId(),userInfo.getUsername(),
-                user.getPhone(),userInfo.getAvatar(),adminRoleService.listRolesNameByUser(user.getId()),
+                user.getPhone(),userInfo.getAvatar(), ino, adminRoleService.listRolesNameByUser(user.getId()),
                 userInfo.getDefaultRole()
         );
         return userBasicInfo;
@@ -85,7 +94,10 @@ public class UserInfoService {
                 addOrUpdate(userInfoInDB);
 
                 //修改角色
-                message = adminUserToRoleService.saveRoleChanges(user.getId(), userInfo.getRoles());
+                if(userInfo.getRoles()!=null){
+                    message = adminUserToRoleService.saveRoleChanges(user.getId(), userInfo.getRoles());
+                }
+                message="修改成功";
 
             }
         } catch (Exception e){
@@ -95,6 +107,33 @@ public class UserInfoService {
 
         return message;
     }
+
+    public String addAvatar(Integer uid,MultipartFile file) {
+        String message = "";
+        try {
+            UserInfo userInfoInDB = userInfoDAO.findByUserId(uid);
+            if (null == userInfoInDB) {
+                message = "找不到该用户信息，修改失败";
+            } else {
+                if(file!=null){
+                    File imageFolder = new File(ConstantUtil.FILE_Photo_User.string);
+                    File f = new File(imageFolder, CommonUtil.creatUUID() + file.getOriginalFilename()
+                            .substring(file.getOriginalFilename().length() - 4));
+                    file.transferTo(f);
+                    userInfoInDB.setAvatar(f.getName());
+                }
+                addOrUpdate(userInfoInDB);
+                message="修改成功";
+            }
+        } catch (Exception e){
+            message = "参数错误，修改失败";
+            e.printStackTrace();
+        }
+
+        return message;
+    }
+
+
     public String editDefaultRole(String role,Integer uid) {
         String message = "";
         try {
@@ -103,6 +142,22 @@ public class UserInfoService {
             if(adminRoleService.findByName(role)==null){
                 message="没有该角色";
             }else{
+                List<AdminRole> roles= userService.findRoleByUserId(uid);
+                log.info(String.valueOf(roles==null));
+                int flag=0;
+                for(AdminRole r:roles){
+                    if(r.getName().equals(role)){
+                        flag=1;
+                        break;
+                    }
+                }
+                if(flag==0){
+                    roles.add(adminRoleService.findByName(role));
+                    message=adminUserToRoleService.saveRoleChanges(uid,roles);
+                    if(!message.equals("修改成功")){
+                        return message;
+                    }
+                }
                 userInfo.setDefaultRole(role);
                 addOrUpdate(userInfo);
                 message="修改成功";

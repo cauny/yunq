@@ -18,17 +18,19 @@ public class UserBasicInfo {
     private String username;
     private String phone;
     private String avatar;
+    private String ino;
     private List<String> roles;
     private String defaultRole;
 
     public UserBasicInfo() {
     }
 
-    public UserBasicInfo(Integer id,String username, String phone, String avatar, List<String> roles, String defaultRole) {
-        this.id=id;
+    public UserBasicInfo(Integer id, String username, String phone, String avatar, String ino, List<String> roles, String defaultRole) {
+        this.id = id;
         this.username = username;
         this.phone = phone;
         this.avatar = avatar;
+        this.ino = ino;
         this.roles = roles;
         this.defaultRole = defaultRole;
     }

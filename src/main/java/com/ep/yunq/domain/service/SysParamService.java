@@ -5,7 +5,9 @@ import com.ep.yunq.application.dto.SysParamDTO;
 import com.ep.yunq.domain.entity.AdminRole;
 import com.ep.yunq.domain.entity.SysParam;
 import com.ep.yunq.domain.entity.User;
+import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
+import com.ep.yunq.infrastructure.util.ResultUtil;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ public class SysParamService {
     SysParamDAO sysParamDAO;
     @Autowired
     AdminRoleService adminRoleService;
+    @Autowired
+    UserService userService;
 
     public SysParam findById(int id){
         return sysParamDAO.findById(id);
@@ -73,6 +77,11 @@ public class SysParamService {
 
     public String edit(SysParamDTO sysParamDTO) {
         String message = "";
+        Integer uid= CommonUtil.getTokenId();
+        if(uid==null){
+            message="Token出错";
+            return message;
+        }
         try {
             SysParam sysParamInDB = sysParamDAO.findById(sysParamDTO.getId());
             if (null == sysParamInDB) {
@@ -81,6 +90,8 @@ public class SysParamService {
             else {
                 ModelMapper modelMapper=new ModelMapper();
                 SysParam sysParam=modelMapper.map(sysParamDTO,SysParam.class);
+                User user=userService.findById(uid);
+                sysParam.setUser(user);
                 addOrUpdate(sysParam);
                 message = "修改成功";
             }

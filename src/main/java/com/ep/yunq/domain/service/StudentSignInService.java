@@ -9,6 +9,7 @@ import com.ep.yunq.domain.entity.StudentSignIn;
 import com.ep.yunq.infrastructure.util.CommonUtil;
 import com.ep.yunq.infrastructure.util.ConstantUtil;
 import com.ep.yunq.infrastructure.util.PageUtil;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.gavaghan.geodesy.Ellipsoid;
 import org.gavaghan.geodesy.GlobalCoordinates;
@@ -36,6 +37,9 @@ public class StudentSignInService {
     CourseToStudentService courseStudentService;
     @Autowired
     CourseSignInService courseSignInService;
+    @Autowired
+    SysParamService sysParamService;
+
     private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public void addOrUpdate(StudentSignIn studentSignIn){
@@ -55,6 +59,7 @@ public class StudentSignInService {
     public String add(StudentSignIn studentSignIn,Integer courseSignId) {
         String message = "";
         int uid = studentSignIn.getStudentId();
+        Integer distance=Integer.parseInt(sysParamService.findByUserIdAndName(uid,"signInRange").getValue());
         CourseSignIn courseSignIn=courseSignInService.findById(courseSignId);
         studentSignIn.setCourseSignIn(courseSignIn);
         studentSignIn.setMode(courseSignIn.getMode());
@@ -66,7 +71,7 @@ public class StudentSignInService {
                 GlobalCoordinates source = new GlobalCoordinates(studentSignIn.getLatitude().doubleValue(), studentSignIn.getLongitude().doubleValue());
                 GlobalCoordinates target = new GlobalCoordinates(studentSignIn.getCourseSignIn().getLatitude().doubleValue(), studentSignIn.getCourseSignIn().getLongitude().doubleValue());
                 double dist = CommonUtil.getDistanceMeter(source, target, Ellipsoid.Sphere);
-                if (dist >= ConstantUtil.Sys_Param_distance.code){
+                if (dist >= distance){
                     message = "超出签到范围";
                 } else if (studentSignIn.getTime().after(studentSignIn.getCourseSignIn().getEndTime())) {
                     message = "超过时间";
@@ -79,7 +84,7 @@ public class StudentSignInService {
                 GlobalCoordinates source = new GlobalCoordinates(studentSignIn.getLatitude().doubleValue(), studentSignIn.getLongitude().doubleValue());
                 GlobalCoordinates target = new GlobalCoordinates(studentSignIn.getCourseSignIn().getLatitude().doubleValue(), studentSignIn.getCourseSignIn().getLongitude().doubleValue());
                 double dist = CommonUtil.getDistanceMeter(source, target, Ellipsoid.Sphere);
-                if (dist >= ConstantUtil.Sys_Param_distance.code){
+                if (dist >= distance){
                     message = "超出签到范围";
                 } else {
                     addOrUpdate(studentSignIn);

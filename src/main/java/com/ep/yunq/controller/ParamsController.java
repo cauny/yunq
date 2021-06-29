@@ -51,7 +51,7 @@ public class ParamsController {
 
     @ApiOperation("根据用户id获取系统参数")
     @GetMapping(value = "/api/params/ids")
-    public Result<List<SysParamDTO>> getSysParamByUserId() {
+    public Result<Page<SysParamDTO>> getSysParamByUserId(@RequestParam int pageNum, @RequestParam int pageSize) {
         log.info("---------------- 获取系统参数 ----------------------");
         Integer uid= CommonUtil.getTokenId();
         if(uid==null){
@@ -62,7 +62,8 @@ public class ParamsController {
             return ResultUtil.buildFailResult("该用户不存在");
         }
         List<SysParamDTO> sysParamDTO = PageUtil.listChange(sysParam, SysParamDTO.class);
-        return ResultUtil.buildSuccessResult(sysParamDTO);
+        Page<SysParamDTO> sysParamDTOS=PageUtil.listToPage(sysParamDTO,pageNum,pageSize);
+        return ResultUtil.buildSuccessResult(sysParamDTOS);
     }
 
 

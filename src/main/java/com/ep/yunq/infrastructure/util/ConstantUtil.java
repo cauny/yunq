@@ -26,9 +26,6 @@ public enum ConstantUtil {
     SIGNUP_VALUE_ERROR(703),
     //短信验证码
     SMS_Verification_Code(801),
-    //系统参数
-    Sys_Param_Experience(2),
-    Sys_Param_distance(100),
 
     //文件
     FILE_Url_Course("http://59.77.134.88:8080/api/file/Course/"),
@@ -42,7 +39,6 @@ public enum ConstantUtil {
 
     //签到
     SIGNUP_Mode_OneStep("oneStep"),
-    SIGNUP_Mode_Gesture("23"),
     SIGNUP_Mode_Time("time");
 
     public int code;

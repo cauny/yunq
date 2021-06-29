@@ -109,7 +109,9 @@ public class CourseToStudentService {
 
     public void addExperience(int cid,int uid){
         CourseToStudent courseToStudentInDB = courseToStudentDAO.findByCourseAndUser(cid, uid);
-        SysParam sysParam=sysParamService.findByUserIdAndName(uid,"experience");
+        SysParam sysParam=sysParamService.findByUserIdAndName(uid,"signInExperience");
+        log.info("c:"+String.valueOf(courseToStudentInDB==null));
+        log.info("s:"+String.valueOf(sysParam==null));
         int experience = courseToStudentInDB.getExperience() +Integer.parseInt(sysParam.getValue());
         courseToStudentInDB.setExperience(experience);
         if(experience>Integer.parseInt(sysParamService.findByUserIdAndName(uid,"level_3").getValue())){

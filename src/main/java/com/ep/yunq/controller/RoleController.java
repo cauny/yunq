@@ -52,15 +52,19 @@ public class RoleController {
     @PostMapping(value = "/api/roles/roles")
     public Result<String> addRole(@RequestBody AdminRole requestRole) {
         log.info("---------------- 添加新角色 ----------------------");
+        String message="";
         AdminRole adminRoleInDB = adminRoleService.findByName(requestRole.getName());
         if (null != adminRoleInDB) {
-            String message = "该角色已存在";
+            message = "该角色已存在";
             return ResultUtil.buildFailResult(message);
         } else {
-            adminRoleService.add(requestRole);
-            String message = "添加角色成功";
-            treePathRoleMatcher.rebuildTree();
-            return ResultUtil.buildSuccessResult(message,null);
+            message=adminRoleService.add(requestRole);
+            if(message.equals("添加角色成功")){
+                treePathRoleMatcher.rebuildTree();
+                return ResultUtil.buildSuccessResult(message,null);
+            }else {
+                return ResultUtil.buildFailResult(message);
+            }
         }
     }
 

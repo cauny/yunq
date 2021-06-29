@@ -187,6 +187,11 @@ public class UserService {
             ModelMapper modelMapper=new ModelMapper();
             User user=modelMapper.map(userDTO,User.class);
             user.setCreator(uid);
+            String newPwd=sysParamService.findByUserIdAndName(uid,"defaultPwd").getValue();
+            if(newPwd==null){
+                newPwd="123456";
+            }
+            user.setPassword(newPwd);
             UserInfo userInfo=modelMapper.map(userDTO,UserInfo.class);
             message= createUser(user,userInfo);
             if(message.equals("创建成功")){

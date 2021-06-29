@@ -87,9 +87,16 @@ public class AdminRoleService {
         return roles;
     }
 
-    public void add(AdminRole adminRole) {
+    public String add(AdminRole adminRole) {
+        String message="";
         adminRole.setCreationDate(new Date());
-        adminRoleDAO.save(adminRole);
+        AdminRole adminRole1=adminRoleDAO.save(adminRole);
+        message=editRoleMenuAndPerm(adminRole1.getId(), adminRole.getMenus(), adminRole.getPerms());
+        if(message.equals("更新成功")){
+            return "添加角色成功";
+        }else {
+            return "添加角色失败";
+        }
     }
     public void update(AdminRole adminRole){
         adminRole.setModificationDate(new Date());

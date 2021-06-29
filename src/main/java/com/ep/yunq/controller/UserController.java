@@ -3,10 +3,7 @@ package com.ep.yunq.controller;
 import com.ep.yunq.application.dto.UserDTO;
 import com.ep.yunq.application.dto.UserLoginDTO;
 import com.ep.yunq.domain.entity.*;
-import com.ep.yunq.domain.service.AdminRoleService;
-import com.ep.yunq.domain.service.AdminUserToRoleService;
-import com.ep.yunq.domain.service.UserInfoService;
-import com.ep.yunq.domain.service.UserService;
+import com.ep.yunq.domain.service.*;
 import com.ep.yunq.infrastructure.util.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,6 +41,8 @@ public class UserController {
     AdminRoleService adminRoleService;
     @Autowired
     UserInfoService userInfoService;
+    @Autowired
+    SysParamService sysParamService;
 
 
     /**
@@ -101,11 +100,17 @@ public class UserController {
 
     @ApiOperation("重置密码")
     @PutMapping(value = "/api/admins/users/passwords")
-    public Result resetPassword(@RequestBody User requestUser) {
+    public Result resetPassword(@RequestParam Integer uid) {
         log.info("---------------- 重置密码 ----------------------");
+        User requestUser=userService.findById(uid);
+        String newPwd=sysParamService.findByUserIdAndName(uid,"defaultPwd").getValue();
+        if(newPwd==null){
+            newPwd="123456";
+        }
+        requestUser.setPassword(newPwd);
         String message = userService.resetPassword(requestUser);
         if ("重置成功".equals(message))
-            return ResultUtil.buildSuccessResult(message);
+            return ResultUtil.buildSuccessResult(message,newPwd);
         else
             return ResultUtil.buildFailResult(message);
     }
@@ -184,7 +189,7 @@ public class UserController {
 
     @ApiOperation("修改用户学号工号")
     @PutMapping(value = "/api/admins/ino")
-    public Result editUserIno(@RequestParam String ino){
+    public Result editUserIno(@RequestParam String ino,@RequestParam String userName){
         String message="";
         Integer uid=CommonUtil.getTokenId();
         if(uid==null){
@@ -192,14 +197,29 @@ public class UserController {
         }
         UserInfo userInfo=userInfoService.findByUid(uid);
         userInfo.setIno(ino);
+        userInfo.setUsername(userName);
         message=userInfoService.edit(userInfo,null);
         if ("修改成功".equals(message))
             return ResultUtil.buildSuccessResult(message);
         else
             return ResultUtil.buildFailResult(message);
-
-
     }
 
+    @ApiOperation("修改用户头像")
+    @PutMapping(value = "/api/admins/avatar")
+    public Result editUserIno(@RequestParam MultipartFile file){
+        String message="";
+        Integer uid=CommonUtil.getTokenId();
+        if(uid==null){
+            return ResultUtil.buildFailResult("Token出错");
+        }
+        message=userInfoService.addAvatar(uid,file);
+        if ("修改成功".equals(message)){
+            String url=userInfoService.findByUid(uid).getAvatar();
+            return ResultUtil.buildSuccessResult(message,url);
+        }else{
+            return ResultUtil.buildFailResult(message);
+        }
 
+    }
 }
